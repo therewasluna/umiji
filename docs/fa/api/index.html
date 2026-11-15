@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <title>راهنمای API · Umiji</title>
+        <meta
+            name="description"
+            content="API پنل Umiji: توکن‌ها و دامنه‌های دسترسی، درخواست‌ها، خطاها، صفحه‌بندی، وب‌هوک‌ها با بررسی امضا، و همه‌ی اندپوینت‌ها با فیلدها و نمونه‌هایشان."
+        />
+        <meta name="theme-color" content="#130C11" />
+        <link rel="alternate" hreflang="en" href="https://umiji.wiki/api/" />
+        <link rel="alternate" hreflang="fa" href="https://umiji.wiki/fa/api/" />
+        <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="../../assets/favicon-32.png" sizes="32x32" type="image/png" />
+        <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" href="../../assets/fonts/umiji-persian-digits.woff2" as="font" type="font/woff2" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Montserrat:wght@400;500;600&family=Alexandria:wght@500..800&family=Vazirmatn:wght@400..800&display=swap"
+        />
+        <!-- only the two letters of 海路 -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600&text=%E6%B5%B7%E8%B7%AF&display=swap" />
+        <link rel="stylesheet" href="../../assets/site.css" />
+    </head>
+    <body>
+        <a class="skip" href="#main">رفتن به محتوا</a>
+
+        <header class="topbar">
+            <div class="wrap">
+                <a class="brand" href="../" aria-label="خانه‌ی ویکی Umiji">
+                    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
+                            <path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" />
+                            <path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" />
+                        </g>
+                    </svg>
+                    <span class="word" dir="ltr"><span class="umi">Umi</span><span class="ji">ji</span></span>
+                </a>
+                <nav class="nav" aria-label="اصلی">
+                    <a href="../guide/">راهنمای راه‌اندازی</a>
+                    <a href="../concepts/">مفاهیم</a>
+                    <a href="./" aria-current="page">API</a>
+                </nav>
+                <div class="tools">
+                    <a class="icon-btn gh" href="https://github.com/therewasluna/umiji" aria-label="Umiji در GitHub">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" /></svg>
+                    </a>
+                    <a class="icon-btn lang-btn" href="../../api/" lang="en" hreflang="en">English</a>
+                </div>
+            </div>
+        </header>
+
+        <main id="main">
+            <div class="page-head api">
+                <div class="wrap">
+                    <div>
+                        <h1>کل پنل را با کد خودتان اداره کنید.</h1>
+                        <p>
+                            هر کاری که در Umiji با کلیک انجام می‌دهید، یک برنامه هم می‌تواند از راه HTTPS انجام دهد:
+                            کاربرها، نودها، هاست‌ها، اسکوادها، قالب‌ها، صورتحساب و آمار. این‌جا می‌بینید درخواست را چطور
+                            امضا کنید، چه جوابی برمی‌گردد، پنل چه وب‌هوک‌هایی می‌فرستد، و همه‌ی اندپوینت‌ها را با فیلدهایشان.
+                        </p>
+                        <ul class="facts">
+                            <li><b>239</b> اندپوینت</li>
+                            <li><b>29</b> گروه</li>
+                            <li><b>279</b> کد خطا</li>
+                            <li>JSON روی HTTPS</li>
+                            <li>نسخه‌ی <b>3.4.7</b></li>
+                        </ul>
+                        <div class="api-tools">
+                            <label class="search">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+                                <input id="api-search" type="search" placeholder="جستجوی اندپوینت‌ها، مثل reset یا A019" aria-label="جستجوی اندپوینت‌ها و کدهای خطا" autocomplete="off" />
+                                <kbd aria-hidden="true">/</kbd>
+                            </label>
+                            <label class="base-field" title="نمونه‌های این صفحه از این آدرس استفاده می‌کنند. فقط در همین مرورگر می‌ماند.">
+                                پنل شما
+                                <input id="base-url" type="url" inputmode="url" placeholder="https://panel.example.com" spellcheck="false" autocomplete="off" />
+                            </label>
+                        </div>
+                    </div>
+                    <div class="api-hero" aria-hidden="true">
+                        <div class="window">
+                            <div class="window-bar"><i></i><i></i><i></i><span>~ · bash</span></div>
+<pre><span class="label">درخواست</span><code><span class="tk-f">curl</span> <span class="tk-s">"<span class="base">https://panel.example.com</span>/api/users/by-username/alice"</span> \
+  <span class="tk-k">-H</span> <span class="tk-s">"Authorization: Bearer $UMIJI_TOKEN"</span></code></pre>
+<pre><span class="label">پاسخ</span><code class="json">{
+  "response": {
+    "id": 74,
+    "username": "alice",
+    "status": "ACTIVE",
+    "trafficLimitBytes": 53687091200,
+    "trafficLimitStrategy": "MONTH",
+    "expireAt": "2026-12-15T00:00:00.000Z",
+    "subscriptionUrl": "https://sub.example.com/JRAT-hTGXSqu0xLM",
+    "activeInternalSquads": [{ "name": "Germany" }]
+  }
+}</code></pre>
+                        </div>
+                        <div class="status"><i></i><b>200</b> OK</div>
+                    </div>
+                </div>
+                <svg class="waves" viewBox="0 0 16 16" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-linecap="round" stroke-width="1.6"><path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /><path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /></g></svg>
+            </div>
+
+            <div class="wrap docs">
+                <aside class="toc collapsible" aria-label="راهنمای API">
+                    <button class="toc-toggle" type="button" aria-expanded="false">
+                        همه‌ی بخش‌ها
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+                    </button>
+                    <div class="group"><span>شروع</span><ul>
+                        <li><a href="#overview">چطور کار می‌کند</a></li>
+                        <li><a href="#base-url">آدرس پایه</a></li>
+                        <li><a href="#auth">توکن‌های API</a></li>
+                        <li><a href="#scopes">دامنه‌های دسترسی</a></li>
+                        <li><a href="#roles">چه کسی به چه چیزی دسترسی دارد</a></li>
+                        <li><a href="#quick-start">اولین درخواست‌ها</a></li>
+                    </ul></div>
+                    <div class="group"><span>قراردادها</span><ul>
+                        <li><a href="#format">درخواست و پاسخ</a></li>
+                        <li><a href="#errors">خطاها</a></li>
+                        <li><a href="#pagination">صفحه‌بندی</a></li>
+                        <li><a href="#types">تاریخ، بایت و شناسه</a></li>
+                    </ul></div>
+                    <div class="group"><span>پنل شما را صدا می‌زند</span><ul>
+                        <li><a href="#webhooks">وب‌هوک‌ها</a></li>
+                        <li><a href="#webhook-signature">بررسی امضا</a></li>
+                        <li><a href="#webhook-events">رویدادها</a></li>
+                        <li><a href="#streams">استریم‌های خروجی Redis</a></li>
+                    </ul></div>
+                    <div class="group"><span>بیشتر</span><ul>
+                        <li><a href="#subscription-links">لینک‌های اشتراک</a></li>
+                        <li><a href="#metrics">متریک‌ها و سلامت</a></li>
+                        <li><a href="#explorers">Scalar و Swagger</a></li>
+                        <li><a href="#error-codes">کدهای خطا</a></li>
+                    </ul></div>
+                    <div id="toc-ref"></div>
+                </aside>
+
+                <div>
+                    <!-- GETTING STARTED -->
+                    <section class="guide-block" id="overview">
+                        <span class="kicker">شروع</span>
+                        <div class="group-title"><h2>چطور کار می‌کند</h2></div>
+                        <p>
+                            پنلی که در مرورگر باز می‌کنید خودش یکی از کلاینت‌های همین API است. اسکریپت‌ها، ربات‌ها و
+                            سیستم‌های فروش شما هم با همین اندپوینت‌ها حرف می‌زنند، فقط به جای ورود، یک توکن دارند.
+                        </p>
+                        <ul class="plain">
+                            <li>همه‌ی اندپوینت‌ها زیر <code>/api</code> روی آدرس پنل شما هستند.</li>
+                            <li>برنامه با یک <strong>توکن API</strong> خودش را معرفی می‌کند که در هدر <code>Authorization: Bearer …</code> فرستاده می‌شود. هر توکن <a href="#scopes">دامنه‌های دسترسی</a> خودش را دارد که مشخص می‌کند چه چیزهایی را می‌تواند صدا بزند.</li>
+                            <li>درخواست و پاسخ JSON هستند. پاسخ موفق داخل <code>{"response": …}</code> می‌آید.</li>
+                            <li>پنل هم شما را صدا می‌زند: <a href="#webhooks">وب‌هوک</a> برای رویدادهای کاربر، نود و صورتحساب، و در صورت نیاز <a href="#streams">استریم‌های Redis</a> برای ترافیک.</li>
+                        </ul>
+                        <div class="tiles-wrap">
+                            <div class="tiles">
+                                <a class="tile" href="#auth">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4" /><path d="M10.8 12.2 20 3m-3 3 2 2m-5 1 2 2" /></svg>
+                                    <b>گرفتن توکن</b><span>دو دقیقه در تنظیمات Umiji.</span>
+                                </a>
+                                <a class="tile" href="#quick-start">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 8 4 4-4 4M12 16h7" /></svg>
+                                    <b>اولین درخواست‌ها</b><span>با curl، جاوااسکریپت و پایتون.</span>
+                                </a>
+                                <a class="tile" href="#reference">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h10" /></svg>
+                                    <b>مرجع</b><span>هر 239 اندپوینت، با فیلدها.</span>
+                                </a>
+                                <a class="tile" href="#webhooks">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3 5 14h6l-1 7 8-11h-6l1-7Z" /></svg>
+                                    <b>وب‌هوک‌ها</b><span>رویدادهای امضاشده، همان لحظه.</span>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="guide-block" id="base-url">
+                        <div class="group-title"><h2>آدرس پایه</h2></div>
+                        <p>همان آدرسی که پنل را با آن باز می‌کنید، به‌علاوه‌ی <code>/api</code>. آدرس خودتان را در <strong>پنل شما</strong> در بالای صفحه بنویسید تا همه‌ی نمونه‌های این صفحه از آن استفاده کنند.</p>
+<pre data-copy><code><span class="base">https://panel.example.com</span>/api</code></pre>
+                        <div class="note warn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01" /><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" /></svg>
+                            <div>
+                                <p><strong>HTTPS از پشت ریورس پراکسی لازم است.</strong> API درخواستی را که هدرهای <code>X-Forwarded-For</code> و <code>X-Forwarded-Proto: https</code> را نداشته باشد بی هیچ جوابی قطع می‌کند. ریورس پراکسی شما (Caddy یا Nginx) هر دو را اضافه می‌کند، پس درخواست به آدرس عمومی بی‌دردسر کار می‌کند. curl این حالت را با «Empty reply from server» نشان می‌دهد.</p>
+                                <p>اسکریپتی که روی خود سرور پنل اجرا می‌شود می‌تواند پراکسی را دور بزند و مستقیم پورت 3000 را صدا بزند، به شرطی که خودش هر دو هدر را بفرستد:</p>
+                            </div>
+                        </div>
+<pre data-copy><code><span class="tk-f">curl</span> <span class="tk-s">"http://127.0.0.1:3000/api/system/stats"</span> \
+  <span class="tk-k">-H</span> <span class="tk-s">"Authorization: Bearer $UMIJI_TOKEN"</span> \
+  <span class="tk-k">-H</span> <span class="tk-s">"X-Forwarded-For: 127.0.0.1"</span> \
+  <span class="tk-k">-H</span> <span class="tk-s">"X-Forwarded-Proto: https"</span></code></pre>
+                        <p>API را از سمت سرور صدا بزنید، نه از یک صفحه‌ی وب. مرورگرها فقط روی دامنه‌ی خود پنل جواب می‌گیرند، و توکنی که در کد فرانت‌اند باشد را هر کسی می‌تواند بخواند.</p>
+                    </section>
+
+                    <section class="guide-block" id="auth">
+                        <div class="group-title"><h2>توکن‌های API</h2></div>
+                        <p>توکن کلید بلندی است که نماینده‌ی یک برنامه است. برای هر ربات یا اسکریپت یک توکن جدا بسازید تا بتوانید یکی را حذف کنید بی‌آنکه بقیه از کار بیفتند.</p>
+                        <ol class="do">
+                            <li><b>تنظیمات Umiji</b> را باز کنید و کارت <b>توکن‌های API</b> را پیدا کنید. روی <b>ساخت توکن API</b> بزنید.</li>
+                            <li><b>نام توکن</b> و <b>انقضا پس از (روز)</b> را پر کنید و <a href="#scopes">دامنه‌های دسترسی</a> را انتخاب کنید: یکی از پیش‌تنظیم‌ها، یا اندپوینت‌ها را تک‌تک.</li>
+                            <li>توکن را کپی کنید. <strong>فقط یک بار</strong>، درست بعد از ساخته شدن، نشان داده می‌شود.</li>
+                            <li>آن را با هر درخواست در هدر <code>Authorization</code> بفرستید.</li>
+                        </ol>
+<pre data-copy><code><span class="c"># <span dir="rtl">توکن را در کد ننویسید، در یک متغیر محیطی نگه دارید</span></span>
+<span class="tk-f">export</span> UMIJI_TOKEN=<span class="tk-s">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…"</span>
+
+<span class="tk-f">curl</span> <span class="tk-s">"<span class="base">https://panel.example.com</span>/api/system/stats"</span> \
+  <span class="tk-k">-H</span> <span class="tk-s">"Authorization: Bearer $UMIJI_TOKEN"</span></code></pre>
+                        <ul class="plain">
+                            <li><strong>حذف توکن فوراً اثر می‌کند.</strong> پنل توکن را در هر درخواست بررسی می‌کند، پس توکن حذف‌شده در همان درخواست بعدی 403 می‌گیرد.</li>
+                            <li>توکن منقضی‌شده 401 می‌گیرد. یک توکن تازه بسازید؛ توکن را نمی‌شود تمدید کرد.</li>
+                            <li>ساختن و حذف توکن‌ها کار مالک است، از داخل پنل. یک توکن نمی‌تواند توکن‌ها را ببیند، بسازد یا حذف کند، و هر تغییر <a href="#webhook-events">وب‌هوک</a> <code>service.api_token_created</code> یا <code>service.api_token_deleted</code> را می‌فرستد.</li>
+                        </ul>
+                        <div class="note">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 8h.01M11 12h1v4h1" /></svg>
+                            <p><strong>ورود خودتان به درد اسکریپت نمی‌خورد.</strong> نشست مالک فقط از داخل پنل و در مرورگر پذیرفته می‌شود. اگر جای دیگری استفاده شود، 403 با پیام <code>For API requests you must create own API-token in the admin dashboard.</code> برمی‌گردد. فروشنده‌ها نمی‌توانند توکن بسازند و نشست آن‌ها هم فقط در مرورگر کار می‌کند.</p>
+                        </div>
+                    </section>
+
+                    <section class="guide-block" id="scopes">
+                        <div class="group-title"><h2>دامنه‌های دسترسی</h2></div>
+                        <p>دامنه‌های دسترسی (scopes) می‌گویند یک توکن چه چیزهایی را می‌تواند صدا بزند. چهار اندازه دارند، از همه‌چیز تا فقط یک اندپوینت. اگر حتی یکی از دامنه‌های توکن اندپوینت را پوشش دهد، درخواست رد نمی‌شود.</p>
+                        <ol class="ladder">
+                            <li><code>*</code><span>هر چیزی که توکن API به آن دسترسی دارد. همان کلید <strong>دسترسی کامل</strong>.</span></li>
+                            <li><code>users:*</code><span>همه‌ی اندپوینت‌های یک منبع، این‌جا کاربرها.</span></li>
+                            <li><code>users:read</code><span>همه‌ی اندپوینت‌های خواندنی یک منبع. <code>users:write</code> هم همه‌ی اندپوینت‌های تغییردهنده است.</span></li>
+                            <li><code>users:create</code><span>فقط یک اندپوینت. هر اندپوینت در <a href="#reference">مرجع</a> دامنه‌ی خودش را نشان می‌دهد؛ برای کپی رویش بزنید.</span></li>
+                        </ol>
+                        <p>پنجره‌ی ساخت توکن سه پیش‌تنظیم دارد: <b class="ui">فقط خواندنی</b> (همه‌ی اندپوینت‌های خواندنی)، دسترسی کامل، و <b class="ui">صفحه اشتراک</b>، یعنی همان پنج دامنه‌ای که سرور صفحه‌ی اشتراک لازم دارد. می‌توانید یک آرایه‌ی JSON از دامنه‌ها را هم از کلیپ‌بورد جای‌گذاری کنید. فهرست کامل دامنه‌ها، به تفکیک منبع، از <a href="#ref-api-tokens"><code>GET /api/tokens/scopes</code></a> می‌آید.</p>
+<pre data-copy><code class="json">["subscription-page-configs:list", "subscription-page-configs:get",
+ "subscriptions:subpage-config", "system:metadata", "users:by-username"]</code></pre>
+                        <p>درخواستی بیرون از دامنه‌های توکن 403 با <code>Forbidden resource</code> می‌گیرد. به هر توکن کمترین دسترسی لازم را بدهید: رباتی که فقط کاربر می‌سازد <code>users:create</code> و <code>users:by-username</code> لازم دارد، نه <code>*</code>.</p>
+                    </section>
+
+                    <section class="guide-block" id="roles">
+                        <div class="group-title"><h2>چه کسی به چه چیزی دسترسی دارد</h2></div>
+                        <p>بیشتر اندپوینت‌ها با توکن کار می‌کنند. چندتایی مال صفحه‌های خود پنل‌اند و توکن را نمی‌پذیرند. هر اندپوینت در مرجع برچسب دارد، پس قبل از امتحان می‌دانید.</p>
+                        <div class="table-wrap">
+                            <table class="data">
+                                <thead><tr><th>اندپوینت‌ها</th><th>توکن API</th><th>مالک در پنل</th><th>فروشنده در پنل</th></tr></thead>
+                                <tbody>
+                                    <tr><td>کاربرها، نودها، هاست‌ها، اسکوادها، قالب‌ها، آمار و بقیه (165)</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="no">–</span></td></tr>
+                                    <tr><td>کاربرها و اسکوادهایی که فروشنده با آن‌ها کار می‌کند (28)</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span> فقط مال خودش</td></tr>
+                                    <tr><td>فروشنده‌ها، پیام همگانی، تنظیمات Umiji، passkeyها، توکن‌های API (19)</td><td><span class="no">–</span></td><td><span class="yes">✓</span></td><td><span class="no">–</span></td></tr>
+                                    <tr><td>ربات فروشگاه خود فروشنده (17)</td><td><span class="no">–</span></td><td><span class="no">–</span></td><td><span class="yes">✓</span></td></tr>
+                                    <tr><td>ورود، و لینک‌های عمومی اشتراک (10)</td><td colspan="3">توکن لازم نیست</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>توکن همیشه به جای مالک کار می‌کند، پس همه‌ی کاربرها را می‌بیند. برای کار با کاربرهای یک فروشنده، بر اساس <code>brokerUuid</code> کاربر فیلتر کنید.</p>
+                    </section>
+
+                    <section class="guide-block" id="quick-start">
+                        <div class="group-title"><h2>اولین درخواست‌ها</h2></div>
+                        <p>ده کاربر اول را بگیرید، بعد کاربری با ماهی 50 گیگابایت برای 30 روز بسازید. همین دو درخواست به سه زبان:</p>
+                        <div class="tabs">
+                            <div role="tablist" aria-label="زبان">
+                                <button role="tab" type="button">curl</button>
+                                <button role="tab" type="button">JavaScript</button>
+                                <button role="tab" type="button">Python</button>
+                            </div>
+                            <div role="tabpanel">
+<pre data-copy><code><span class="c"># <span dir="rtl">ده کاربر اول</span></span>
+<span class="tk-f">curl</span> <span class="tk-s">"<span class="base">https://panel.example.com</span>/api/users?start=0&amp;size=10"</span> \
+  <span class="tk-k">-H</span> <span class="tk-s">"Authorization: Bearer $UMIJI_TOKEN"</span>
+
+<span class="c"># <span dir="rtl">کاربر تازه: ماهی 50 گیگابایت، برای 30 روز، در یک اسکواد داخلی</span></span>
+<span class="tk-f">curl</span> <span class="tk-k">-X</span> POST <span class="tk-s">"<span class="base">https://panel.example.com</span>/api/users"</span> \
+  <span class="tk-k">-H</span> <span class="tk-s">"Authorization: Bearer $UMIJI_TOKEN"</span> \
+  <span class="tk-k">-H</span> <span class="tk-s">"Content-Type: application/json"</span> \
+  <span class="tk-k">-d</span> '{
+    <span class="tk-k">"username"</span>: <span class="tk-s">"alice"</span>,
+    <span class="tk-k">"expireAt"</span>: <span class="tk-s">"2026-12-15T00:00:00.000Z"</span>,
+    <span class="tk-k">"trafficLimitBytes"</span>: <span class="tk-n">53687091200</span>,
+    <span class="tk-k">"trafficLimitStrategy"</span>: <span class="tk-s">"MONTH"</span>,
+    <span class="tk-k">"activeInternalSquads"</span>: [<span class="tk-s">"7f3c2a1e-5b4d-4c6e-9f8a-1b2c3d4e5f60"</span>]
+  }'</code></pre>
+                            </div>
+                            <div role="tabpanel">
+<pre data-copy><code><span class="c">// <span dir="rtl">Node.js نسخه‌ی 18 یا بالاتر: fetch داخلش هست</span></span>
+<span class="tk-k">const</span> BASE = <span class="tk-s">'<span class="base">https://panel.example.com</span>/api'</span>
+<span class="tk-k">const</span> headers = {
+    Authorization: <span class="tk-s">`Bearer ${process.env.UMIJI_TOKEN}`</span>,
+    <span class="tk-s">'Content-Type'</span>: <span class="tk-s">'application/json'</span>,
+}
+
+<span class="tk-k">async function</span> <span class="tk-f">umiji</span>(method, path, body) {
+    <span class="tk-k">const</span> res = <span class="tk-k">await</span> fetch(BASE + path, { method, headers, body: body &amp;&amp; JSON.stringify(body) })
+    <span class="tk-k">if</span> (res.status === <span class="tk-n">202</span> || res.status === <span class="tk-n">204</span>) <span class="tk-k">return</span> <span class="tk-b">null</span>
+    <span class="tk-k">const</span> json = <span class="tk-k">await</span> res.json()
+    <span class="tk-k">if</span> (!res.ok) <span class="tk-k">throw new</span> Error(<span class="tk-s">`${json.errorCode ?? res.status}: ${json.message}`</span>)
+    <span class="tk-k">return</span> json.response
+}
+
+<span class="tk-k">const</span> { users, total } = <span class="tk-k">await</span> umiji(<span class="tk-s">'GET'</span>, <span class="tk-s">'/users?start=0&amp;size=10'</span>)
+
+<span class="tk-k">const</span> alice = <span class="tk-k">await</span> umiji(<span class="tk-s">'POST'</span>, <span class="tk-s">'/users'</span>, {
+    username: <span class="tk-s">'alice'</span>,
+    expireAt: <span class="tk-k">new</span> Date(Date.now() + <span class="tk-n">30</span> * <span class="tk-n">864e5</span>).toISOString(),
+    trafficLimitBytes: <span class="tk-n">50</span> * <span class="tk-n">1024</span> ** <span class="tk-n">3</span>,
+    trafficLimitStrategy: <span class="tk-s">'MONTH'</span>,
+})
+console.log(alice.subscriptionUrl)</code></pre>
+                            </div>
+                            <div role="tabpanel">
+<pre data-copy><code><span class="tk-k">import</span> os, datetime, requests
+
+BASE = <span class="tk-s">"<span class="base">https://panel.example.com</span>/api"</span>
+s = requests.Session()
+s.headers[<span class="tk-s">"Authorization"</span>] = <span class="tk-s">f"Bearer {os.environ['UMIJI_TOKEN']}"</span>
+
+<span class="tk-k">def</span> <span class="tk-f">umiji</span>(method, path, **kw):
+    r = s.request(method, BASE + path, timeout=<span class="tk-n">30</span>, **kw)
+    <span class="tk-k">if</span> r.status_code <span class="tk-k">in</span> (<span class="tk-n">202</span>, <span class="tk-n">204</span>):
+        <span class="tk-k">return</span> <span class="tk-b">None</span>
+    data = r.json()
+    <span class="tk-k">if not</span> r.ok:
+        <span class="tk-k">raise</span> RuntimeError(<span class="tk-s">f"{data.get('errorCode', r.status_code)}: {data['message']}"</span>)
+    <span class="tk-k">return</span> data[<span class="tk-s">"response"</span>]
+
+page = umiji(<span class="tk-s">"GET"</span>, <span class="tk-s">"/users"</span>, params={<span class="tk-s">"start"</span>: <span class="tk-n">0</span>, <span class="tk-s">"size"</span>: <span class="tk-n">10</span>})
+
+alice = umiji(<span class="tk-s">"POST"</span>, <span class="tk-s">"/users"</span>, json={
+    <span class="tk-s">"username"</span>: <span class="tk-s">"alice"</span>,
+    <span class="tk-s">"expireAt"</span>: (datetime.datetime.now(datetime.UTC) + datetime.timedelta(days=<span class="tk-n">30</span>)).isoformat(),
+    <span class="tk-s">"trafficLimitBytes"</span>: <span class="tk-n">50</span> * <span class="tk-n">1024</span>**<span class="tk-n">3</span>,
+    <span class="tk-s">"trafficLimitStrategy"</span>: <span class="tk-s">"MONTH"</span>,
+})
+print(alice[<span class="tk-s">"subscriptionUrl"</span>])</code></pre>
+                            </div>
+                        </div>
+                        <p>کاربر تازه کامل برمی‌گردد، با <code>id</code> و <code>subscriptionUrl</code>: لینکی که به مشتری می‌دهید. اگر <code>activeInternalSquads</code> را نفرستید، کاربر تا وقتی به یک اسکواد اضافه نشود هیچ سروری نمی‌گیرد.</p>
+                    </section>
+
+                    <!-- CONVENTIONS -->
+                    <section class="guide-block" id="format">
+                        <span class="kicker">قراردادها</span>
+                        <div class="group-title"><h2>درخواست و پاسخ</h2></div>
+                        <ul class="plain">
+                            <li>بدنه را به صورت JSON و با <code>Content-Type: application/json</code> بفرستید. فیلدهایی که API نمی‌شناسد کنار گذاشته می‌شوند، نه اینکه درخواست رد شود.</li>
+                            <li>چیزی که رویش کار می‌کنید در مسیر می‌آید (<code>/api/nodes/{uuid}</code>)، جز در ویرایش: <code>PATCH</code> کل تغییر را در بدنه می‌گیرد و <code>uuid</code> یا <code>id</code> هم داخل همان بدنه است. <code>PATCH /api/users</code> یا <code>id</code> می‌گیرد یا <code>username</code>.</li>
+                            <li><code>PATCH</code> فقط فیلدهایی را که می‌فرستید تغییر می‌دهد.</li>
+                            <li>کارهایی که ویرایش ساده نیستند زیر <code>/actions/</code> هستند: <code>POST /api/users/{userId}/actions/reset-traffic</code>، <code>…/actions/disable</code> و <code>…/actions/restart</code>.</li>
+                        </ul>
+                        <div class="table-wrap">
+                            <table class="data">
+                                <thead><tr><th>وضعیت</th><th>یعنی</th><th>بدنه</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>200 OK</code></td><td>انجام شد.</td><td><code>{"response": …}</code></td></tr>
+                                    <tr><td><code>201 Created</code></td><td>چیز تازه‌ای ساخته شد.</td><td><code>{"response": …}</code>، همان چیز تازه</td></tr>
+                                    <tr><td><code>202 Accepted</code></td><td>در صف رفت: تغییرهای گروهی کاربرها و اسکوادها، ری‌استارت نود، همگام‌سازی پلاگین و قطعه کد، قطع اتصال‌ها. کار در پس‌زمینه انجام می‌شود و کمی طول می‌کشد.</td><td>ندارد</td></tr>
+                                    <tr><td><code>204 No Content</code></td><td>حذف شد.</td><td>ندارد</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>گرفتن اتصال‌های زنده مثل نوبت گرفتن است: <code>POST /api/connections/by-user/{userId}</code> فوراً یک <code>jobId</code> برمی‌گرداند، و <code>GET /api/connections/by-user/{jobId}</code> نتیجه را وقتی نودها جواب دادند می‌دهد. هر یکی دو ثانیه دوباره بپرسید تا <code>isCompleted</code> برابر true شود.</p>
+                    </section>
+
+                    <section class="guide-block" id="errors">
+                        <div class="group-title"><h2>خطاها</h2></div>
+                        <p>خطا به یکی از سه شکل برمی‌گردد. اول وضعیت HTTP را ببینید، بعد اگر <code>errorCode</code> بود، آن را: کدها بین نسخه‌ها ثابت می‌مانند، ولی پیام‌ها شاید عوض شوند.</p>
+                        <h3>پنل درخواست را رد کرد</h3>
+<pre data-copy><code class="json">{
+  "timestamp": "2026-11-15T07:11:48.106Z",
+  "path": "/api/users",
+  "message": "User username already exists",
+  "errorCode": "A019"
+}</code></pre>
+                        <h3>بدنه از اعتبارسنجی رد نشد (400)</h3>
+<pre data-copy><code class="json">{
+  "statusCode": 400,
+  "message": "Validation failed",
+  "errors": [
+    { "code": "too_small", "minimum": 3, "path": ["username"], "message": "Username must be at least 3 characters" },
+    { "code": "invalid_type", "expected": "string", "path": ["expireAt"], "message": "Invalid input: expected string, received undefined" }
+  ]
+}</code></pre>
+                        <h3>توکن پذیرفته نشد (401 و 403)</h3>
+<pre data-copy><code class="json">{ "message": "Unauthorized", "statusCode": 401 }
+{ "message": "Forbidden resource", "error": "Forbidden", "statusCode": 403 }</code></pre>
+                        <div class="table-wrap">
+                            <table class="data">
+                                <thead><tr><th>وضعیت</th><th>معمولاً یعنی</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>400</code></td><td>اعتبارسنجی رد شد، یا یکی از قانون‌های پنل اجازه نداد؛ <code>errorCode</code> می‌گوید کدام.</td></tr>
+                                    <tr><td><code>401</code></td><td>توکن نیست، خراب است یا منقضی شده.</td></tr>
+                                    <tr><td><code>403</code></td><td>توکن دامنه‌ی لازم را ندارد، حذف شده، یا اندپوینت فقط مال پنل است.</td></tr>
+                                    <tr><td><code>404</code></td><td>چنین کاربر، نود، هاست… وجود ندارد (مثلاً <code>A063</code>).</td></tr>
+                                    <tr><td><code>409</code></td><td>این نام یا تگ قبلاً گرفته شده.</td></tr>
+                                    <tr><td><code>429</code></td><td>تلاش‌های ورود زیادی پشت سر هم (<code>A286</code>). API محدودیت دیگری ندارد، ولی ملایم باشید.</td></tr>
+                                    <tr><td><code>500</code></td><td>پنل نتوانست کار را تمام کند: پایگاه داده یا یک نود خطا داد. <code>errorCode</code> مرحله را مشخص می‌کند.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>همه‌ی کدها با پیامشان در <a href="#error-codes">کدهای خطا</a> هستند، و جستجوی بالای صفحه هم پیدایشان می‌کند.</p>
+                    </section>
+
+                    <section class="guide-block" id="pagination">
+                        <div class="group-title"><h2>صفحه‌بندی</h2></div>
+                        <p>فهرست‌هایی که ممکن است بزرگ شوند صفحه‌صفحه می‌آیند. دو نوع صفحه‌بندی هست.</p>
+                        <h3>آفست: <code>start</code> و <code>size</code></h3>
+                        <p><code>GET /api/users</code>، <code>/api/subscriptions</code>، <code>/api/hwid/devices</code> و تاریخچه‌ی درخواست‌ها <code>start</code> (از کجا شروع شود، از 0) و <code>size</code> (تا 1000؛ برای اشتراک‌ها تا 500) می‌گیرند. پاسخ <code>total</code> دارد، پس می‌دانید چند صفحه هست. برای جدولی با شماره‌ی صفحه مناسب است.</p>
+                        <h3>کرسر: <code>GET /api/users/stream</code></h3>
+                        <p>برای رفتن روی همه‌ی کاربرها، مثلاً برای همگام‌سازی یا خروجی گرفتن. هر صفحه <code>nextCursor</code> و <code>hasMore</code> دارد: کرسر را برگردانید تا وقتی <code>hasMore</code> برابر false شود. روی پنل‌های بزرگ هم سریع می‌ماند و بر اساس <code>status</code>، <code>tag</code>، <code>telegramId</code>، <code>email</code>، <code>trafficLimitStrategy</code> و <code>externalSquadUuid</code> فیلتر می‌کند.</p>
+<pre data-copy><code><span class="tk-k">let</span> cursor
+<span class="tk-k">do</span> {
+    <span class="tk-k">const</span> q = <span class="tk-k">new</span> URLSearchParams({ size: <span class="tk-s">'1000'</span>, status: <span class="tk-s">'ACTIVE'</span>, ...(cursor &amp;&amp; { cursor }) })
+    <span class="tk-k">const</span> page = <span class="tk-k">await</span> umiji(<span class="tk-s">'GET'</span>, <span class="tk-s">`/users/stream?${q}`</span>)
+    <span class="tk-k">for</span> (<span class="tk-k">const</span> user <span class="tk-k">of</span> page.users) save(user)
+    cursor = page.hasMore ? page.nextCursor : <span class="tk-b">undefined</span>
+} <span class="tk-k">while</span> (cursor)</code></pre>
+                        <div class="note">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 8h.01M11 12h1v4h1" /></svg>
+                            <p>پارامترهای جدول (<code>filters</code>، <code>filterModes</code>، <code>globalFilterMode</code> و <code>sorting</code>) برای جدول‌های خود پنل ساخته شده‌اند و با جستجوی متنی کُند کار می‌کنند. برای خودکارسازی از فهرست کرسری یا جستجوی مستقیم استفاده کنید: <code>/api/users/by-username/{username}</code>، <code>/by-short-uuid/{shortUuid}</code> و <code>/api/users/{userId}</code>.</p>
+                        </div>
+                    </section>
+
+                    <section class="guide-block" id="types">
+                        <div class="group-title"><h2>تاریخ، بایت و شناسه</h2></div>
+                        <div class="table-wrap">
+                            <table class="data">
+                                <thead><tr><th>چه چیزی</th><th>چه شکلی</th></tr></thead>
+                                <tbody>
+                                    <tr><td>تاریخ‌ها</td><td>ISO 8601 به وقت UTC، مثل <code>2026-11-15T12:00:00.000Z</code>. همین‌طور هم بفرستید؛ اختلاف ساعت مثل <code>+03:30</code> هم پذیرفته می‌شود.</td></tr>
+                                    <tr><td>ترافیک</td><td>بایت، به صورت عدد. هر گیگابایت (GiB) برابر <code>1073741824</code> است. محدودیت ترافیک <code>0</code> یعنی نامحدود.</td></tr>
+                                    <tr><td>کاربرها</td><td>یک عدد به نام <code>id</code>، در مسیرهایی مثل <code>/api/users/{userId}</code>. با <code>username</code>، با <code>shortUuid</code> (شناسه‌ی داخل لینک اشتراک)، با <code>telegramId</code> و با <code>email</code> هم پیدا می‌شوند.</td></tr>
+                                    <tr><td>بقیه‌ی چیزها</td><td>یک <code>uuid</code>: نودها، هاست‌ها، اسکوادها، پروفایل‌ها، قالب‌ها و فروشنده‌ها.</td></tr>
+                                    <tr><td>وضعیت کاربر</td><td><code>ACTIVE</code>، <code>DISABLED</code>، <code>LIMITED</code> (ترافیک تمام شده) و <code>EXPIRED</code>. شما فقط دوتای اول را تنظیم می‌کنید؛ بقیه را پنل می‌گذارد.</td></tr>
+                                    <tr><td>بازنشانی ترافیک</td><td><code>NO_RESET</code>، <code>DAY</code> (هر شب)، <code>WEEK</code> (دوشنبه‌ها)، <code>MONTH</code> (روز اول ماه میلادی) و <code>MONTH_ROLLING</code> (هر ماه در همان روزی که کاربر ساخته شده). زمان‌ها به وقت UTC هستند.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- WEBHOOKS -->
+                    <section class="guide-block" id="webhooks">
+                        <span class="kicker">پنل شما را صدا می‌زند</span>
+                        <div class="group-title"><h2>وب‌هوک‌ها</h2></div>
+                        <p>به جای اینکه هر دقیقه از پنل بپرسید ترافیک کاربری تمام شده یا نه، بگذارید خودش خبر بدهد. با روشن کردن وب‌هوک، پنل همان لحظه‌ای که اتفاقی بیفتد یک <code>POST</code> امضاشده به آدرس شما می‌فرستد.</p>
+                        <p>آن را در فایل <code>.env</code> پنل روشن کنید و پنل را ری‌استارت کنید:</p>
+<pre data-copy><code>WEBHOOK_ENABLED=<span class="tk-b">true</span>
+<span class="c"># <span dir="rtl">یک آدرس، یا چند آدرس جدا شده با کاما؛ با http:// یا https://</span></span>
+WEBHOOK_URL=<span class="tk-s">https://bot.example.com/umiji-hook</span>
+<span class="c"># <span dir="rtl">کلید امضا: دست‌کم 32 حرف و رقم لاتین، و هیچ چیز دیگر</span></span>
+WEBHOOK_SECRET_HEADER=<span class="tk-s">vsmu67Kmg6R8FjIOF1WUY8LWBHie4scdEqrfsKmyf4IAf8dY3nFS0wwYHkhh6ZvQ</span></code></pre>
+                        <p>به‌طور پیش‌فرض همه‌ی رویدادها فرستاده می‌شوند. برای خاموش کردن بعضی‌ها، یا فرستادن یک رویداد به یک آدرس اضافه، فایل <code>notifications-config.yml</code> را ویرایش کنید (در کانتینر، داخل <code>/var/lib/umiji/configs/notifications/</code>):</p>
+<pre data-copy><code>events:
+  user.modified:
+    telegram: <span class="tk-b">false</span>
+    webhook: <span class="tk-b">false</span>
+  user.expired:
+    telegram: <span class="tk-b">true</span>
+    webhook: <span class="tk-b">true</span>
+    additionalWebhookUrls:
+      - <span class="tk-s">https://crm.example.com/hooks/expired</span></code></pre>
+                        <h3>چه چیزی می‌رسد</h3>
+                        <div class="table-wrap">
+                            <table class="data">
+                                <thead><tr><th>هدر</th><th>مقدار</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>Content-Type</code></td><td><code>application/json</code></td></tr>
+                                    <tr><td><code>X-Umiji-Signature</code></td><td>HMAC-SHA256 بدنه‌ی خام با کلید شما، به صورت hex.</td></tr>
+                                    <tr><td><code>X-Umiji-Timestamp</code></td><td>زمان رویداد به صورت ISO 8601؛ همان <code>timestamp</code> داخل بدنه.</td></tr>
+                                    <tr><td><code>User-Agent</code></td><td><code>Umiji</code></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+<pre data-copy><code class="json">{
+  "scope": "user",
+  "event": "user.expired",
+  "timestamp": "2026-11-15T12:00:00.000Z",
+  "data": { "id": 74, "username": "alice", "status": "EXPIRED", "subscriptionUrl": "https://sub.example.com/JRAT-hTGXSqu0xLM" },
+  "meta": null
+}</code></pre>
+                        <p>در رویدادهای کاربر، <code>data</code> کل کاربر است، همان چیزی که <code>GET /api/users/{userId}</code> برمی‌گرداند. با هر وضعیت 2xx جواب بدهید. اگر سرور شما جواب ندهد، پنل سه بار دیگر با فاصله‌ی پنج ثانیه امتحان می‌کند.</p>
+                    </section>
+
+                    <section class="guide-block" id="webhook-signature">
+                        <div class="group-title"><h2>بررسی امضا</h2></div>
+                        <p>هر کسی می‌تواند به آدرس شما درخواست بفرستد. قبل از اینکه به یک وب‌هوک اعتماد کنید، <strong>بدنه‌ی خام را بایت‌به‌بایت</strong> با کلیدتان امضا کنید و با <code>X-Umiji-Signature</code> مقایسه کنید. اول JSON را پارس و دوباره سریال نکنید: بایت‌ها عوض می‌شوند.</p>
+                        <div class="tabs">
+                            <div role="tablist" aria-label="زبان">
+                                <button role="tab" type="button">Node.js</button>
+                                <button role="tab" type="button">Python</button>
+                                <button role="tab" type="button">PHP</button>
+                            </div>
+                            <div role="tabpanel">
+<pre data-copy><code><span class="tk-k">import</span> crypto <span class="tk-k">from</span> <span class="tk-s">'node:crypto'</span>
+<span class="tk-k">import</span> express <span class="tk-k">from</span> <span class="tk-s">'express'</span>
+
+<span class="tk-k">const</span> app = express()
+
+<span class="c">// <span dir="rtl">express.raw بدنه را همان‌طور که پنل امضا کرده، بایتی نگه می‌دارد</span></span>
+app.post(<span class="tk-s">'/umiji-hook'</span>, express.raw({ type: <span class="tk-s">'application/json'</span> }), (req, res) =&gt; {
+    <span class="tk-k">const</span> expected = crypto.createHmac(<span class="tk-s">'sha256'</span>, process.env.WEBHOOK_SECRET).update(req.body).digest()
+    <span class="tk-k">const</span> given = Buffer.from(req.get(<span class="tk-s">'X-Umiji-Signature'</span>) ?? <span class="tk-s">''</span>, <span class="tk-s">'hex'</span>)
+    <span class="tk-k">if</span> (given.length !== expected.length || !crypto.timingSafeEqual(given, expected)) {
+        <span class="tk-k">return</span> res.sendStatus(<span class="tk-n">401</span>)
+    }
+
+    <span class="tk-k">const</span> { event, data } = JSON.parse(req.body)
+    <span class="tk-k">if</span> (event === <span class="tk-s">'user.expired'</span>) remindToRenew(data.username)
+    res.sendStatus(<span class="tk-n">200</span>)
+})
+
+app.listen(<span class="tk-n">8080</span>)</code></pre>
+                            </div>
+                            <div role="tabpanel">
+<pre data-copy><code><span class="tk-k">import</span> hashlib, hmac, json, os
+<span class="tk-k">from</span> flask <span class="tk-k">import</span> Flask, abort, request
+
+app = Flask(__name__)
+SECRET = os.environ[<span class="tk-s">"WEBHOOK_SECRET"</span>].encode()
+
+<span class="tk-f">@app.post</span>(<span class="tk-s">"/umiji-hook"</span>)
+<span class="tk-k">def</span> <span class="tk-f">hook</span>():
+    body = request.get_data()  <span class="c"># <span dir="rtl">بایت‌های خام</span></span>
+    expected = hmac.new(SECRET, body, hashlib.sha256).hexdigest()
+    <span class="tk-k">if not</span> hmac.compare_digest(expected, request.headers.get(<span class="tk-s">"X-Umiji-Signature"</span>, <span class="tk-s">""</span>)):
+        abort(<span class="tk-n">401</span>)
+
+    event = json.loads(body)
+    <span class="tk-k">if</span> event[<span class="tk-s">"event"</span>] == <span class="tk-s">"user.expired"</span>:
+        remind_to_renew(event[<span class="tk-s">"data"</span>][<span class="tk-s">"username"</span>])
+    <span class="tk-k">return</span> <span class="tk-s">""</span>, <span class="tk-n">200</span></code></pre>
+                            </div>
+                            <div role="tabpanel">
+<pre data-copy><code>&lt;?php
+$body = file_get_contents(<span class="tk-s">'php://input'</span>);  <span class="c">// <span dir="rtl">بایت‌های خام</span></span>
+$expected = hash_hmac(<span class="tk-s">'sha256'</span>, $body, getenv(<span class="tk-s">'WEBHOOK_SECRET'</span>));
+
+<span class="tk-k">if</span> (!hash_equals($expected, $_SERVER[<span class="tk-s">'HTTP_X_UMIJI_SIGNATURE'</span>] ?? <span class="tk-s">''</span>)) {
+    http_response_code(<span class="tk-n">401</span>);
+    <span class="tk-k">exit</span>;
+}
+
+$event = json_decode($body, <span class="tk-b">true</span>);
+<span class="tk-k">if</span> ($event[<span class="tk-s">'event'</span>] === <span class="tk-s">'user.expired'</span>) {
+    remind_to_renew($event[<span class="tk-s">'data'</span>][<span class="tk-s">'username'</span>]);
+}
+http_response_code(<span class="tk-n">200</span>);</code></pre>
+                            </div>
+                        </div>
+                        <p>برای جلوگیری از تکرار، وب‌هوک‌هایی را که <code>X-Umiji-Timestamp</code> آن‌ها چند دقیقه کهنه است هم کنار بگذارید.</p>
+                    </section>
+
+                    <section class="guide-block" id="webhook-events">
+                        <div class="group-title"><h2>رویدادها</h2></div>
+                        <p>هر رویداد یک <code>scope</code> دارد که مشخص می‌کند داخل <code>data</code> چه چیزی هست.</p>
+                        <div class="table-wrap">
+                            <table class="data">
+                                <thead><tr><th>رویداد</th><th>کی</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>user.created</code></td><td>کاربری ساخته شد.</td></tr>
+                                    <tr><td><code>user.modified</code></td><td>کاربری تغییر کرد.</td></tr>
+                                    <tr><td><code>user.deleted</code></td><td>کاربری حذف شد.</td></tr>
+                                    <tr><td><code>user.revoked</code></td><td>لینک اشتراک کاربر با یک لینک تازه عوض شد.</td></tr>
+                                    <tr><td><code>user.disabled</code>، <code>user.enabled</code></td><td>خاموش یا دوباره روشن شد.</td></tr>
+                                    <tr><td><code>user.limited</code></td><td>ترافیکش تمام شد.</td></tr>
+                                    <tr><td><code>user.expired</code></td><td>تاریخ انقضایش گذشت.</td></tr>
+                                    <tr><td><code>user.traffic_reset</code></td><td>ترافیکش بازنشانی شد، دستی یا طبق برنامه.</td></tr>
+                                    <tr><td><code>user.first_connected</code></td><td>کاربر برای اولین بار وصل شد.</td></tr>
+                                    <tr><td><code>user.bandwidth_usage_threshold_reached</code></td><td>از درصدی از محدودیت، مثلاً 80٪، گذشت. <code>BANDWIDTH_USAGE_NOTIFICATIONS_ENABLED</code> لازم است.</td></tr>
+                                    <tr><td><code>user.not_connected</code></td><td>چند ساعت بعد از ساخته شدن هنوز وصل نشده؛ <code>meta.notConnectedAfterHours</code> می‌گوید چند ساعت. <code>NOT_CONNECTED_USERS_NOTIFICATIONS_ENABLED</code> لازم است.</td></tr>
+                                    <tr><td><code>user.expiration</code></td><td>به‌زودی منقضی می‌شود، یا مدتی پیش منقضی شده؛ <code>meta.expiration</code> تعداد ساعت است (قبل از انقضا منفی). <code>EXPIRATION_NOTIFICATIONS_ENABLED</code> لازم است.</td></tr>
+                                    <tr><td><code>user_hwid_devices.added</code>، <code>.deleted</code></td><td>دستگاهی اضافه یا حذف شد. <code>data</code> شامل <code>user</code> و <code>hwidUserDevice</code> است.</td></tr>
+                                    <tr><td><code>node.created</code>، <code>.modified</code>، <code>.deleted</code></td><td>نودی ساخته، تغییر داده یا حذف شد.</td></tr>
+                                    <tr><td><code>node.enabled</code>، <code>.disabled</code></td><td>نودی روشن یا خاموش شد.</td></tr>
+                                    <tr><td><code>node.connection_lost</code>، <code>.connection_restored</code></td><td>ارتباط پنل با نودی قطع شد، یا برگشت.</td></tr>
+                                    <tr><td><code>node.traffic_notify</code></td><td>نودی به هشدار ترافیکش رسید.</td></tr>
+                                    <tr><td><code>service.panel_started</code></td><td>پنل بالا آمد؛ <code>data.panelVersion</code>.</td></tr>
+                                    <tr><td><code>service.login_attempt_success</code>، <code>_failed</code></td><td>کسی وارد پنل شد، یا تلاش کرد؛ <code>data.loginAttempt</code> نام کاربری، IP و مرورگر را دارد.</td></tr>
+                                    <tr><td><code>service.subpage_config_changed</code></td><td>یکی از تنظیمات صفحه‌ی اشتراک ساخته، تغییر داده یا حذف شد.</td></tr>
+                                    <tr><td><code>service.api_token_created</code>، <code>_deleted</code></td><td>توکن API ساخته یا حذف شد؛ <code>data.apiToken</code>.</td></tr>
+                                    <tr><td><code>crm.infra_billing_node_payment_in_7_days</code></td><td>صورتحساب یک سرور تا 7 روز دیگر سررسید می‌شود. همین‌طور <code>_in_48hrs</code>، <code>_in_24hrs</code> و <code>_due_today</code>، و وقتی دیر شده: <code>_overdue_24hrs</code>، <code>_overdue_48hrs</code> و <code>_overdue_7_days</code>.</td></tr>
+                                    <tr><td><code>torrent_blocker.report</code></td><td>Torrent Blocker کاربری را گرفت؛ <code>data</code> نود، کاربر و گزارش را دارد.</td></tr>
+                                    <tr><td><code>errors.bandwidth_usage_threshold_reached_max_notifications</code></td><td>برای کامل بودن در فایل تنظیمات آمده؛ این نسخه هیچ‌وقت آن را نمی‌فرستد.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h3>همه‌ی فیلدها، به تفکیک scope</h3>
+                        <div class="tabs">
+                            <div role="tablist" aria-label="scope">
+                                <button role="tab" type="button">user</button>
+                                <button role="tab" type="button">user_hwid_devices</button>
+                                <button role="tab" type="button">node</button>
+                                <button role="tab" type="button">service</button>
+                                <button role="tab" type="button">crm</button>
+                                <button role="tab" type="button">torrent_blocker</button>
+                                <button role="tab" type="button">errors</button>
+                            </div>
+                            <div role="tabpanel" data-schema="UmijiWebhookUserEventsDto"></div>
+                            <div role="tabpanel" data-schema="UmijiWebhookUserHwidDevicesEventsDto"></div>
+                            <div role="tabpanel" data-schema="UmijiWebhookNodeEventsDto"></div>
+                            <div role="tabpanel" data-schema="UmijiWebhookServiceEventsDto"></div>
+                            <div role="tabpanel" data-schema="UmijiWebhookCrmEventsDto"></div>
+                            <div role="tabpanel" data-schema="UmijiWebhookTorrentBlockerEventsDto"></div>
+                            <div role="tabpanel" data-schema="UmijiWebhookErrorsEventsDto"></div>
+                        </div>
+                    </section>
+
+                    <section class="guide-block" id="streams">
+                        <div class="group-title"><h2>استریم‌های خروجی Redis</h2></div>
+                        <p>برای تحلیل در مقیاس بالا، پنل می‌تواند داده‌ی خام را در Redis Streams هم بنویسد تا یک سرویس از خودتان، ClickHouse یا Vector آن را بخواند. با <code>EXPORT_TO_STREAM_ENABLED=true</code> روشنش کنید. <code>EXPORT_TO_STREAM_MAXLEN</code> (به‌طور پیش‌فرض 3000) تقریباً تعداد پیام‌هایی است که هر استریم پیش از دور ریختن قدیمی‌ترها نگه می‌دارد.</p>
+                        <div class="table-wrap">
+                            <table class="data">
+                                <thead><tr><th>استریم</th><th>هر پیام یعنی</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>ioraw:export:user_usage</code></td><td>یک دسته ترافیک کاربرها از یک نود: <code>records</code> جفت‌های <code>userId:bytes</code> است که با <code>;</code> به هم وصل شده‌اند.</td></tr>
+                                    <tr><td><code>ioraw:export:subscription_requests</code></td><td>یک بار گرفتن اشتراک: کاربر، زمان، IP، برنامه و قانون پاسخی که جواب داد.</td></tr>
+                                    <tr><td><code>ioraw:export:node_connections</code></td><td>چه کسانی همین الان روی یک نود هستند. یک ساعت نگه داشته می‌شود.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+<pre data-copy><code><span class="c"># <span dir="rtl">پیام‌های تازه را با یک consumer group، همان‌طور که می‌رسند بخوانید</span></span>
+redis-cli XGROUP CREATE ioraw:export:user_usage billing $ MKSTREAM
+redis-cli XREADGROUP GROUP billing worker-1 COUNT 100 BLOCK 5000 STREAMS ioraw:export:user_usage &gt;</code></pre>
+                        <div class="tabs">
+                            <div role="tablist" aria-label="استریم">
+                                <button role="tab" type="button">user_usage</button>
+                                <button role="tab" type="button">subscription_requests</button>
+                                <button role="tab" type="button">node_connections</button>
+                            </div>
+                            <div role="tabpanel" data-schema="UmijiUserUsageStreamMessageDto"></div>
+                            <div role="tabpanel" data-schema="UmijiSubscriptionRequestStreamMessageDto"></div>
+                            <div role="tabpanel" data-schema="UmijiNodeConnectionsStreamMessageDto"></div>
+                        </div>
+                    </section>
+
+                    <!-- MORE -->
+                    <section class="guide-block" id="subscription-links">
+                        <span class="kicker">بیشتر</span>
+                        <div class="group-title"><h2>لینک‌های اشتراک</h2></div>
+                        <p>لینک‌هایی که برنامه‌های کلاینت وارد می‌کنند زیر توکن نیستند: شناسه‌ی کوتاه داخل لینک خودش کلید است. این لینک‌ها از آدرس اشتراک در <code>SUB_PUBLIC_DOMAIN</code> سرو می‌شوند، که به‌طور پیش‌فرض آدرس پنل شما به‌علاوه‌ی <code>/api/sub</code> است.</p>
+                        <div class="table-wrap">
+                            <table class="data">
+                                <thead><tr><th>آدرس</th><th>چه می‌دهد</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>/api/sub/{shortUuid}</code></td><td>چیزی که برنامه وارد می‌کند. قوانین پاسخ فرمت را از <code>User-Agent</code> برنامه انتخاب می‌کنند: لینک‌های Base64، Xray JSON، Mihomo، sing-box و بقیه.</td></tr>
+                                    <tr><td><code>/api/sub/{shortUuid}/{clientType}</code></td><td>فرمتی که خودتان نام می‌برید: <code>json</code>، <code>v2ray-json</code>، <code>mihomo</code>، <code>stash</code>، <code>clash</code> یا <code>singbox</code>.</td></tr>
+                                    <tr><td><code>/api/sub/{shortUuid}/info</code></td><td>JSON برای صفحه‌های خودتان: کاربر، لینک‌های اتصالش و آدرس اشتراک.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>برای ربات‌ها، گروه <a href="#ref-subscriptions">اشتراک‌ها</a> که با توکن محافظت می‌شود همین داده را با نام کاربری یا شناسه می‌دهد، بی‌آنکه چیزی را پارس کنید.</p>
+                    </section>
+
+                    <section class="guide-block" id="metrics">
+                        <div class="group-title"><h2>متریک‌ها و سلامت</h2></div>
+                        <p>پروسه‌ی زمان‌بند (scheduler) روی <code>METRICS_PORT</code> (یعنی 3001) که روی سرور پنل به <code>127.0.0.1</code> بسته شده، با دو اندپوینت بیرون از <code>/api</code> جواب می‌دهد:</p>
+<pre data-copy><code><span class="c"># <span dir="rtl">متریک‌های Prometheus، با METRICS_USER و METRICS_PASS از .env</span></span>
+<span class="tk-f">curl</span> <span class="tk-k">-u</span> <span class="tk-s">"$METRICS_USER:$METRICS_PASS"</span> http://127.0.0.1:3001/metrics
+
+<span class="c"># <span dir="rtl">پایگاه داده در دسترس است؟ health check داکر از همین استفاده می‌کند</span></span>
+<span class="tk-f">curl</span> http://127.0.0.1:3001/health</code></pre>
+<pre data-copy><code><span class="c"># prometheus.yml</span>
+scrape_configs:
+  - job_name: umiji
+    static_configs:
+      - targets: [<span class="tk-s">'127.0.0.1:3001'</span>]
+    basic_auth:
+      username: <span class="tk-s">admin</span>
+      password: <span class="tk-s">your-METRICS_PASS</span></code></pre>
+                        <p>از خود API هم <a href="#ref-system"><code>GET /api/system/health</code></a> و <code>/api/system/stats</code> همین تصویر را به صورت JSON می‌دهند.</p>
+                    </section>
+
+                    <section class="guide-block" id="explorers">
+                        <div class="group-title"><h2>Scalar و Swagger</h2></div>
+                        <p>پنل شما مرورگرهای زنده‌ی API خودش را دارد که از همان کدی که اجرا می‌کند ساخته می‌شوند. <b class="ui">تنظیمات Umiji</b> › <b class="ui">ابزارهای بک‌اند</b> را باز کنید و کنار Scalar (مرجع تعاملی و مدرن) یا Swagger (کاوشگر کلاسیک OpenAPI) روی <b class="ui">ورود</b> بزنید. ورود یک لینک یک‌بارمصرف است که دو ساعت اعتبار دارد.</p>
+                        <p>هر دو می‌توانند با یک توکن درخواست واقعی بفرستند، و Scalar دکمه‌ای برای دانلود سند OpenAPI دارد. آن را به یک ابزار ساخت کلاینت مثل <code>openapi-generator</code> بدهید تا یک کلاینت تایپ‌شده به زبان خودتان بگیرید.</p>
+                    </section>
+
+                    <section id="error-codes">
+                        <div class="group-title"><h2>کدهای خطا</h2></div>
+                        <p class="ref-intro">همه‌ی <span id="error-total">279</span> کدی که پنل ممکن است در <code>errorCode</code> بفرستد، با وضعیت HTTP آن‌ها. پیام‌ها همان پیام‌های انگلیسی API هستند.</p>
+                        <label class="search err-filter">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+                            <input id="error-search" type="search" placeholder="فیلتر، مثل node یا 404" aria-label="فیلتر کدهای خطا" autocomplete="off" />
+                        </label>
+                        <div class="table-wrap" style="max-height: 520px; overflow-y: auto">
+                            <table class="data" id="error-table">
+                                <thead><tr><th>کد</th><th>HTTP</th><th>پیام</th></tr></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- REFERENCE -->
+                    <section class="ref-section" id="reference">
+                        <span class="kicker">مرجع</span>
+                        <div class="group-title"><h2>همه‌ی اندپوینت‌ها</h2></div>
+                        <p class="ref-intro">به همان ترتیب منوی پنل. هر اندپوینت را باز کنید تا دسترسی، پارامترها، فیلدهای بدنه و پاسخ، یک درخواست آماده‌ی کپی و یک پاسخ نمونه را ببینید. توضیح اندپوینت‌ها و فیلدها انگلیسی است، همان‌طور که در خود API آمده.</p>
+                        <ul class="legend">
+                            <li><span class="verb get">GET</span> خواندن</li>
+                            <li><span class="verb post">POST</span> ساختن یا انجام کار</li>
+                            <li><span class="verb patch">PATCH</span> تغییر</li>
+                            <li><span class="verb put">PUT</span> جایگزینی</li>
+                            <li><span class="verb delete">DELETE</span> حذف</li>
+                        </ul>
+                        <p class="ref-count" id="ref-count" aria-live="polite"></p>
+                        <noscript><p>مرجع به جاوااسکریپت نیاز دارد. بدون آن، از Scalar یا Swagger در ابزارهای بک‌اند پنل خودتان استفاده کنید.</p></noscript>
+                        <div id="ref-root" data-spec="../../api/spec.json"></div>
+                        <p class="ref-count">چند مسیر عمداً آورده نشده‌اند: نصب‌کننده‌ی نود، بلیت‌های ترمینال SSH، ورود به ابزارهای بک‌اند و وب‌هوک تلگرام ربات‌های فروشنده. فقط صفحه‌های خود پنل و تلگرام آن‌ها را صدا می‌زنند.</p>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="wrap">
+                <span><bdi class="jp" lang="ja">海路</bdi> · Umiji نرم‌افزاری آزاد با مجوز AGPL-3.0 است.</span>
+                <nav aria-label="پانویس">
+                    <a href="../">خانه</a>
+                    <a href="../guide/">راهنمای راه‌اندازی</a>
+                    <a href="../concepts/">مفاهیم</a>
+                    <a href="https://github.com/therewasluna/umiji">GitHub</a>
+                    <a href="https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md">DEPLOY.md <span>(انگلیسی)</span></a>
+                </nav>
+            </div>
+        </footer>
+        <script src="../../assets/api.js" defer></script>
+        <script src="../../assets/site.js" defer></script>
+    </body>
+</html>

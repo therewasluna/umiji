@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <title>API guide · Umiji</title>
+        <meta
+            name="description"
+            content="The Umiji panel API: API tokens and scopes, requests, errors, pagination, webhooks with signature checks, and every endpoint with its fields and examples."
+        />
+        <meta name="theme-color" content="#130C11" />
+        <link rel="alternate" hreflang="en" href="https://umiji.wiki/api/" />
+        <link rel="alternate" hreflang="fa" href="https://umiji.wiki/fa/api/" />
+        <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="../assets/favicon-32.png" sizes="32x32" type="image/png" />
+        <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700&family=Unbounded:wght@500;600&display=swap"
+        />
+        <!-- only the letters of the language switch and of 海路 -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@600&family=Noto+Sans+JP:wght@400;600&text=%D9%81%D8%A7%D8%B1%D8%B3%DB%8C%E6%B5%B7%E8%B7%AF&display=swap" />
+        <link rel="stylesheet" href="../assets/site.css" />
+    </head>
+    <body>
+        <a class="skip" href="#main">Skip to content</a>
+
+        <header class="topbar">
+            <div class="wrap">
+                <a class="brand" href="../" aria-label="Umiji wiki home">
+                    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
+                            <path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" />
+                            <path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" />
+                        </g>
+                    </svg>
+                    <span class="word"><span class="umi">Umi</span><span class="ji">ji</span></span>
+                </a>
+                <nav class="nav" aria-label="Main">
+                    <a href="../guide/">Setup guide</a>
+                    <a href="../concepts/">Concepts</a>
+                    <a href="./" aria-current="page">API</a>
+                </nav>
+                <div class="tools">
+                    <a class="icon-btn gh" href="https://github.com/therewasluna/umiji" aria-label="Umiji on GitHub">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" /></svg>
+                    </a>
+                    <a class="icon-btn lang-btn" href="../fa/api/" lang="fa" hreflang="fa" aria-label="فارسی، نسخه‌ی فارسی همین صفحه">فارسی</a>
+                </div>
+            </div>
+        </header>
+
+        <main id="main">
+            <div class="page-head api">
+                <div class="wrap">
+                    <div>
+                        <h1>Drive the whole panel from your own code.</h1>
+                        <p>
+                            Everything you click in Umiji, a program can do over HTTPS: users, nodes, hosts, squads,
+                            templates, billing and stats. Here is how to sign requests, what comes back, the webhooks the
+                            panel sends, and every endpoint with its fields.
+                        </p>
+                        <ul class="facts">
+                            <li><b>239</b> endpoints</li>
+                            <li><b>29</b> groups</li>
+                            <li><b>279</b> error codes</li>
+                            <li>JSON over HTTPS</li>
+                            <li>Version <b>3.4.7</b></li>
+                        </ul>
+                        <div class="api-tools">
+                            <label class="search">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+                                <input id="api-search" type="search" placeholder="Search endpoints, like “reset traffic” or “A019”" aria-label="Search endpoints and error codes" autocomplete="off" />
+                                <kbd aria-hidden="true">/</kbd>
+                            </label>
+                            <label class="base-field" title="Examples on this page use this address. It stays in this browser only.">
+                                Your panel
+                                <input id="base-url" type="url" inputmode="url" placeholder="https://panel.example.com" spellcheck="false" autocomplete="off" />
+                            </label>
+                        </div>
+                    </div>
+                    <div class="api-hero" aria-hidden="true">
+                        <div class="window">
+                            <div class="window-bar"><i></i><i></i><i></i><span>~ · bash</span></div>
+<pre><span class="label">Request</span><code><span class="tk-f">curl</span> <span class="tk-s">"<span class="base">https://panel.example.com</span>/api/users/by-username/alice"</span> \
+  <span class="tk-k">-H</span> <span class="tk-s">"Authorization: Bearer $UMIJI_TOKEN"</span></code></pre>
+<pre><span class="label">Response</span><code class="json">{
+  "response": {
+    "id": 74,
+    "username": "alice",
+    "status": "ACTIVE",
+    "trafficLimitBytes": 53687091200,
+    "trafficLimitStrategy": "MONTH",
+    "expireAt": "2026-12-15T00:00:00.000Z",
+    "subscriptionUrl": "https://sub.example.com/JRAT-hTGXSqu0xLM",
+    "activeInternalSquads": [{ "name": "Germany" }]
+  }
+}</code></pre>
+                        </div>
+                        <div class="status"><i></i><b>200</b> OK</div>
+                    </div>
+                </div>
+                <svg class="waves" viewBox="0 0 16 16" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-linecap="round" stroke-width="1.6"><path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /><path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /></g></svg>
+            </div>
+
+            <div class="wrap docs">
+                <aside class="toc collapsible" aria-label="API guide">
+                    <button class="toc-toggle" type="button" aria-expanded="false">
+                        All sections
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+                    </button>
+                    <div class="group"><span>Getting started</span><ul>
+                        <li><a href="#overview">How it works</a></li>
+                        <li><a href="#base-url">Base URL</a></li>
+                        <li><a href="#auth">API tokens</a></li>
+                        <li><a href="#scopes">Scopes</a></li>
+                        <li><a href="#roles">Who can call what</a></li>
+                        <li><a href="#quick-start">First requests</a></li>
+                    </ul></div>
+                    <div class="group"><span>Conventions</span><ul>
+                        <li><a href="#format">Requests and responses</a></li>
+                        <li><a href="#errors">Errors</a></li>
+                        <li><a href="#pagination">Pagination</a></li>
+                        <li><a href="#types">Dates, bytes and IDs</a></li>
+                    </ul></div>
+                    <div class="group"><span>The panel calls you</span><ul>
+                        <li><a href="#webhooks">Webhooks</a></li>
+                        <li><a href="#webhook-signature">Check the signature</a></li>
+                        <li><a href="#webhook-events">Events</a></li>
+                        <li><a href="#streams">Redis export streams</a></li>
+                    </ul></div>
+                    <div class="group"><span>More</span><ul>
+                        <li><a href="#subscription-links">Subscription links</a></li>
+                        <li><a href="#metrics">Metrics and health</a></li>
+                        <li><a href="#explorers">Scalar and Swagger</a></li>
+                        <li><a href="#error-codes">Error codes</a></li>
+                    </ul></div>
+                    <div id="toc-ref"></div>
+                </aside>
+
+                <div>
+                    <!-- GETTING STARTED -->
+                    <section class="guide-block" id="overview">
+                        <span class="kicker">Getting started</span>
+                        <div class="group-title"><h2>How it works</h2></div>
+                        <p>
+                            The panel you open in the browser is itself a client of this API. Your scripts, bots and
+                            billing systems talk to the same endpoints, with a token instead of a sign-in.
+                        </p>
+                        <ul class="plain">
+                            <li>Every endpoint lives under <code>/api</code> on your panel’s address.</li>
+                            <li>A program proves who it is with an <strong>API token</strong>, sent as <code>Authorization: Bearer …</code>. Each token carries <a href="#scopes">scopes</a> that limit what it may call.</li>
+                            <li>Requests and answers are JSON. A successful answer is wrapped in <code>{"response": …}</code>.</li>
+                            <li>The panel also calls you: <a href="#webhooks">webhooks</a> for user, node and billing events, and optional <a href="#streams">Redis streams</a> for traffic.</li>
+                        </ul>
+                        <div class="tiles-wrap">
+                            <div class="tiles">
+                                <a class="tile" href="#auth">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="15" r="4" /><path d="M10.8 12.2 20 3m-3 3 2 2m-5 1 2 2" /></svg>
+                                    <b>Get a token</b><span>Two minutes in Umiji Settings.</span>
+                                </a>
+                                <a class="tile" href="#quick-start">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 8 4 4-4 4M12 16h7" /></svg>
+                                    <b>First requests</b><span>curl, JavaScript and Python.</span>
+                                </a>
+                                <a class="tile" href="#reference">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h10" /></svg>
+                                    <b>Reference</b><span>All 239 endpoints, with fields.</span>
+                                </a>
+                                <a class="tile" href="#webhooks">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3 5 14h6l-1 7 8-11h-6l1-7Z" /></svg>
+                                    <b>Webhooks</b><span>Signed events, sent as they happen.</span>
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section class="guide-block" id="base-url">
+                        <div class="group-title"><h2>Base URL</h2></div>
+                        <p>The address you open the panel at, plus <code>/api</code>. Type yours in <strong>Your panel</strong> at the top, and every example on this page uses it.</p>
+<pre data-copy><code><span class="base">https://panel.example.com</span>/api</code></pre>
+                        <div class="note warn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01" /><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" /></svg>
+                            <div>
+                                <p><strong>HTTPS through a reverse proxy is required.</strong> The API closes the connection, without any answer, on a request that doesn’t carry <code>X-Forwarded-For</code> and <code>X-Forwarded-Proto: https</code>. Your reverse proxy (Caddy, Nginx) adds both, so calls to the public address just work. curl shows this as “Empty reply from server”.</p>
+                                <p>A script on the panel’s own server can skip the proxy and call port 3000 directly, if it sends both headers itself:</p>
+                            </div>
+                        </div>
+<pre data-copy><code><span class="tk-f">curl</span> <span class="tk-s">"http://127.0.0.1:3000/api/system/stats"</span> \
+  <span class="tk-k">-H</span> <span class="tk-s">"Authorization: Bearer $UMIJI_TOKEN"</span> \
+  <span class="tk-k">-H</span> <span class="tk-s">"X-Forwarded-For: 127.0.0.1"</span> \
+  <span class="tk-k">-H</span> <span class="tk-s">"X-Forwarded-Proto: https"</span></code></pre>
+                        <p>Call the API from a server, not from a web page. Browsers only get answers on the panel’s own domain, and a token in front-end code is a token anyone can read.</p>
+                    </section>
+
+                    <section class="guide-block" id="auth">
+                        <div class="group-title"><h2>API tokens</h2></div>
+                        <p>A token is a long key that stands for one program. Make a separate one for each bot or script, so you can remove one without breaking the others.</p>
+                        <ol class="do">
+                            <li>Open <b>Umiji Settings</b> and find the <b>API tokens</b> card. Press <b>Create API token</b>.</li>
+                            <li>Fill in <b>Token name</b> and <b>Expires in (days)</b>, then pick the <a href="#scopes">scopes</a>: a preset, or single endpoints.</li>
+                            <li>Copy the token. It is shown <strong>only once</strong>, right after you create it.</li>
+                            <li>Send it with every request, in the <code>Authorization</code> header.</li>
+                        </ol>
+<pre data-copy><code><span class="c"># keep it out of your code, in an environment variable</span>
+<span class="tk-f">export</span> UMIJI_TOKEN=<span class="tk-s">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9…"</span>
+
+<span class="tk-f">curl</span> <span class="tk-s">"<span class="base">https://panel.example.com</span>/api/system/stats"</span> \
+  <span class="tk-k">-H</span> <span class="tk-s">"Authorization: Bearer $UMIJI_TOKEN"</span></code></pre>
+                        <ul class="plain">
+                            <li><strong>Deleting a token stops it at once.</strong> The panel checks the token on every request, so a deleted token gets 403 on its very next call.</li>
+                            <li>An expired token gets 401. Make a new one; tokens can’t be extended.</li>
+                            <li>Creating and deleting tokens is for the owner, from the panel. A token can’t list, create or delete tokens, and each change sends the <code>service.api_token_created</code> or <code>service.api_token_deleted</code> <a href="#webhook-events">webhook</a>.</li>
+                        </ul>
+                        <div class="note">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 8h.01M11 12h1v4h1" /></svg>
+                            <p><strong>Your own sign-in doesn’t work for scripts.</strong> The owner’s session is accepted only from the panel in a browser. Used anywhere else, it gets 403 with <code>For API requests you must create own API-token in the admin dashboard.</code> Brokers can’t make tokens, and their sessions also work only in the browser.</p>
+                        </div>
+                    </section>
+
+                    <section class="guide-block" id="scopes">
+                        <div class="group-title"><h2>Scopes</h2></div>
+                        <p>Scopes say what a token may call. They come in four sizes, from everything down to one endpoint. A token passes if any one of its scopes covers the endpoint.</p>
+                        <ol class="ladder">
+                            <li><code>*</code><span>Everything an API token can reach. The <strong>Full access</strong> switch.</span></li>
+                            <li><code>users:*</code><span>Every endpoint of one resource, here users.</span></li>
+                            <li><code>users:read</code><span>All reading endpoints of a resource. <code>users:write</code> is all the changing ones.</span></li>
+                            <li><code>users:create</code><span>One endpoint. Each endpoint in the <a href="#reference">reference</a> shows its own scope; click it to copy.</span></li>
+                        </ol>
+                        <p>The create dialog has three presets: <b class="ui">Read only</b> (every reading endpoint), full access, and <b class="ui">Subpage</b>, the five scopes the subscription page server needs. You can also paste a JSON array of scopes from the clipboard. The full list of scopes, grouped by resource, comes from <a href="#ref-api-tokens"><code>GET /api/tokens/scopes</code></a>.</p>
+<pre data-copy><code class="json">["subscription-page-configs:list", "subscription-page-configs:get",
+ "subscriptions:subpage-config", "system:metadata", "users:by-username"]</code></pre>
+                        <p>A call outside the token’s scopes gets 403 with <code>Forbidden resource</code>. Give each token the smallest set it needs: a sign-up bot needs <code>users:create</code> and <code>users:by-username</code>, not <code>*</code>.</p>
+                    </section>
+
+                    <section class="guide-block" id="roles">
+                        <div class="group-title"><h2>Who can call what</h2></div>
+                        <p>Most endpoints work with a token. A few belong to the panel’s own screens and refuse tokens. Each endpoint in the reference is tagged, so you know before you try.</p>
+                        <div class="table-wrap">
+                            <table class="data">
+                                <thead><tr><th>Endpoints</th><th>API token</th><th>Owner in panel</th><th>Broker in panel</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Users, nodes, hosts, squads, templates, stats and the rest (165)</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="no">–</span></td></tr>
+                                    <tr><td>Users and squads a broker works with (28)</td><td><span class="yes">✓</span></td><td><span class="yes">✓</span></td><td><span class="yes">✓</span> own only</td></tr>
+                                    <tr><td>Brokers, broadcasts, Umiji Settings, passkeys, API tokens (19)</td><td><span class="no">–</span></td><td><span class="yes">✓</span></td><td><span class="no">–</span></td></tr>
+                                    <tr><td>A broker’s own store bot (17)</td><td><span class="no">–</span></td><td><span class="no">–</span></td><td><span class="yes">✓</span></td></tr>
+                                    <tr><td>Sign-in, and the public subscription links (10)</td><td colspan="3">No token needed</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>A token always acts as the owner, so it sees every user. To work for a single broker, filter by the user’s <code>brokerUuid</code>.</p>
+                    </section>
+
+                    <section class="guide-block" id="quick-start">
+                        <div class="group-title"><h2>First requests</h2></div>
+                        <p>List the first ten users, then create one with 50 GiB a month for 30 days. The same two calls in three languages:</p>
+                        <div class="tabs">
+                            <div role="tablist" aria-label="Language">
+                                <button role="tab" type="button">curl</button>
+                                <button role="tab" type="button">JavaScript</button>
+                                <button role="tab" type="button">Python</button>
+                            </div>
+                            <div role="tabpanel">
+<pre data-copy><code><span class="c"># the first ten users</span>
+<span class="tk-f">curl</span> <span class="tk-s">"<span class="base">https://panel.example.com</span>/api/users?start=0&amp;size=10"</span> \
+  <span class="tk-k">-H</span> <span class="tk-s">"Authorization: Bearer $UMIJI_TOKEN"</span>
+
+<span class="c"># a new user: 50 GiB a month, for 30 days, in one internal squad</span>
+<span class="tk-f">curl</span> <span class="tk-k">-X</span> POST <span class="tk-s">"<span class="base">https://panel.example.com</span>/api/users"</span> \
+  <span class="tk-k">-H</span> <span class="tk-s">"Authorization: Bearer $UMIJI_TOKEN"</span> \
+  <span class="tk-k">-H</span> <span class="tk-s">"Content-Type: application/json"</span> \
+  <span class="tk-k">-d</span> '{
+    <span class="tk-k">"username"</span>: <span class="tk-s">"alice"</span>,
+    <span class="tk-k">"expireAt"</span>: <span class="tk-s">"2026-12-15T00:00:00.000Z"</span>,
+    <span class="tk-k">"trafficLimitBytes"</span>: <span class="tk-n">53687091200</span>,
+    <span class="tk-k">"trafficLimitStrategy"</span>: <span class="tk-s">"MONTH"</span>,
+    <span class="tk-k">"activeInternalSquads"</span>: [<span class="tk-s">"7f3c2a1e-5b4d-4c6e-9f8a-1b2c3d4e5f60"</span>]
+  }'</code></pre>
+                            </div>
+                            <div role="tabpanel">
+<pre data-copy><code><span class="c">// Node.js 18 or newer: fetch is built in</span>
+<span class="tk-k">const</span> BASE = <span class="tk-s">'<span class="base">https://panel.example.com</span>/api'</span>
+<span class="tk-k">const</span> headers = {
+    Authorization: <span class="tk-s">`Bearer ${process.env.UMIJI_TOKEN}`</span>,
+    <span class="tk-s">'Content-Type'</span>: <span class="tk-s">'application/json'</span>,
+}
+
+<span class="tk-k">async function</span> <span class="tk-f">umiji</span>(method, path, body) {
+    <span class="tk-k">const</span> res = <span class="tk-k">await</span> fetch(BASE + path, { method, headers, body: body &amp;&amp; JSON.stringify(body) })
+    <span class="tk-k">if</span> (res.status === <span class="tk-n">202</span> || res.status === <span class="tk-n">204</span>) <span class="tk-k">return</span> <span class="tk-b">null</span>
+    <span class="tk-k">const</span> json = <span class="tk-k">await</span> res.json()
+    <span class="tk-k">if</span> (!res.ok) <span class="tk-k">throw new</span> Error(<span class="tk-s">`${json.errorCode ?? res.status}: ${json.message}`</span>)
+    <span class="tk-k">return</span> json.response
+}
+
+<span class="tk-k">const</span> { users, total } = <span class="tk-k">await</span> umiji(<span class="tk-s">'GET'</span>, <span class="tk-s">'/users?start=0&amp;size=10'</span>)
+
+<span class="tk-k">const</span> alice = <span class="tk-k">await</span> umiji(<span class="tk-s">'POST'</span>, <span class="tk-s">'/users'</span>, {
+    username: <span class="tk-s">'alice'</span>,
+    expireAt: <span class="tk-k">new</span> Date(Date.now() + <span class="tk-n">30</span> * <span class="tk-n">864e5</span>).toISOString(),
+    trafficLimitBytes: <span class="tk-n">50</span> * <span class="tk-n">1024</span> ** <span class="tk-n">3</span>,
+    trafficLimitStrategy: <span class="tk-s">'MONTH'</span>,
+})
+console.log(alice.subscriptionUrl)</code></pre>
+                            </div>
+                            <div role="tabpanel">
+<pre data-copy><code><span class="tk-k">import</span> os, datetime, requests
+
+BASE = <span class="tk-s">"<span class="base">https://panel.example.com</span>/api"</span>
+s = requests.Session()
+s.headers[<span class="tk-s">"Authorization"</span>] = <span class="tk-s">f"Bearer {os.environ['UMIJI_TOKEN']}"</span>
+
+<span class="tk-k">def</span> <span class="tk-f">umiji</span>(method, path, **kw):
+    r = s.request(method, BASE + path, timeout=<span class="tk-n">30</span>, **kw)
+    <span class="tk-k">if</span> r.status_code <span class="tk-k">in</span> (<span class="tk-n">202</span>, <span class="tk-n">204</span>):
+        <span class="tk-k">return</span> <span class="tk-b">None</span>
+    data = r.json()
+    <span class="tk-k">if not</span> r.ok:
+        <span class="tk-k">raise</span> RuntimeError(<span class="tk-s">f"{data.get('errorCode', r.status_code)}: {data['message']}"</span>)
+    <span class="tk-k">return</span> data[<span class="tk-s">"response"</span>]
+
+page = umiji(<span class="tk-s">"GET"</span>, <span class="tk-s">"/users"</span>, params={<span class="tk-s">"start"</span>: <span class="tk-n">0</span>, <span class="tk-s">"size"</span>: <span class="tk-n">10</span>})
+
+alice = umiji(<span class="tk-s">"POST"</span>, <span class="tk-s">"/users"</span>, json={
+    <span class="tk-s">"username"</span>: <span class="tk-s">"alice"</span>,
+    <span class="tk-s">"expireAt"</span>: (datetime.datetime.now(datetime.UTC) + datetime.timedelta(days=<span class="tk-n">30</span>)).isoformat(),
+    <span class="tk-s">"trafficLimitBytes"</span>: <span class="tk-n">50</span> * <span class="tk-n">1024</span>**<span class="tk-n">3</span>,
+    <span class="tk-s">"trafficLimitStrategy"</span>: <span class="tk-s">"MONTH"</span>,
+})
+print(alice[<span class="tk-s">"subscriptionUrl"</span>])</code></pre>
+                            </div>
+                        </div>
+                        <p>The new user comes back whole, with its <code>id</code> and <code>subscriptionUrl</code>: the link you hand to the customer. Leave out <code>activeInternalSquads</code> and the user gets no servers until you add them to a squad.</p>
+                    </section>
+
+                    <!-- CONVENTIONS -->
+                    <section class="guide-block" id="format">
+                        <span class="kicker">Conventions</span>
+                        <div class="group-title"><h2>Requests and responses</h2></div>
+                        <ul class="plain">
+                            <li>Send bodies as JSON with <code>Content-Type: application/json</code>. Fields the API doesn’t know are dropped, not refused.</li>
+                            <li>The thing to act on goes in the path (<code>/api/nodes/{uuid}</code>), except for updates: <code>PATCH</code> takes the whole change in the body, with its <code>uuid</code> or <code>id</code> inside. <code>PATCH /api/users</code> takes either <code>id</code> or <code>username</code>.</li>
+                            <li>A <code>PATCH</code> changes only the fields you send.</li>
+                            <li>Actions that aren’t plain edits sit under <code>/actions/</code>: <code>POST /api/users/{userId}/actions/reset-traffic</code>, <code>…/actions/disable</code>, <code>…/actions/restart</code>.</li>
+                        </ul>
+                        <div class="table-wrap">
+                            <table class="data">
+                                <thead><tr><th>Status</th><th>Means</th><th>Body</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>200 OK</code></td><td>Done.</td><td><code>{"response": …}</code></td></tr>
+                                    <tr><td><code>201 Created</code></td><td>A new object was made.</td><td><code>{"response": …}</code>, the new object</td></tr>
+                                    <tr><td><code>202 Accepted</code></td><td>Queued: bulk changes to users and squads, node restarts, plugin and snippet syncs, dropped connections. The work runs in the background and takes a moment.</td><td>None</td></tr>
+                                    <tr><td><code>204 No Content</code></td><td>Deleted.</td><td>None</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>Live connection lookups work like a ticket: <code>POST /api/connections/by-user/{userId}</code> answers with a <code>jobId</code> at once, then <code>GET /api/connections/by-user/{jobId}</code> returns the result once the nodes have replied. Ask again every second or two until <code>isCompleted</code> is true.</p>
+                    </section>
+
+                    <section class="guide-block" id="errors">
+                        <div class="group-title"><h2>Errors</h2></div>
+                        <p>An error comes back in one of three shapes. Check the status first, then <code>errorCode</code> when there is one: the codes stay the same between versions, the messages may not.</p>
+                        <h3>The panel refused it</h3>
+<pre data-copy><code class="json">{
+  "timestamp": "2026-11-15T07:11:48.106Z",
+  "path": "/api/users",
+  "message": "User username already exists",
+  "errorCode": "A019"
+}</code></pre>
+                        <h3>The body didn’t pass validation (400)</h3>
+<pre data-copy><code class="json">{
+  "statusCode": 400,
+  "message": "Validation failed",
+  "errors": [
+    { "code": "too_small", "minimum": 3, "path": ["username"], "message": "Username must be at least 3 characters" },
+    { "code": "invalid_type", "expected": "string", "path": ["expireAt"], "message": "Invalid input: expected string, received undefined" }
+  ]
+}</code></pre>
+                        <h3>The token was refused (401, 403)</h3>
+<pre data-copy><code class="json">{ "message": "Unauthorized", "statusCode": 401 }
+{ "message": "Forbidden resource", "error": "Forbidden", "statusCode": 403 }</code></pre>
+                        <div class="table-wrap">
+                            <table class="data">
+                                <thead><tr><th>Status</th><th>Usually means</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>400</code></td><td>Validation failed, or a panel rule said no; the <code>errorCode</code> tells which.</td></tr>
+                                    <tr><td><code>401</code></td><td>No token, a broken token, or an expired one.</td></tr>
+                                    <tr><td><code>403</code></td><td>The token lacks the scope, was deleted, or the endpoint is panel-only.</td></tr>
+                                    <tr><td><code>404</code></td><td>No such user, node, host… (for example <code>A063</code>).</td></tr>
+                                    <tr><td><code>409</code></td><td>A name or tag is already taken.</td></tr>
+                                    <tr><td><code>429</code></td><td>Too many sign-in attempts (<code>A286</code>). The API has no other rate limit, but be gentle.</td></tr>
+                                    <tr><td><code>500</code></td><td>The panel couldn’t finish the job: the database or a node failed. The <code>errorCode</code> names the step.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>Every code with its message is in <a href="#error-codes">Error codes</a>, and the search at the top finds them too.</p>
+                    </section>
+
+                    <section class="guide-block" id="pagination">
+                        <div class="group-title"><h2>Pagination</h2></div>
+                        <p>Lists that can grow large come in pages. There are two kinds.</p>
+                        <h3>Offset: <code>start</code> and <code>size</code></h3>
+                        <p><code>GET /api/users</code>, <code>/api/subscriptions</code>, <code>/api/hwid/devices</code> and the request history take <code>start</code> (where to begin, from 0) and <code>size</code> (up to 1000; up to 500 for subscriptions). The answer has <code>total</code>, so you know how many pages there are. Good for a table with page numbers.</p>
+                        <h3>Cursor: <code>GET /api/users/stream</code></h3>
+                        <p>For going through every user, for a sync or an export. Each page has <code>nextCursor</code> and <code>hasMore</code>: pass the cursor back until <code>hasMore</code> is false. It stays fast on large panels and filters by <code>status</code>, <code>tag</code>, <code>telegramId</code>, <code>email</code>, <code>trafficLimitStrategy</code> and <code>externalSquadUuid</code>.</p>
+<pre data-copy><code><span class="tk-k">let</span> cursor
+<span class="tk-k">do</span> {
+    <span class="tk-k">const</span> q = <span class="tk-k">new</span> URLSearchParams({ size: <span class="tk-s">'1000'</span>, status: <span class="tk-s">'ACTIVE'</span>, ...(cursor &amp;&amp; { cursor }) })
+    <span class="tk-k">const</span> page = <span class="tk-k">await</span> umiji(<span class="tk-s">'GET'</span>, <span class="tk-s">`/users/stream?${q}`</span>)
+    <span class="tk-k">for</span> (<span class="tk-k">const</span> user <span class="tk-k">of</span> page.users) save(user)
+    cursor = page.hasMore ? page.nextCursor : <span class="tk-b">undefined</span>
+} <span class="tk-k">while</span> (cursor)</code></pre>
+                        <div class="note">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 8h.01M11 12h1v4h1" /></svg>
+                            <p>The table parameters (<code>filters</code>, <code>filterModes</code>, <code>globalFilterMode</code>, <code>sorting</code>) are made for the panel’s own tables and search with slow text matching. For automation, use the cursor list or the direct lookups: <code>/api/users/by-username/{username}</code>, <code>/by-short-uuid/{shortUuid}</code> and <code>/api/users/{userId}</code>.</p>
+                        </div>
+                    </section>
+
+                    <section class="guide-block" id="types">
+                        <div class="group-title"><h2>Dates, bytes and IDs</h2></div>
+                        <div class="table-wrap">
+                            <table class="data">
+                                <thead><tr><th>What</th><th>How it looks</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Dates</td><td>ISO 8601 in UTC, like <code>2026-11-15T12:00:00.000Z</code>. Send them the same way; an offset such as <code>+03:30</code> also works.</td></tr>
+                                    <tr><td>Traffic</td><td>Bytes, as numbers. 1 GiB is <code>1073741824</code>. A traffic limit of <code>0</code> means unlimited.</td></tr>
+                                    <tr><td>Users</td><td>A number, <code>id</code>, in paths such as <code>/api/users/{userId}</code>. Also found by <code>username</code>, by <code>shortUuid</code> (the ID inside the subscription link), by <code>telegramId</code> and by <code>email</code>.</td></tr>
+                                    <tr><td>Everything else</td><td>A <code>uuid</code>: nodes, hosts, squads, profiles, templates, brokers.</td></tr>
+                                    <tr><td>User status</td><td><code>ACTIVE</code>, <code>DISABLED</code>, <code>LIMITED</code> (out of traffic), <code>EXPIRED</code>. You set only the first two; the panel sets the others.</td></tr>
+                                    <tr><td>Traffic reset</td><td><code>NO_RESET</code>, <code>DAY</code> (every night), <code>WEEK</code> (Mondays), <code>MONTH</code> (on the 1st), <code>MONTH_ROLLING</code> (each month on the day the user was created). Times are UTC.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- WEBHOOKS -->
+                    <section class="guide-block" id="webhooks">
+                        <span class="kicker">The panel calls you</span>
+                        <div class="group-title"><h2>Webhooks</h2></div>
+                        <p>Instead of asking the panel every minute whether a user ran out of traffic, let it tell you. With webhooks on, the panel sends a signed <code>POST</code> to your address the moment something happens.</p>
+                        <p>Turn them on in the panel’s <code>.env</code>, then restart the panel:</p>
+<pre data-copy><code>WEBHOOK_ENABLED=<span class="tk-b">true</span>
+<span class="c"># one address, or several separated by commas; http:// or https://</span>
+WEBHOOK_URL=<span class="tk-s">https://bot.example.com/umiji-hook</span>
+<span class="c"># the signing key: at least 32 letters and digits, nothing else</span>
+WEBHOOK_SECRET_HEADER=<span class="tk-s">vsmu67Kmg6R8FjIOF1WUY8LWBHie4scdEqrfsKmyf4IAf8dY3nFS0wwYHkhh6ZvQ</span></code></pre>
+                        <p>Every event goes out by default. To mute some, or send one event to an extra address, edit <code>notifications-config.yml</code> (in <code>/var/lib/umiji/configs/notifications/</code> in the container):</p>
+<pre data-copy><code>events:
+  user.modified:
+    telegram: <span class="tk-b">false</span>
+    webhook: <span class="tk-b">false</span>
+  user.expired:
+    telegram: <span class="tk-b">true</span>
+    webhook: <span class="tk-b">true</span>
+    additionalWebhookUrls:
+      - <span class="tk-s">https://crm.example.com/hooks/expired</span></code></pre>
+                        <h3>What arrives</h3>
+                        <div class="table-wrap">
+                            <table class="data">
+                                <thead><tr><th>Header</th><th>Value</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>Content-Type</code></td><td><code>application/json</code></td></tr>
+                                    <tr><td><code>X-Umiji-Signature</code></td><td>HMAC-SHA256 of the raw body with your secret, in hex.</td></tr>
+                                    <tr><td><code>X-Umiji-Timestamp</code></td><td>When the event happened, ISO 8601; the same as <code>timestamp</code> in the body.</td></tr>
+                                    <tr><td><code>User-Agent</code></td><td><code>Umiji</code></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+<pre data-copy><code class="json">{
+  "scope": "user",
+  "event": "user.expired",
+  "timestamp": "2026-11-15T12:00:00.000Z",
+  "data": { "id": 74, "username": "alice", "status": "EXPIRED", "subscriptionUrl": "https://sub.example.com/JRAT-hTGXSqu0xLM" },
+  "meta": null
+}</code></pre>
+                        <p>For user events, <code>data</code> is the whole user, the same object <code>GET /api/users/{userId}</code> returns. Answer with any 2xx status. If your server doesn’t, the panel tries three more times, five seconds apart.</p>
+                    </section>
+
+                    <section class="guide-block" id="webhook-signature">
+                        <div class="group-title"><h2>Check the signature</h2></div>
+                        <p>Anyone can post to your address. Before you trust a webhook, sign the <strong>raw body, byte for byte</strong>, with your secret and compare it with <code>X-Umiji-Signature</code>. Don’t parse and re-encode the JSON first: the bytes would change.</p>
+                        <div class="tabs">
+                            <div role="tablist" aria-label="Language">
+                                <button role="tab" type="button">Node.js</button>
+                                <button role="tab" type="button">Python</button>
+                                <button role="tab" type="button">PHP</button>
+                            </div>
+                            <div role="tabpanel">
+<pre data-copy><code><span class="tk-k">import</span> crypto <span class="tk-k">from</span> <span class="tk-s">'node:crypto'</span>
+<span class="tk-k">import</span> express <span class="tk-k">from</span> <span class="tk-s">'express'</span>
+
+<span class="tk-k">const</span> app = express()
+
+<span class="c">// express.raw keeps the body as bytes, exactly as the panel signed it</span>
+app.post(<span class="tk-s">'/umiji-hook'</span>, express.raw({ type: <span class="tk-s">'application/json'</span> }), (req, res) =&gt; {
+    <span class="tk-k">const</span> expected = crypto.createHmac(<span class="tk-s">'sha256'</span>, process.env.WEBHOOK_SECRET).update(req.body).digest()
+    <span class="tk-k">const</span> given = Buffer.from(req.get(<span class="tk-s">'X-Umiji-Signature'</span>) ?? <span class="tk-s">''</span>, <span class="tk-s">'hex'</span>)
+    <span class="tk-k">if</span> (given.length !== expected.length || !crypto.timingSafeEqual(given, expected)) {
+        <span class="tk-k">return</span> res.sendStatus(<span class="tk-n">401</span>)
+    }
+
+    <span class="tk-k">const</span> { event, data } = JSON.parse(req.body)
+    <span class="tk-k">if</span> (event === <span class="tk-s">'user.expired'</span>) remindToRenew(data.username)
+    res.sendStatus(<span class="tk-n">200</span>)
+})
+
+app.listen(<span class="tk-n">8080</span>)</code></pre>
+                            </div>
+                            <div role="tabpanel">
+<pre data-copy><code><span class="tk-k">import</span> hashlib, hmac, json, os
+<span class="tk-k">from</span> flask <span class="tk-k">import</span> Flask, abort, request
+
+app = Flask(__name__)
+SECRET = os.environ[<span class="tk-s">"WEBHOOK_SECRET"</span>].encode()
+
+<span class="tk-f">@app.post</span>(<span class="tk-s">"/umiji-hook"</span>)
+<span class="tk-k">def</span> <span class="tk-f">hook</span>():
+    body = request.get_data()  <span class="c"># the raw bytes</span>
+    expected = hmac.new(SECRET, body, hashlib.sha256).hexdigest()
+    <span class="tk-k">if not</span> hmac.compare_digest(expected, request.headers.get(<span class="tk-s">"X-Umiji-Signature"</span>, <span class="tk-s">""</span>)):
+        abort(<span class="tk-n">401</span>)
+
+    event = json.loads(body)
+    <span class="tk-k">if</span> event[<span class="tk-s">"event"</span>] == <span class="tk-s">"user.expired"</span>:
+        remind_to_renew(event[<span class="tk-s">"data"</span>][<span class="tk-s">"username"</span>])
+    <span class="tk-k">return</span> <span class="tk-s">""</span>, <span class="tk-n">200</span></code></pre>
+                            </div>
+                            <div role="tabpanel">
+<pre data-copy><code>&lt;?php
+$body = file_get_contents(<span class="tk-s">'php://input'</span>);  <span class="c">// the raw bytes</span>
+$expected = hash_hmac(<span class="tk-s">'sha256'</span>, $body, getenv(<span class="tk-s">'WEBHOOK_SECRET'</span>));
+
+<span class="tk-k">if</span> (!hash_equals($expected, $_SERVER[<span class="tk-s">'HTTP_X_UMIJI_SIGNATURE'</span>] ?? <span class="tk-s">''</span>)) {
+    http_response_code(<span class="tk-n">401</span>);
+    <span class="tk-k">exit</span>;
+}
+
+$event = json_decode($body, <span class="tk-b">true</span>);
+<span class="tk-k">if</span> ($event[<span class="tk-s">'event'</span>] === <span class="tk-s">'user.expired'</span>) {
+    remind_to_renew($event[<span class="tk-s">'data'</span>][<span class="tk-s">'username'</span>]);
+}
+http_response_code(<span class="tk-n">200</span>);</code></pre>
+                            </div>
+                        </div>
+                        <p>To refuse replays, also drop webhooks whose <code>X-Umiji-Timestamp</code> is more than a few minutes old.</p>
+                    </section>
+
+                    <section class="guide-block" id="webhook-events">
+                        <div class="group-title"><h2>Events</h2></div>
+                        <p>Each event has a <code>scope</code>, which decides what is in <code>data</code>.</p>
+                        <div class="table-wrap">
+                            <table class="data">
+                                <thead><tr><th>Event</th><th>When</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>user.created</code></td><td>A user was made.</td></tr>
+                                    <tr><td><code>user.modified</code></td><td>A user was changed.</td></tr>
+                                    <tr><td><code>user.deleted</code></td><td>A user was deleted.</td></tr>
+                                    <tr><td><code>user.revoked</code></td><td>The user’s subscription link was replaced with a new one.</td></tr>
+                                    <tr><td><code>user.disabled</code>, <code>user.enabled</code></td><td>Switched off or back on.</td></tr>
+                                    <tr><td><code>user.limited</code></td><td>Out of traffic.</td></tr>
+                                    <tr><td><code>user.expired</code></td><td>The expiry date passed.</td></tr>
+                                    <tr><td><code>user.traffic_reset</code></td><td>Traffic was reset, by hand or on schedule.</td></tr>
+                                    <tr><td><code>user.first_connected</code></td><td>The user connected for the first time.</td></tr>
+                                    <tr><td><code>user.bandwidth_usage_threshold_reached</code></td><td>Crossed a share of the limit, such as 80%. Needs <code>BANDWIDTH_USAGE_NOTIFICATIONS_ENABLED</code>.</td></tr>
+                                    <tr><td><code>user.not_connected</code></td><td>Hasn’t connected for some hours after creation; <code>meta.notConnectedAfterHours</code> says how many. Needs <code>NOT_CONNECTED_USERS_NOTIFICATIONS_ENABLED</code>.</td></tr>
+                                    <tr><td><code>user.expiration</code></td><td>Expires soon, or expired a while ago; <code>meta.expiration</code> is the hours (negative before expiry). Needs <code>EXPIRATION_NOTIFICATIONS_ENABLED</code>.</td></tr>
+                                    <tr><td><code>user_hwid_devices.added</code>, <code>.deleted</code></td><td>A device was added or removed. <code>data</code> has <code>user</code> and <code>hwidUserDevice</code>.</td></tr>
+                                    <tr><td><code>node.created</code>, <code>.modified</code>, <code>.deleted</code></td><td>A node was made, changed or deleted.</td></tr>
+                                    <tr><td><code>node.enabled</code>, <code>.disabled</code></td><td>A node was switched on or off.</td></tr>
+                                    <tr><td><code>node.connection_lost</code>, <code>.connection_restored</code></td><td>The panel lost a node, or got it back.</td></tr>
+                                    <tr><td><code>node.traffic_notify</code></td><td>A node reached its traffic alert.</td></tr>
+                                    <tr><td><code>service.panel_started</code></td><td>The panel started; <code>data.panelVersion</code>.</td></tr>
+                                    <tr><td><code>service.login_attempt_success</code>, <code>_failed</code></td><td>Someone signed in to the panel, or tried; <code>data.loginAttempt</code> has the username, IP and browser.</td></tr>
+                                    <tr><td><code>service.subpage_config_changed</code></td><td>A subscription page config was made, changed or deleted.</td></tr>
+                                    <tr><td><code>service.api_token_created</code>, <code>_deleted</code></td><td>An API token was made or deleted; <code>data.apiToken</code>.</td></tr>
+                                    <tr><td><code>crm.infra_billing_node_payment_in_7_days</code></td><td>A server bill is due in 7 days. Also <code>_in_48hrs</code>, <code>_in_24hrs</code>, <code>_due_today</code>, and when it’s late: <code>_overdue_24hrs</code>, <code>_overdue_48hrs</code>, <code>_overdue_7_days</code>.</td></tr>
+                                    <tr><td><code>torrent_blocker.report</code></td><td>Torrent Blocker caught a user; <code>data</code> has the node, the user and the report.</td></tr>
+                                    <tr><td><code>errors.bandwidth_usage_threshold_reached_max_notifications</code></td><td>Listed in the config for completeness; this version never sends it.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <h3>Every field, by scope</h3>
+                        <div class="tabs">
+                            <div role="tablist" aria-label="Scope">
+                                <button role="tab" type="button">user</button>
+                                <button role="tab" type="button">user_hwid_devices</button>
+                                <button role="tab" type="button">node</button>
+                                <button role="tab" type="button">service</button>
+                                <button role="tab" type="button">crm</button>
+                                <button role="tab" type="button">torrent_blocker</button>
+                                <button role="tab" type="button">errors</button>
+                            </div>
+                            <div role="tabpanel" data-schema="UmijiWebhookUserEventsDto"></div>
+                            <div role="tabpanel" data-schema="UmijiWebhookUserHwidDevicesEventsDto"></div>
+                            <div role="tabpanel" data-schema="UmijiWebhookNodeEventsDto"></div>
+                            <div role="tabpanel" data-schema="UmijiWebhookServiceEventsDto"></div>
+                            <div role="tabpanel" data-schema="UmijiWebhookCrmEventsDto"></div>
+                            <div role="tabpanel" data-schema="UmijiWebhookTorrentBlockerEventsDto"></div>
+                            <div role="tabpanel" data-schema="UmijiWebhookErrorsEventsDto"></div>
+                        </div>
+                    </section>
+
+                    <section class="guide-block" id="streams">
+                        <div class="group-title"><h2>Redis export streams</h2></div>
+                        <p>For analytics at scale, the panel can also write raw data into Redis Streams, for a worker of your own, ClickHouse or Vector to read. Turn it on with <code>EXPORT_TO_STREAM_ENABLED=true</code>. <code>EXPORT_TO_STREAM_MAXLEN</code> (3000 by default) is about how many messages each stream keeps before the oldest go.</p>
+                        <div class="table-wrap">
+                            <table class="data">
+                                <thead><tr><th>Stream</th><th>One message is</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>ioraw:export:user_usage</code></td><td>One node’s batch of user traffic: <code>records</code> is <code>userId:bytes</code> pairs joined by <code>;</code>.</td></tr>
+                                    <tr><td><code>ioraw:export:subscription_requests</code></td><td>One subscription fetch: user, time, IP, app and the response rule that answered.</td></tr>
+                                    <tr><td><code>ioraw:export:node_connections</code></td><td>Who is on one node right now. Kept for an hour.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+<pre data-copy><code><span class="c"># read new messages as they come, with a consumer group</span>
+redis-cli XGROUP CREATE ioraw:export:user_usage billing $ MKSTREAM
+redis-cli XREADGROUP GROUP billing worker-1 COUNT 100 BLOCK 5000 STREAMS ioraw:export:user_usage &gt;</code></pre>
+                        <div class="tabs">
+                            <div role="tablist" aria-label="Stream">
+                                <button role="tab" type="button">user_usage</button>
+                                <button role="tab" type="button">subscription_requests</button>
+                                <button role="tab" type="button">node_connections</button>
+                            </div>
+                            <div role="tabpanel" data-schema="UmijiUserUsageStreamMessageDto"></div>
+                            <div role="tabpanel" data-schema="UmijiSubscriptionRequestStreamMessageDto"></div>
+                            <div role="tabpanel" data-schema="UmijiNodeConnectionsStreamMessageDto"></div>
+                        </div>
+                    </section>
+
+                    <!-- MORE -->
+                    <section class="guide-block" id="subscription-links">
+                        <span class="kicker">More</span>
+                        <div class="group-title"><h2>Subscription links</h2></div>
+                        <p>The links client apps import aren’t under the token: the short ID in the link is the key. They are served from the subscription address in <code>SUB_PUBLIC_DOMAIN</code>, by default your panel followed by <code>/api/sub</code>.</p>
+                        <div class="table-wrap">
+                            <table class="data">
+                                <thead><tr><th>Address</th><th>Gives</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>/api/sub/{shortUuid}</code></td><td>What the app imports. The response rules pick the format from the app’s <code>User-Agent</code>: Base64 links, Xray JSON, Mihomo, sing-box and so on.</td></tr>
+                                    <tr><td><code>/api/sub/{shortUuid}/{clientType}</code></td><td>A format you name: <code>json</code>, <code>v2ray-json</code>, <code>mihomo</code>, <code>stash</code>, <code>clash</code> or <code>singbox</code>.</td></tr>
+                                    <tr><td><code>/api/sub/{shortUuid}/info</code></td><td>JSON for your own pages: the user, their connection links and the subscription URL.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>For bots, the token-protected <a href="#ref-subscriptions">Subscriptions</a> group gives the same data by username or ID, with nothing to parse.</p>
+                    </section>
+
+                    <section class="guide-block" id="metrics">
+                        <div class="group-title"><h2>Metrics and health</h2></div>
+                        <p>The scheduler process answers on <code>METRICS_PORT</code> (3001), bound to <code>127.0.0.1</code> on the panel’s server, with two endpoints outside <code>/api</code>:</p>
+<pre data-copy><code><span class="c"># Prometheus metrics, with the METRICS_USER and METRICS_PASS from .env</span>
+<span class="tk-f">curl</span> <span class="tk-k">-u</span> <span class="tk-s">"$METRICS_USER:$METRICS_PASS"</span> http://127.0.0.1:3001/metrics
+
+<span class="c"># is the database reachable? Docker's health check uses this one</span>
+<span class="tk-f">curl</span> http://127.0.0.1:3001/health</code></pre>
+<pre data-copy><code><span class="c"># prometheus.yml</span>
+scrape_configs:
+  - job_name: umiji
+    static_configs:
+      - targets: [<span class="tk-s">'127.0.0.1:3001'</span>]
+    basic_auth:
+      username: <span class="tk-s">admin</span>
+      password: <span class="tk-s">your-METRICS_PASS</span></code></pre>
+                        <p>From the API itself, <a href="#ref-system"><code>GET /api/system/health</code></a> and <code>/api/system/stats</code> give the same picture as JSON.</p>
+                    </section>
+
+                    <section class="guide-block" id="explorers">
+                        <div class="group-title"><h2>Scalar and Swagger</h2></div>
+                        <p>Your panel carries its own live API explorers, generated from the code it runs. Open <b class="ui">Umiji Settings</b> › <b class="ui">Backend tools</b> and press <b class="ui">Login</b> next to Scalar (a modern, interactive reference) or Swagger (the classic OpenAPI explorer). The login is a one-time link that lasts two hours.</p>
+                        <p>Both can send real requests with a token, and Scalar has a button to download the OpenAPI document. Feed that to a generator such as <code>openapi-generator</code> to get a typed client in your language.</p>
+                    </section>
+
+                    <section id="error-codes">
+                        <div class="group-title"><h2>Error codes</h2></div>
+                        <p class="ref-intro">All <span id="error-total">279</span> codes the panel can send in <code>errorCode</code>, with their HTTP status.</p>
+                        <label class="search err-filter">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+                            <input id="error-search" type="search" placeholder="Filter, like “node” or “404”" aria-label="Filter error codes" autocomplete="off" />
+                        </label>
+                        <div class="table-wrap" style="max-height: 520px; overflow-y: auto">
+                            <table class="data" id="error-table">
+                                <thead><tr><th>Code</th><th>HTTP</th><th>Message</th></tr></thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- REFERENCE -->
+                    <section class="ref-section" id="reference">
+                        <span class="kicker">Reference</span>
+                        <div class="group-title"><h2>Every endpoint</h2></div>
+                        <p class="ref-intro">Grouped the way the panel’s menu is. Open an endpoint for its access, parameters, body and response fields, a request to copy and an example answer.</p>
+                        <ul class="legend">
+                            <li><span class="verb get">GET</span> read</li>
+                            <li><span class="verb post">POST</span> create or act</li>
+                            <li><span class="verb patch">PATCH</span> change</li>
+                            <li><span class="verb put">PUT</span> replace</li>
+                            <li><span class="verb delete">DELETE</span> remove</li>
+                        </ul>
+                        <p class="ref-count" id="ref-count" aria-live="polite"></p>
+                        <noscript><p>The reference needs JavaScript. Without it, use Scalar or Swagger in your panel’s Backend tools.</p></noscript>
+                        <div id="ref-root" data-spec="spec.json"></div>
+                        <p class="ref-count">A few routes are left out on purpose: the node installer, SSH terminal tickets, the Backend tools login and the Telegram webhook of broker bots. Only the panel’s own screens and Telegram call them.</p>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="wrap">
+                <span><span class="jp" lang="ja">海路</span> · Umiji is free software under AGPL-3.0.</span>
+                <nav aria-label="Footer">
+                    <a href="../guide/">Setup guide</a>
+                    <a href="../concepts/">Concepts</a>
+                    <a href="./">API</a>
+                    <a href="https://github.com/therewasluna/umiji">GitHub</a>
+                    <a href="https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md">DEPLOY.md</a>
+                </nav>
+            </div>
+        </footer>
+        <script src="../assets/api.js" defer></script>
+        <script src="../assets/site.js" defer></script>
+    </body>
+</html>

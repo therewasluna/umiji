@@ -26,7 +26,7 @@
 | [umiji-frontend](https://github.com/therewasluna/umiji-frontend) | The web panel. |
 | [umiji-subscription-page](https://github.com/therewasluna/umiji-subscription-page) | The page users open from their subscription link. |
 | [umiji-node](https://github.com/therewasluna/umiji-node) | Runs Xray-core on each server. |
-| umiji (this one) | Overview, logo, help articles and templates the panel loads. |
+| umiji (this one) | Overview, logo, help articles and templates the panel loads, and the wiki in `docs/` ([umiji.wiki](https://umiji.wiki), in English and Persian). |
 
 ## Get started
 

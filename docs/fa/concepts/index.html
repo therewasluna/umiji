@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <title>مفاهیم · Umiji</title>
+        <meta
+            name="description"
+            content="توضیح همه‌ی مفاهیم پنل Umiji: کاربرها، نودها، پروفایل‌های کانفیگ، اینباندها، هاست‌ها، اسکوادها، قالب‌ها، صفحه‌ی اشتراک، فروشنده‌ها، ربات‌های فروشگاه، ابزارها و تنظیمات."
+        />
+        <meta name="theme-color" content="#130C11" />
+        <link rel="alternate" hreflang="en" href="https://umiji.wiki/concepts/" />
+        <link rel="alternate" hreflang="fa" href="https://umiji.wiki/fa/concepts/" />
+        <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="../../assets/favicon-32.png" sizes="32x32" type="image/png" />
+        <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" href="../../assets/fonts/umiji-persian-digits.woff2" as="font" type="font/woff2" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Alexandria:wght@500..800&family=Vazirmatn:wght@400..800&display=swap"
+        />
+        <!-- only the two letters of 海路 -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600&text=%E6%B5%B7%E8%B7%AF&display=swap" />
+        <link rel="stylesheet" href="../../assets/site.css" />
+    </head>
+    <body>
+        <a class="skip" href="#main">رفتن به محتوا</a>
+
+        <header class="topbar">
+            <div class="wrap">
+                <a class="brand" href="../" aria-label="خانه‌ی ویکی Umiji">
+                    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
+                            <path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" />
+                            <path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" />
+                        </g>
+                    </svg>
+                    <span class="word" dir="ltr"><span class="umi">Umi</span><span class="ji">ji</span></span>
+                </a>
+                <nav class="nav" aria-label="اصلی">
+                    <a href="../guide/">راهنمای راه‌اندازی</a>
+                    <a href="./" aria-current="page">مفاهیم</a>
+                    <a href="../api/">API</a>
+                </nav>
+                <div class="tools">
+                    <a class="icon-btn gh" href="https://github.com/therewasluna/umiji" aria-label="Umiji در GitHub">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" /></svg>
+                    </a>
+                    <a class="icon-btn lang-btn" href="../../concepts/" lang="en" hreflang="en">English</a>
+                </div>
+            </div>
+        </header>
+
+        <main id="main">
+            <div class="page-head">
+                <div class="wrap">
+                    <h1>همه‌ی مفهوم‌های پنل، با توضیح.</h1>
+                    <p>
+                        به همان ترتیب منوی پنل دسته‌بندی شده‌اند. هر مدخل می‌گوید آن چیز چیست، کجا پیدایش کنید و به چه
+                        چیزهایی وصل است.
+                    </p>
+                    <label class="search">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+                        <input id="concept-search" type="search" placeholder="جستجو، مثل «reality» یا «سهمیه»" aria-label="جستجوی مفاهیم" autocomplete="off" />
+                        <kbd aria-hidden="true">/</kbd>
+                    </label>
+                </div>
+                <svg class="waves" viewBox="0 0 16 16" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-linecap="round" stroke-width="1.6"><path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /><path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /></g></svg>
+            </div>
+
+            <div class="wrap docs">
+                <aside class="toc collapsible" aria-label="مفاهیم">
+                    <button class="toc-toggle" type="button" aria-expanded="false">
+                        همه‌ی مفاهیم
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+                    </button>
+                    <div class="group"><span>مبانی</span><ul>
+                        <li><a href="#roles">مالک، فروشنده‌ها، مشتری‌ها</a></li>
+                        <li><a href="#xray">Xray-core</a></li>
+                        <li><a href="#route">چطور به هم وصل‌اند</a></li>
+                    </ul></div>
+                    <div class="group"><span>کاربرها</span><ul>
+                        <li><a href="#user">کاربر</a></li>
+                        <li><a href="#user-status">وضعیت</a></li>
+                        <li><a href="#traffic">محدودیت و بازنشانی ترافیک</a></li>
+                        <li><a href="#expiry">تاریخ انقضا</a></li>
+                        <li><a href="#subscription-link">لینک اشتراک</a></li>
+                        <li><a href="#hwid">لیمیت دستگاه HWID</a></li>
+                        <li><a href="#ip-limit">لیمیت IP هم‌زمان</a></li>
+                        <li><a href="#ip-limit-risks">خطرهای لیمیت IP</a></li>
+                        <li><a href="#ip-limit-cdn">لیمیت IP پشت CDN</a></li>
+                        <li><a href="#tags">برچسب و توضیحات</a></li>
+                        <li><a href="#bulk">عملیات گروهی</a></li>
+                        <li><a href="#internal-squad">اسکواد داخلی</a></li>
+                        <li><a href="#external-squad">اسکواد خارجی</a></li>
+                    </ul></div>
+                    <div class="group"><span>نودها</span><ul>
+                        <li><a href="#node">نود</a></li>
+                        <li><a href="#auto-install">نصب خودکار</a></li>
+                        <li><a href="#manual-setup">راه‌اندازی دستی</a></li>
+                        <li><a href="#consumption">ضریب مصرف</a></li>
+                        <li><a href="#node-proxy">پروکسی نود</a></li>
+                        <li><a href="#ssh">ترمینال SSH</a></li>
+                        <li><a href="#plugins">پلاگین‌ها</a></li>
+                        <li><a href="#node-stats">آمار و متریک‌ها</a></li>
+                        <li><a href="#infra-billing">صورتحساب‌های تجهیزات</a></li>
+                    </ul></div>
+                    <div class="group"><span>پروفایل‌های کانفیگ</span><ul>
+                        <li><a href="#config-profile">پروفایل کانفیگ</a></li>
+                        <li><a href="#editor">ویرایشگر بصری و JSON</a></li>
+                        <li><a href="#inbound">اینباند</a></li>
+                        <li><a href="#protocols">پروتکل‌ها</a></li>
+                        <li><a href="#transport">انتقال (Transport)</a></li>
+                        <li><a href="#reality">REALITY و TLS</a></li>
+                        <li><a href="#keys">ساختن کلید</a></li>
+                        <li><a href="#mtproto">MTProto (تلگرام)</a></li>
+                        <li><a href="#snippets">قطعه کدها</a></li>
+                    </ul></div>
+                    <div class="group"><span>اشتراک</span><ul>
+                        <li><a href="#host">هاست</a></li>
+                        <li><a href="#host-options">گزینه‌های هاست</a></li>
+                        <li><a href="#templates">قالب‌ها</a></li>
+                        <li><a href="#subscription-settings">تنظیمات اشتراک</a></li>
+                        <li><a href="#response-headers">هدرهای پاسخ</a></li>
+                        <li><a href="#response-rules">قوانین پاسخ</a></li>
+                        <li><a href="#subscription-page">صفحه‌ی اشتراک</a></li>
+                        <li><a href="#client-app">برنامه‌های کلاینت</a></li>
+                    </ul></div>
+                    <div class="group"><span>فروشنده‌ها و فروش</span><ul>
+                        <li><a href="#broker">فروشنده</a></li>
+                        <li><a href="#broker-panel">پنل فروشنده</a></li>
+                        <li><a href="#telegram-bot">ربات فروشگاه تلگرام</a></li>
+                        <li><a href="#plans">پلن‌ها و دسته‌بندی‌ها</a></li>
+                        <li><a href="#payments">کیف پول، پرداخت، رسید</a></li>
+                        <li><a href="#orders">سفارش‌ها</a></li>
+                        <li><a href="#referrals">دعوت از دوستان</a></li>
+                        <li><a href="#trial">تست رایگان</a></li>
+                        <li><a href="#channels">کانال‌های اجباری</a></li>
+                        <li><a href="#bot-texts">متن‌ها و زبان‌ها</a></li>
+                        <li><a href="#bot-stats">آمار ربات</a></li>
+                        <li><a href="#broadcast">پیام همگانی ربات‌ها</a></li>
+                    </ul></div>
+                    <div class="group"><span>ابزارها</span><ul>
+                        <li><a href="#hwid-inspector">بازرسی HWID</a></li>
+                        <li><a href="#srh-inspector">بازرسی SRH</a></li>
+                        <li><a href="#torrent-reports">گزارش‌های Torrent Blocker</a></li>
+                        <li><a href="#sessions">کاوشگر نشست‌ها</a></li>
+                        <li><a href="#http-stats">آمار HTTP</a></li>
+                        <li><a href="#quick-open">باز کردن سریع</a></li>
+                    </ul></div>
+                    <div class="group"><span>تنظیمات</span><ul>
+                        <li><a href="#umiji-settings">تنظیمات Umiji</a></li>
+                        <li><a href="#auth">روش‌های احراز هویت</a></li>
+                        <li><a href="#api-tokens">توکن‌های API</a></li>
+                        <li><a href="#branding">برندینگ</a></li>
+                        <li><a href="#languages">زبان‌ها</a></li>
+                        <li><a href="#home">داشبورد خانه</a></li>
+                    </ul></div>
+                </aside>
+
+                <div>
+                    <!-- BASICS -->
+                    <section class="group-block" id="basics">
+                        <div class="group-title">
+                            <h2>مبانی</h2>
+                        </div>
+                        <div class="concepts">
+                            <article class="concept" id="roles">
+                                <h3>مالک، فروشنده‌ها و مشتری‌ها <a class="anchor" href="#roles" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>سه گروه با Umiji سروکار دارند. <strong>مالک</strong> پنل را اداره می‌کند: سرورها، کاربران، اشتراک‌ها، نماینده‌ها و فروش. اولین حسابی که در یک پنل تازه ثبت می‌شود، حساب ادمین مالک می‌شود.</p>
+                                <p><strong>فروشنده‌ها</strong> نماینده‌های فروش‌اند. با همان آدرس وارد می‌شوند، اما پنل کوچک‌تری می‌بینند که فقط کاربران خودشان در آن است. <strong>مشتری‌ها</strong>، یعنی کاربران نهایی، هرگز پنل را نمی‌بینند. سروکارشان با لینک اشتراک، صفحه‌ی اشتراک و ربات تلگرام یک فروشنده است.</p>
+                                <div class="related"><a href="#broker">فروشنده</a><a href="#broker-panel">پنل فروشنده</a><a href="#subscription-page">صفحه‌ی اشتراک</a></div>
+                            </article>
+                            <article class="concept" id="xray">
+                                <h3>Xray-core <a class="anchor" href="#xray" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>موتور پروکسی متن‌بازی که ترافیک کاربرانتان را جابه‌جا می‌کند. داخل نود Umiji روی هر سرور اجرا می‌شود. خود پنل هیچ ترافیکی را جابه‌جا نمی‌کند: کانفیگ Xray را می‌نویسد، کاربران را اضافه و حذف می‌کند و آمار ترافیک را می‌خواند.</p>
+                                <p>نسخه‌ی Xray هر نود روی کارت همان نود دیده می‌شود. مستندات خود Xray، در <a href="https://xtls.github.io/en/config/">xtls.github.io</a> (به انگلیسی)، همه‌ی فیلدهایی را که در پروفایل کانفیگ می‌توانید تنظیم کنید توضیح می‌دهد.</p>
+                                <div class="related"><a href="#node">نود</a><a href="#config-profile">پروفایل کانفیگ</a></div>
+                            </article>
+                            <article class="concept" id="route">
+                                <h3>چطور به هم وصل‌اند <a class="anchor" href="#route" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>هر <a href="#config-profile">پروفایل کانفیگ</a> چند <a href="#inbound">اینباند</a> دارد. هر <a href="#node">نود</a> یک پروفایل را اجرا می‌کند و بعضی از اینباندهایش را روشن می‌کند. هر <a href="#host">هاست</a> به یک اینباند اشاره می‌کند و به برنامه‌ها می‌گوید کجا وصل شوند. <a href="#internal-squad">اسکواد داخلی</a> مجموعه‌ای از اینباندهاست، و <a href="#user">کاربری</a> که در آن اسکواد باشد، همه‌ی هاست‌های قابل‌مشاهده‌ی آن اینباندها را از طریق <a href="#subscription-link">لینک اشتراکش</a> می‌گیرد.</p>
+                                <p>پس اگر کسی پرسید «چرا این کاربر آلمان را نمی‌بیند؟»، مسیر را دنبال کنید: آیا هاست آلمان قابل‌مشاهده است، آیا اینباندش در یکی از اسکوادهای کاربر هست، و آیا آن اینباند روی یک نود وصل روشن است؟</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- USERS -->
+                    <section class="group-block" id="users">
+                        <div class="group-title">
+                            <h2>کاربرها</h2>
+                        </div>
+                        <p>همه‌ی کسانی که اشتراک دارند. منو ‹ کاربرها.</p>
+                        <div class="concepts">
+                            <article class="concept" id="user">
+                                <h3>کاربر <a class="anchor" href="#user" aria-label="لینک به این مفهوم">#</a> <span class="who">مالک · فروشنده</span></h3>
+                                <span class="where">کاربرها ‹ ایجاد</span>
+                                <p>یک اشتراک: یک نفر، یا یکی از دستگاه‌هایش، که از طریق سرورهای شما وصل می‌شود. هر کاربر یک وضعیت، یک محدودیت ترافیک، یک تاریخ انقضا، اسکوادهای داخلی‌ای که تعیین می‌کنند به کدام سرورها دسترسی دارد، و یک لینک اشتراک شخصی دارد.</p>
+                                <dl>
+                                    <dt>نام کاربر</dt><dd>اجباری است و بعداً قابل تغییر نیست.</dd>
+                                    <dt>شناسه تلگرام، ایمیل</dt><dd>اطلاعات تماس اختیاری.</dd>
+                                    <dt>محدودیت ترافیک</dt><dd>به GiB یا واحدهای دیگر. 0 یعنی نامحدود.</dd>
+                                    <dt>تاریخ انقضا</dt><dd>زمانی که اشتراک تمام می‌شود.</dd>
+                                    <dt>اسکوادهای داخلی</dt><dd>اینکه کاربر کدام اینباندها، و در نتیجه کدام هاست‌ها، را بگیرد.</dd>
+                                    <dt>اسکواد خارجی</dt><dd>تغییرات اختیاری در نحوه‌ی ساخته شدن اشتراکش.</dd>
+                                </dl>
+                                <div class="related"><a href="#user-status">وضعیت</a><a href="#traffic">ترافیک</a><a href="#internal-squad">اسکواد داخلی</a></div>
+                            </article>
+                            <article class="concept" id="user-status">
+                                <h3>وضعیت <a class="anchor" href="#user-status" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>هر کاربر در یکی از چهار وضعیت است. تعداد کاربران هر وضعیت بالای صفحه‌ی کاربرها نشان داده می‌شود.</p>
+                                <dl>
+                                    <dt>فعال</dt><dd>می‌تواند وصل شود.</dd>
+                                    <dt>محدود</dt><dd>محدودیت ترافیکش تمام شده است. با بازنشانی ترافیکش دوباره فعال می‌شود.</dd>
+                                    <dt>منقضی</dt><dd>تاریخ انقضایش گذشته است. با تمدید آن برمی‌گردد.</dd>
+                                    <dt>غیرفعال</dt><dd>دستی خاموش شده است.</dd>
+                                </dl>
+                                <p>اینکه کاربر محدود، منقضی یا غیرفعال در برنامه‌اش چه ببیند، در <a href="#subscription-settings">ریمارک‌های سفارشی</a> تعیین می‌شود.</p>
+                            </article>
+                            <article class="concept" id="traffic">
+                                <h3>محدودیت ترافیک و دوره‌ی بازنشانی <a class="anchor" href="#traffic" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">کاربر ‹ محدودیت ترافیک</span>
+                                <p>محدودیت ترافیک سقف دانلود و آپلود کاربر است. وقتی تمام شود، کاربر <em>محدود</em> می‌شود. دوره‌ی بازنشانی تعیین می‌کند شمارنده هر چند وقت یک بار به صفر برگردد.</p>
+                                <dl>
+                                    <dt>هیچ‌گاه بازنشانی نشود</dt><dd>پیش‌فرض. محدودیت برای کل اشتراک است.</dd>
+                                    <dt>بازنشانی روزانه، هفتگی، ماهانه</dt><dd>طبق تقویم صفر می‌شود.</dd>
+                                    <dt>بازنشانی ماهانه (بر اساس تاریخ ایجاد)</dt><dd>هر ماه صفر می‌شود، اما ماه از روز شروع خود کاربر حساب می‌شود، نه از اول ماه تقویمی.</dd>
+                                </dl>
+                                <p><a href="#consumption">ضریب مصرف</a> یک نود تعیین می‌کند ترافیک روی آن نود با چه سرعتی شمرده شود. ترافیک یک کاربر را می‌توانید دستی بازنشانی کنید، یا ترافیک چند کاربر را یک‌جا.</p>
+                            </article>
+                            <article class="concept" id="expiry">
+                                <h3>تاریخ انقضا <a class="anchor" href="#expiry" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">کاربر ‹ تنظیمات دسترسی</span>
+                                <p>تاریخ و ساعتی که اشتراک تمام می‌شود. دکمه‌های سریع یک ماه، سه ماه یا یک سال اضافه می‌کنند، و «سال 2099» عملاً یعنی هیچ‌وقت. کاربرانی که انقضایشان نزدیک است در صفحه‌ی کاربرها نارنجی نشان داده می‌شوند تا به‌موقع تمدیدشان کنید.</p>
+                            </article>
+                            <article class="concept" id="subscription-link">
+                                <h3>لینک اشتراک <a class="anchor" href="#subscription-link" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">کاربر ‹ لینک اشتراک</span>
+                                <p>آدرس شخصی هر کاربر، مثل <code>https://sub.example.com/&lt;id&gt;</code>. وقتی به یک برنامه اضافه شود، فهرست هاست‌هایی را که کاربر اجازه‌ی استفاده از آن‌ها را دارد، مخصوص همان برنامه، تحویل می‌دهد. وقتی در مرورگر باز شود، <a href="#subscription-page">صفحه‌ی اشتراک</a> را نشان می‌دهد. برنامه‌ها هر چند وقت یک بار آن را دوباره دریافت می‌کنند، پس تغییرات شما بدون فرستادن لینک تازه به کاربران می‌رسد.</p>
+                                <p>مثل رمز عبور از آن مراقبت کنید. <strong>لغو اشتراک</strong>، در «عملیات بیشتر» کاربر، لینک تازه‌ای می‌سازد و لینک قبلی را از کار می‌اندازد.</p>
+                                <div class="related"><a href="#host">هاست</a><a href="#templates">قالب‌ها</a><a href="#client-app">برنامه‌های کلاینت</a></div>
+                            </article>
+                            <article class="concept" id="hwid">
+                                <h3>لیمیت دستگاه HWID <a class="anchor" href="#hwid" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">کاربر ‹ تنظیمات دستگاه و برچسب · اشتراک ‹ تنظیمات اشتراک ‹ تنظیمات HWID</span>
+                                <p>تعداد دستگاه‌هایی را که می‌توانند از یک اشتراک استفاده کنند محدود می‌کند. برنامه‌هایی که از آن پشتیبانی می‌کنند، با هر درخواست یک شناسه‌ی سخت‌افزاری می‌فرستند، و وقتی کاربر به سقفش برسد، دستگاه‌های تازه با پیامی که خودتان می‌نویسید رد می‌شوند.</p>
+                                <p>فقط وقتی کار می‌کند که <strong>محدودیت HWID</strong> در اشتراک ‹ تنظیمات اشتراک روشن باشد، و همه‌ی برنامه‌ها شناسه نمی‌فرستند. <strong>محدودیت پیشفرض تعداد دستگاه</strong> برای کاربرانی است که سقف مخصوص خودشان را ندارند. با <strong>غیرفعالسازی لیمیت HWID</strong> هم می‌توانید یک کاربر را از این محدودیت معاف کنید.</p>
+                                <div class="related"><a href="#hwid-inspector">بازرسی HWID</a><a href="#ip-limit">لیمیت IP هم‌زمان</a></div>
+                            </article>
+                            <article class="concept" id="ip-limit">
+                                <h3>لیمیت IP هم‌زمان <a class="anchor" href="#ip-limit" aria-label="لینک به این مفهوم">#</a> <span class="who">بتا</span></h3>
+                                <span class="where">کاربر ‹ تنظیمات دستگاه و برچسب · ربات تلگرام ‹ پلن‌ها · ربات تلگرام ‹ تست رایگان</span>
+                                <p>تعداد IPهایی را که می‌توانند هم‌زمان از یک کاربر استفاده کنند، در همه‌ی نودها محدود می‌کند. برخلاف لیمیت HWID، جلوی کسانی را هم که کانفیگ یا UUID را کپی کرده‌اند می‌گیرد، چون به اتصال‌های زنده نگاه می‌کند، نه به دریافت اشتراک.</p>
+                                <p>هر IP تا وقتی اتصال بازی دارد یک جا را نگه می‌دارد؛ پس دستگاه‌های روی یک وای‌فای یکی حساب می‌شوند و وقتی همه‌ی جاها پر باشد، IP تازه رد می‌شود. در IPv6 همه‌ی نشانی‌های یک <code>/64</code> یکی حساب می‌شوند. هر نود فوراً اعمالش می‌کند و پنل هر 30 ثانیه نودها را با هم مقایسه می‌کند. خالی یعنی نامحدود.</p>
+                                <p><strong>دستگاه هم‌زمان</strong> در یک پلن یا در تست رایگان، این لیمیت را به همه‌ی اشتراک‌هایی می‌دهد که ربات از آن می‌سازد.</p>
+                                <div class="note warn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" /></svg>
+                                    <p><strong>این قابلیت آزمایشی (بتا) است و همیشه درست کار نمی‌کند.</strong> ممکن است دستگاه‌های اضافه را راه بدهد و ممکن است گوشی خود یک کاربر پولی را هم رد کند. پیش از روشن کردنش، <a href="#ip-limit-risks">خطرهایش</a> را بخوانید.</p>
+                                </div>
+                                <div class="related"><a href="#ip-limit-risks">خطرهای لیمیت IP</a><a href="#hwid">لیمیت دستگاه HWID</a><a href="#plans">پلن‌ها و دسته‌بندی‌ها</a></div>
+                            </article>
+                            <article class="concept" id="ip-limit-risks">
+                                <h3>خطرهای لیمیت IP <a class="anchor" href="#ip-limit-risks" aria-label="لینک به این مفهوم">#</a> <span class="who">بتا</span></h3>
+                                <p><a href="#ip-limit">لیمیت IP هم‌زمان</a> نشانی‌های IP را می‌شمارد، نه آدم‌ها یا دستگاه‌ها را؛ پس در بعضی موقعیت‌ها از هر دو طرف اشتباه می‌کند. پیش از اینکه آن را در پلن‌ها بفروشید، روی چند کاربر امتحانش کنید.</p>
+                                <p><strong>ممکن است دستگاه خود یک کاربر پولی را رد کند.</strong> گوشی‌ای که از وای‌فای به اینترنت همراه می‌رود IP تازه‌ای می‌گیرد، در حالی که اتصال‌های قبلی‌اش هنوز روی نود باز است. با لیمیت 1، تا بسته شدن آن‌ها رد می‌شود: روی RAW تا حدود یک دقیقه و نیم، و روی WebSocket و gRPC و XHTTP تا حدود 6 دقیقه. گوشی‌ای که هم‌زمان از وای‌فای و اینترنت همراه، یا هم‌زمان از IPv4 و IPv6 استفاده کند، ممکن است دو دستگاه حساب شود.</p>
+                                <p><strong>ممکن است دستگاه‌های اضافه وارد شوند.</strong> دستگاه دوم روی نودی دیگر تا حدود 30 ثانیه کار می‌کند و بعد قطع می‌شود، و این قطع شدن اتصال‌هایش را وسط کار می‌بندد. اگر پنل به نودی دسترسی نداشته باشد، یا هسته‌ی نودی تازه ری‌استارت شده باشد، آن نود مدتی فقط IPهای خودش را می‌شمارد؛ پس یک کاربر می‌تواند روی هر نود یک جا بگیرد.</p>
+                                <p><strong>ممکن است دستگاه وصل‌شده جایش را به دستگاه تازه بدهد.</strong> پنل فقط برای دستگاهی جا نگه می‌دارد که آنلاین می‌بیند. اگر یک لحظه آن را نبیند، چون نود آن دستگاه ری‌استارت شده، ویرایش پروفایل کانفیگ هسته‌ها را ری‌استارت کرده یا نودی جواب نداده، دستگاهی که روی نود دیگری منتظر است می‌تواند جا را بگیرد و دستگاه اول قطع می‌شود.</p>
+                                <p><strong>کسانی که روی یک شبکه‌اند یکی حساب می‌شوند.</strong> همه‌ی کسانی که پشت یک مودم یا در یک اداره‌اند یک IP دارند، و اپراتورهای موبایل هم اغلب مشتری‌های زیادی را پشت یک IP می‌گذارند. دوستانی که یک کانفیگ را روی یک شبکه یا یک اپراتور با هم شریک‌اند، ممکن است همه وصل شوند.</p>
+                                <p><strong>پشت CDN یا رله به تنظیم روی نود نیاز دارد.</strong> بدون آن، اتصال‌ها از آدرس‌های CDN یا رله می‌رسند؛ پس یک دستگاه ممکن است چند دستگاه به نظر برسد و تصادفی رد شود، و اپ حتی می‌تواند آدرس دلخواهی جا بزند. پیش از محدود کردن کاربران روی چنین اینباندی، <a href="#ip-limit-cdn">لیمیت IP پشت CDN</a> را دنبال کنید.</p>
+                                <p><strong>نودها باید نسخه‌ی فعلی نود Umiji را داشته باشند.</strong> نودی با نسخه‌ی قدیمی‌تر یا هسته‌ی معمولی Xray اصلاً این لیمیت را اعمال نمی‌کند. پنل فقط یک هشدار در لاگش می‌نویسد.</p>
+                                <p><strong>بعضی مسیرها از آن رد نمی‌شوند.</strong> <a href="#bulk">عملیات گروهی</a> هیچ‌وقت لیمیت نمی‌گذارد. روی انتقال‌های مبتنی بر UDP مثل mKCP، دستگاهی که وارد شده قطع نمی‌شود و فقط دفعه‌ی بعد رد می‌شود.</p>
+                                <div class="related"><a href="#ip-limit">لیمیت IP هم‌زمان</a><a href="#hwid">لیمیت دستگاه HWID</a></div>
+                            </article>
+                            <article class="concept" id="ip-limit-cdn">
+                                <h3>لیمیت IP پشت CDN <a class="anchor" href="#ip-limit-cdn" aria-label="لینک به این مفهوم">#</a> <span class="who">بتا</span></h3>
+                                <span class="where">پروفایل کانفیگ › اینباند › Sockopt · nginx روی نود</span>
+                                <p>وقتی اینباندی پشت CDN است، مثلاً Cloudflare، کاربران به CDN وصل می‌شوند و CDN به نود. آن وقت نود آدرس‌های CDN را می‌بیند که از یک اتصال به اتصال بعد عوض می‌شوند؛ پس <a href="#ip-limit">لیمیت IP هم‌زمان</a> یک گوشی را چند دستگاه حساب می‌کند و تصادفی ردش می‌کند. دو تغییر روی نود، IP واقعی هر کاربر را به آن می‌رساند.</p>
+                                <p>فقط انتقال‌های HTTP از CDN رد می‌شوند، یعنی XHTTP و WebSocket و HTTPUpgrade و gRPC. اینباندهای RAW با <a href="#reality">REALITY</a> و اینباند <a href="#mtproto">MTProto</a> مستقیم به نود می‌رسند و از قبل IP واقعی را می‌بینند.</p>
+                                <p><strong>اول، بگذارید Xray آدرس IP را از هدر بخواند.</strong> در پروفایل کانفیگ، اینباند را باز کنید، بخش <strong>Sockopt</strong> را پیدا کنید و <code>X-Forwarded-For</code> را به <strong>Trusted X-Forwarded-For</strong> اضافه کنید. <strong>Listen</strong> را هم روی <code>127.0.0.1</code> بگذارید تا فقط nginx روی همان سرور به اینباند برسد. در JSON:</p>
+                                <pre data-copy><code>"listen": "127.0.0.1",
+"port": 10001,
+"streamSettings": {
+  "network": "xhttp",
+  "xhttpSettings": { "path": "/xh" },
+  "sockopt": { "trustedXForwardedFor": ["X-Forwarded-For"] }
+}</code></pre>
+                                <p><strong>دوم، nginx را روی نود جلوی Xray بگذارید.</strong> Xray اولین آدرس داخل <code>X-Forwarded-For</code> را برمی‌دارد، و خود اپ هم می‌تواند همان را بنویسد: CDN هرچه اپ فرستاده نگه می‌دارد و آدرس واقعی را بعد از آن اضافه می‌کند. کسی که کانفیگی را با دیگران شریک است می‌تواند همه‌ی دستگاه‌ها را با یک آدرس جا بزند و از لیمیت رد شود. nginx روی نود فقط به CDN اعتماد می‌کند، هدر را از آخر به اول می‌خواند تا آدرس واقعی را پیدا کند، و فقط همان یکی را به Xray می‌دهد.</p>
+                                <pre data-copy><code>map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
+
+<span class="c"># <span dir="rtl">رنج‌های CDN، هر کدام در یک خط. Cloudflare آن‌ها را در <bdi>https://www.cloudflare.com/ips/</bdi> فهرست کرده است</span></span>
+set_real_ip_from 173.245.48.0/20;
+set_real_ip_from 2400:cb00::/32;
+<span class="c"># <span dir="rtl">…بقیه‌ی رنج‌ها</span></span>
+real_ip_header X-Forwarded-For;
+real_ip_recursive on;
+
+server {
+    listen 443 ssl http2;
+    server_name node1.example.com;
+    ssl_certificate     /etc/letsencrypt/live/node1.example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/node1.example.com/privkey.pem;
+
+    <span class="c"># <span dir="rtl">XHTTP: اینباند روی <bdi>127.0.0.1:10001</bdi> با مسیر <bdi>/xh</bdi></span></span>
+    location /xh {
+        proxy_pass http://127.0.0.1:10001;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_buffering off;
+        proxy_request_buffering off;
+        client_max_body_size 0;
+        proxy_read_timeout 1h;
+    }
+
+    <span class="c"># <span dir="rtl">WebSocket یا HTTPUpgrade: اینباند روی <bdi>127.0.0.1:10002</bdi> با مسیر <bdi>/ws</bdi></span></span>
+    location /ws {
+        proxy_pass http://127.0.0.1:10002;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_read_timeout 1h;
+    }
+
+    <span class="c"># <span dir="rtl">gRPC: اینباند روی <bdi>127.0.0.1:10003</bdi> با نام سرویس <bdi>gr</bdi></span></span>
+    location /gr {
+        grpc_pass grpc://127.0.0.1:10003;
+        grpc_set_header X-Forwarded-For $remote_addr;
+        grpc_read_timeout 1h;
+        client_max_body_size 0;
+    }
+}</code></pre>
+                                <p>اول برای دامنه‌ی نود گواهی بگیرید، با <code>certbot certonly --nginx -d node1.example.com</code> (تا وقتی اجرا می‌شود، <code>Always Use HTTPS</code> را در Cloudflare خاموش کنید) یا با گواهی Origin خود Cloudflare. بعد <code>nginx -t &amp;&amp; systemctl reload nginx</code> را اجرا کنید. در تنظیمات Cloudflare حالت SSL را روی <code>Full (strict)</code> بگذارید و اگر gRPC دارید، آن را در بخش Network روشن کنید. فقط بلوک‌های <code>location</code> لازم را نگه دارید، با پورت‌ها و مسیرهای اینباندهای خودتان.</p>
+                                <p><strong>سوم، هاست را به CDN وصل کنید.</strong> <a href="#host">هاست</a> آن اینباند، دامنه‌ی CDN را به‌عنوان آدرس، پورت 443، TLS و همان مسیر یا نام سرویس دارد.</p>
+                                <p><strong>بررسی.</strong> با یک گوشی وصل شوید و <a href="#sessions">کاوشگر نشست‌ها</a> را باز کنید: کاربر باید با IP واقعی گوشی دیده شود، نه با آدرس CDN. اگر آدرس‌های CDN را می‌بینید، گام اول جا مانده است.</p>
+                                <p><strong>سرور رله‌ای که جلوی نود فقط TCP را جابه‌جا می‌کند</strong> هم IPها را همین‌طور پنهان می‌کند. اگر رله می‌تواند پروتکل PROXY بفرستد، مثل <code>send-proxy</code> در HAProxy یا <code>proxy_protocol on</code> در بلوک <code>stream</code> در nginx، گزینه‌ی <strong>Accept Proxy Protocol</strong> را در <strong>Sockopt</strong> اینباند روشن کنید. آن وقت اینباند فقط اتصال‌هایی را می‌پذیرد که با همین هدر شروع می‌شوند؛ پس در فایروال نود فقط به رله اجازه دهید به پورتش برسد، وگرنه هر کسی می‌تواند هر آدرسی را جا بزند.</p>
+                                <div class="related"><a href="#ip-limit">لیمیت IP هم‌زمان</a><a href="#ip-limit-risks">خطرهای لیمیت IP</a><a href="#host">هاست</a></div>
+                            </article>
+                            <article class="concept" id="tags">
+                                <h3>برچسب و توضیحات <a class="anchor" href="#tags" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>برچسب، مثل <code>PREMIUM</code>، کاربران را برای مرتب‌سازی و فیلتر کردن علامت‌گذاری می‌کند و در فهرست کاربرها کنار نامشان دیده می‌شود. توضیحات یادداشتی آزاد است که فقط شما می‌بینید.</p>
+                            </article>
+                            <article class="concept" id="bulk">
+                                <h3>عملیات گروهی <a class="anchor" href="#bulk" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>کاربران را با چک‌باکس‌ها انتخاب کنید تا چند نفر را یک‌جا ویرایش کنید، ترافیکشان را بازنشانی کنید، اشتراکشان را لغو کنید، تاریخ انقضایشان را تمدید کنید یا حذفشان کنید. منوی ⋮ کنار «ایجاد» همین عملیات را برای همه‌ی کاربران دارد. کارهای گروهی در پس‌زمینه اجرا می‌شوند و پنل وقتی در صف قرار گرفتند خبرتان می‌کند.</p>
+                            </article>
+                            <article class="concept" id="internal-squad">
+                                <h3>اسکواد داخلی <a class="anchor" href="#internal-squad" aria-label="لینک به این مفهوم">#</a> <span class="who">مالک</span></h3>
+                                <span class="where">منو ‹ اسکوادهای داخلی</span>
+                                <p>گروهی از کاربران و اینباندهایی که می‌توانند استفاده کنند. کنترل دسترسی از همین‌جاست: کاربر فقط هاست‌های اینباندهایی را می‌گیرد که در اسکوادهایش هستند. یک کاربر می‌تواند عضو چند اسکواد باشد و مجموع هر آنچه آن اسکوادها اجازه می‌دهند را می‌گیرد.</p>
+                                <p>مثلاً یک اسکواد <code>Free</code> با یک کشور و یک اسکواد <code>Premium</code> با بقیه‌ی کشورها بسازید. کاربران رایگان عضو Free می‌شوند و کاربران پولی عضو هر دو. کارت اسکواد اعضا و اینباندهایش را نشان می‌دهد و از منوی آن می‌توانید همه‌ی کاربران را یک‌جا اضافه یا حذف کنید.</p>
+                                <p>فروشنده‌ها فقط اسکوادهایی را می‌بینند که شما اجازه داده‌اید، آن هم با کشور و پروتکل، بدون جزئیات نودها.</p>
+                                <div class="related"><a href="#inbound">اینباند</a><a href="#external-squad">اسکواد خارجی</a><a href="#broker">فروشنده</a></div>
+                            </article>
+                            <article class="concept" id="external-squad">
+                                <h3>اسکواد خارجی <a class="anchor" href="#external-squad" aria-label="لینک به این مفهوم">#</a> <span class="who">مالک</span></h3>
+                                <span class="where">منو ‹ اسکوادهای خارجی</span>
+                                <p>اسکواد داخلی تعیین می‌کند کاربر به <em>چه چیزی</em> دسترسی دارد؛ اسکواد خارجی تعیین می‌کند اشتراکش <em>چطور</em> ساخته شود. هر کاربر حداکثر یک اسکواد خارجی دارد. بدون آن، تنظیمات سراسری اشتراک و قالب‌های پیش‌فرض اعمال می‌شوند.</p>
+                                <dl>
+                                    <dt>الگوها</dt><dd>برای این گروه، برای هر نوع کلاینت قالب دیگری انتخاب کنید.</dd>
+                                    <dt>تنظیمات</dt><dd>تنظیمات اشتراک را بازنویسی کنید، مثل عنوان پروفایل. بازنویسی‌ای که مقدارش خالی باشد هم بازنویسی حساب می‌شود؛ برای برگرداندنش، با آیکون سطل زباله حذفش کنید.</dd>
+                                    <dt>هاست‌ها</dt><dd>فیلدهای هاست را برای همه‌ی هاست‌هایی که این کاربران می‌گیرند بازنویسی کنید.</dd>
+                                    <dt>صفحه اشتراک</dt><dd>اینکه این کاربران کدام صفحه را ببینند.</dd>
+                                </dl>
+                                <p>هر فروشنده یک اسکواد خارجی مخصوص خودش دارد که هم‌نام خودش است، تا کاربرانش همیشه صفحه و تنظیمات همان فروشنده را بگیرند.</p>
+                                <div class="related"><a href="#templates">قالب‌ها</a><a href="#response-rules">قوانین پاسخ</a><a href="#broker">فروشنده</a></div>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- NODES -->
+                    <section class="group-block" id="nodes">
+                        <div class="group-title">
+                            <h2>نودها</h2>
+                        </div>
+                        <p>سرورهایی که ترافیک را جابه‌جا می‌کنند. منو ‹ نودها.</p>
+                        <div class="concepts">
+                            <article class="concept" id="node">
+                                <h3>نود <a class="anchor" href="#node" aria-label="لینک به این مفهوم">#</a> <span class="who">مالک</span></h3>
+                                <span class="where">نودها ‹ ایجاد</span>
+                                <p>سروری که نود Umiji روی آن اجرا می‌شود: یک کانتینر کوچک Docker با Xray-core داخلش. پنل از طریق یک اتصال mTLS روی پورت نود با آن حرف می‌زند، پروفایل کانفیگ و کاربرانش را برایش می‌فرستد و ترافیک را از آن می‌خواند.</p>
+                                <dl>
+                                    <dt>نام داخلی</dt><dd>فقط خودتان می‌بینید.</dd>
+                                    <dt>کشور</dt><dd>پرچم نود را در فهرست تعیین می‌کند.</dd>
+                                    <dt>آدرس، پورت نود</dt><dd>جایی که پنل به نود دسترسی پیدا می‌کند. پورت به‌طور پیش‌فرض 2222 است و باید برای پنل باز باشد.</dd>
+                                    <dt>پیکربندی هسته</dt><dd>پروفایل کانفیگی که نود اجرا می‌کند و اینکه کدام اینباندهایش روشن باشند.</dd>
+                                    <dt>حد مصرف</dt><dd>سقف اختیاری ترافیک برای کل نود.</dd>
+                                </dl>
+                                <p>فهرست نودها وضعیت هر نود، کاربران آنلاین، بار، ترافیک و نسخه‌ی Xray را نشان می‌دهد. نقطه‌ی قرمز یعنی پنل به نود دسترسی ندارد.</p>
+                                <div class="related"><a href="#auto-install">نصب خودکار</a><a href="#config-profile">پروفایل کانفیگ</a><a href="#ssh">ترمینال SSH</a></div>
+                            </article>
+                            <article class="concept" id="auto-install">
+                                <h3>نصب خودکار <a class="anchor" href="#auto-install" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">نودها ‹ ایجاد ‹ نصب خودکار</span>
+                                <p>IP سرور، پورت SSH و رمز root را به پنل بدهید. پنل با SSH وارد می‌شود، سیستم را بررسی می‌کند، Docker را راه می‌اندازد، <code>docker-compose.yml</code> نود را می‌نویسد، نود را اجرا می‌کند، بررسی می‌کند که به آن دسترسی دارد و آن را به پنل اضافه می‌کند. هر مرحله را با خروجی زنده می‌بینید.</p>
+                                <p>رمز فقط یک بار استفاده می‌شود و هرگز ذخیره نمی‌شود. سرور باید Linux روی x86_64 یا ARM64 داشته باشد و ورود با root ممکن باشد. اگر نصب در مرحله‌ی ارتباط با پنل متوقف شد، پورت نود را در فایروال سرور باز کنید. اگر پنجره را ببندید، نصب ادامه پیدا می‌کند.</p>
+                            </article>
+                            <article class="concept" id="manual-setup">
+                                <h3>راه‌اندازی دستی <a class="anchor" href="#manual-setup" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">نودها ‹ ایجاد ‹ راه‌اندازی دستی</span>
+                                <p>پنل یک <code>docker-compose.yml</code> همراه با کلید مخفی نود نشان می‌دهد. آن را روی سرور کپی می‌کنید و خودتان اجرا می‌کنید، و پنل صبر می‌کند تا نود وصل شود و پیام «هسته Xray درحال اجرا می‌باشد!» را نشان دهد.</p>
+                            </article>
+                            <article class="concept" id="consumption">
+                                <h3>ضریب مصرف <a class="anchor" href="#consumption" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>ترافیک روی یک نود را بیشتر یا کمتر از مقدار واقعی‌اش حساب می‌کند: 1.0 عادی است، 0.5 نصف حساب می‌کند و 2.0 دو برابر. با محدودیت 1 GiB و نودی با ضریب 2.0، کاربر در واقع فقط 0.5 GiB می‌تواند روی آن نود مصرف کند. وقتی هزینه‌ی بعضی سرورها از بقیه بیشتر است به کار می‌آید.</p>
+                            </article>
+                            <article class="concept" id="node-proxy">
+                                <h3>پروکسی نود <a class="anchor" href="#node-proxy" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>اگر پنل نمی‌تواند مستقیم به یک نود برسد، <strong>آدرس پروکسی</strong> نود را روی یک پروکسی <code>socks5://</code> یا <code>http://</code> بگذارید. از آن به بعد پنل فقط از طریق همان پروکسی با آن نود حرف می‌زند. پروکسی‌ای که روی سرور خود پنل است باید روی آدرس Docker گوش دهد، نه فقط روی <code>127.0.0.1</code>.</p>
+                            </article>
+                            <article class="concept" id="ssh">
+                                <h3>ترمینال SSH <a class="anchor" href="#ssh" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>یک شل روی نود، داخل مرورگر، روی کامپیوتر یا گوشی. هر نود کلید مخصوص خودش را دارد که در مرورگر شما ساخته می‌شود و همان‌جا در یک گاوصندوق رمزگذاری‌شده می‌ماند. پنل هرگز کلیدهای خصوصی را نمی‌بیند.</p>
+                                <p>عبارت بازیابی 12 کلمه‌ای را یادداشت کنید: تنها راه بازگرداندن کلیدهاست. می‌توانید از آن‌ها پشتیبان رمزگذاری‌شده بگیرید، و اگر کلید میزبان (host key) یک سرور عوض شود، ترمینال به شما هشدار می‌دهد.</p>
+                            </article>
+                            <article class="concept" id="plugins">
+                                <h3>پلاگین‌ها <a class="anchor" href="#plugins" aria-label="لینک به این مفهوم">#</a> <span class="who">بتا</span></h3>
+                                <span class="where">منو ‹ نودها ‹ پلاگین‌ها</span>
+                                <p>افزونه‌هایی که کنار Xray روی نودهایتان اجرا می‌شوند، مثل مسدودکننده‌ی تورنت که <a href="#torrent-reports">گزارش‌های Torrent Blocker</a> را پر می‌کند. یک لیست مشترک می‌تواند به چند پلاگین داده شود، و همگام‌سازی تغییرات را به همه‌ی نودهایی که از آن استفاده می‌کنند می‌فرستد. این یک قابلیت پیشرفته است، پس پیش از روشن کردن هر پلاگین توضیحاتش را بخوانید.</p>
+                            </article>
+                            <article class="concept" id="node-stats">
+                                <h3>آمار و متریک‌ها <a class="anchor" href="#node-stats" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">منو ‹ نودها ‹ آمار نودها · آمار</span>
+                                <p><strong>آمار نودها</strong> ترافیک هر نود را در بازه‌ای که انتخاب می‌کنید نشان می‌دهد. <strong>آمار</strong> (متریک‌ها) عددهایی را نشان می‌دهد که نودها همین حالا گزارش می‌کنند.</p>
+                            </article>
+                            <article class="concept" id="infra-billing">
+                                <h3>صورتحساب‌های تجهیزات <a class="anchor" href="#infra-billing" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">منو ‹ نودها ‹ صورتحساب‌های تجهیزات</span>
+                                <p>دفتری برای هزینه‌ی سرورهایتان و موعد پرداخت‌ها. ارائه‌دهندگان هاستینگ را اضافه کنید، نودها را با قیمت و تاریخ پرداخت بعدی به آن‌ها وصل کنید، و هر پرداخت را در تاریخچه ثبت کنید.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- CONFIG PROFILES -->
+                    <section class="group-block" id="profiles">
+                        <div class="group-title">
+                            <h2>پروفایل‌های کانفیگ</h2>
+                        </div>
+                        <p>تنظیمات Xray که نودهایتان اجرا می‌کنند. منو ‹ پروفایل‌های کانفیگ.</p>
+                        <div class="concepts">
+                            <article class="concept" id="config-profile">
+                                <h3>پروفایل کانفیگ <a class="anchor" href="#config-profile" aria-label="لینک به این مفهوم">#</a> <span class="who">مالک</span></h3>
+                                <p>یک کانفیگ کامل سرور Xray: اینباندها، اوتباندها، مسیریابی، DNS و بقیه. هر نود یک پروفایل اجرا می‌کند و چند نود می‌توانند از یک پروفایل مشترک استفاده کنند. Umiji کاربران اینباندهای مدیریت‌شده را خودش پر می‌کند، پس هیچ پروفایلی خودش فهرست کاربران ندارد.</p>
+                                <p>کارت پروفایل نشان می‌دهد چند اینباند دارد و چند نود آن را اجرا می‌کنند. روی هر دو می‌شود کلیک کرد.</p>
+                                <div class="related"><a href="#editor">ویرایشگر</a><a href="#inbound">اینباند</a><a href="#snippets">قطعه کدها</a></div>
+                            </article>
+                            <article class="concept" id="editor">
+                                <h3>ویرایشگر بصری و JSON <a class="anchor" href="#editor" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>پروفایل در <strong>ویرایشگر بصری</strong> باز می‌شود: فرم‌هایی برای همه‌ی فیلدهای Xray، در بخش‌های اینباندها، اوتباندها، مسیریابی، DNS، لاگ، سیاست‌ها، Observatory، FakeDNS، Geodata و پیشرفته. زبانه‌ی <strong>JSON</strong> همان کانفیگ را به‌صورت متن نشان می‌دهد و با بردن نشانگر روی هر فیلد، مستندات Xray را می‌بینید. هر دو یک سند را ویرایش می‌کنند و برگرداندن تغییرات (Undo) بین آن‌ها کار می‌کند.</p>
+                                <p>یک هسته‌ی سبک Xray در مرورگرتان هر تغییر را بررسی می‌کند. نقطه‌های قرمز شما را تا فیلدی که جا افتاده یا اشتباه است راهنمایی می‌کنند. <strong>ذخیره کانفیگ نامعتبر</strong> این بررسی را نادیده می‌گیرد، برای موارد نادری که مطمئنید حق با شماست. منوی ☰ کنار «ذخیره» کانفیگ را کپی می‌کند، جفت‌کلید می‌سازد و نمونه‌کانفیگ‌ها را از GitHub می‌آورد.</p>
+                            </article>
+                            <article class="concept" id="inbound">
+                                <h3>اینباند <a class="anchor" href="#inbound" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">پروفایل کانفیگ ‹ اینباندها ‹ اینباند جدید</span>
+                                <p>پورتی که نود روی آن گوش می‌دهد، همراه با یک پروتکل و تنظیماتش. <strong>Tag</strong> آن یک نام یکتاست: هاست‌ها، اسکوادها و نودها همه با همین Tag به اینباند اشاره می‌کنند. هر اینباند زبانه‌های عمومی، تنظیمات، انتقال، امنیت، سوکت، Finalmask و Sniffing دارد.</p>
+                                <p>اینباند تا وقتی یک نود روشنش نکند، هاستی به آن اشاره نکند و اسکوادی آن را شامل نشود، برای کاربران کاری انجام نمی‌دهد.</p>
+                                <div class="related"><a href="#protocols">پروتکل‌ها</a><a href="#host">هاست</a><a href="#internal-squad">اسکواد داخلی</a></div>
+                            </article>
+                            <article class="concept" id="protocols">
+                                <h3>پروتکل‌ها <a class="anchor" href="#protocols" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>Umiji کاربران این اینباندها را خودش مدیریت می‌کند:</p>
+                                <dl>
+                                    <dt>VLESS</dt><dd>سبک و مدرن. با REALITY یا XHTTP به کار ببرید. معمولاً اولین انتخاب است.</dd>
+                                    <dt>Trojan</dt><dd>مبتنی بر رمز و شبیه HTTPS. به TLS نیاز دارد.</dd>
+                                    <dt>Shadowsocks</dt><dd>یک پروکسی رمزنگاری‌شده‌ی ساده. روش‌های رمزنگاری سری 2022 پیشنهاد می‌شوند.</dd>
+                                    <dt>Hysteria 2</dt><dd>مبتنی بر QUIC و سریع روی شبکه‌هایی که بسته زیاد گم می‌کنند. به TLS نیاز دارد.</dd>
+                                    <dt>MTProto</dt><dd>پروکسی تلگرام. <a href="#mtproto">MTProto</a> را ببینید.</dd>
+                                </dl>
+                                <p>اینباندهای Mixed (SOCKS5 و HTTP)، HTTP، Tunnel، WireGuard و TUN هم کار می‌کنند، اما Umiji آن‌ها را دقیقاً همان‌طور که نوشته‌اید به Xray می‌دهد و کاربرانشان را مدیریت نمی‌کند.</p>
+                            </article>
+                            <article class="concept" id="transport">
+                                <h3>انتقال (Transport) <a class="anchor" href="#transport" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">اینباند ‹ انتقال</span>
+                                <p>شیوه‌ی جابه‌جا شدن بایت‌های پروتکل: RAW (همان TCP ساده)، XHTTP، WebSocket، HTTPUpgrade، gRPC یا mKCP. بعضی از آن‌ها از CDNها و پروکسی‌های HTTP عبور می‌کنند (WebSocket، HTTPUpgrade، gRPC، XHTTP) و بقیه مستقیم به نود می‌روند. هاست انتقال را از اینباند به ارث می‌برد، پس برنامه‌ها خودبه‌خود آن را درست دریافت می‌کنند.</p>
+                            </article>
+                            <article class="concept" id="reality">
+                                <h3>REALITY و TLS <a class="anchor" href="#reality" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">اینباند ‹ امنیت</span>
+                                <p><strong>REALITY</strong> نه گواهی می‌خواهد و نه دامنه‌ی شخصی. TLS یک وب‌سایت واقعی، یعنی <strong>Target</strong>، را قرض می‌گیرد تا برای ناظر، اتصال شبیه بازدید از همان سایت باشد. <strong>Server names</strong> نام‌هایی است که کلاینت‌ها اجازه دارند استفاده کنند و مثل رمز عبور عمل می‌کند: هاستی که از نامی بیرون از این فهرست استفاده کند وصل نمی‌شود. Private key و Short IDها برایتان ساخته می‌شوند.</p>
+                                <p><strong>TLS</strong> از دامنه و گواهی خودتان استفاده می‌کند و همان چیزی است که Trojan و Hysteria 2 لازم دارند. برای VLESS روی TLS یا REALITY روی RAW، Umiji به‌طور پیش‌فرض flow <code>xtls-rprx-vision</code> را اضافه می‌کند.</p>
+                                <div class="related"><a href="#keys">ساختن کلید</a><a href="#host-options">گزینه‌های هاست</a></div>
+                            </article>
+                            <article class="concept" id="keys">
+                                <h3>ساختن کلید <a class="anchor" href="#keys" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>جفت‌کلیدها در مرورگر خودتان ساخته می‌شوند. از دکمه‌ی ستاره‌ای داخل فیلد استفاده کنید، یا از <strong>ایجاد جفت‌کلید</strong> در منوی ☰ ویرایشگر. علاوه بر کلیدهای x25519 برای REALITY، کلیدهای ML-DSA-65 و ML-KEM-768 را هم برای رمزنگاری VLESS می‌سازد.</p>
+                            </article>
+                            <article class="concept" id="mtproto">
+                                <h3>MTProto (پروکسی تلگرام) <a class="anchor" href="#mtproto" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>اینباندی که مثل پروکسی تلگرام کار می‌کند. از بیرون شبیه یک سایت HTTPS معمولی است و کاربران آن را مستقیم داخل خود تلگرام اضافه می‌کنند، بدون هیچ برنامه‌ی VPN. هر کاربر secret مخصوص خودش را می‌گیرد، پس مصرف مثل هر اینباند دیگری برای هر کاربر جدا شمرده می‌شود، و لغو اشتراک کاربر آن را عوض می‌کند.</p>
+                                <p>فقط تنظیماتی را می‌پذیرد که برنامه‌ی تلگرام می‌تواند استفاده کند، برای همین بیشتر فیلدها قفل‌اند. برنامه‌های VPN این هاست‌ها را هرگز دریافت نمی‌کنند و صفحه‌ی اشتراک لینک <code>tg://</code> را نشان می‌دهد. <strong>کانال اسپانسر</strong> را، که از <bdi>@MTProxybot</bdi> می‌گیرید، می‌توان روی اینباند یا برای هر کاربر تنظیم کرد، و فروشنده‌ها آن را برای کاربران خودشان تنظیم می‌کنند. تگ کاربر بر تگ اینباند مقدم است.</p>
+                            </article>
+                            <article class="concept" id="snippets">
+                                <h3>قطعه کدها <a class="anchor" href="#snippets" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>تکه‌هایی از کانفیگ که بین چند پروفایل مشترک‌اند. یک اوتباند یا یک قانون مسیریابی را یک بار به‌صورت قطعه کد تعریف کنید، بعد در <code>outbounds</code> یا <code>rules</code> هر پروفایلی بنویسید <code>{ "snippet": "name" }</code>. اگر قطعه کد را عوض کنید، همه‌ی پروفایل‌هایی که از آن استفاده می‌کنند هم عوض می‌شوند.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- SUBSCRIPTION -->
+                    <section class="group-block" id="subscription">
+                        <div class="group-title">
+                            <h2>اشتراک</h2>
+                        </div>
+                        <p>آنچه کاربران وقتی برنامه‌شان اشتراک را درخواست می‌کند دریافت می‌کنند. منو ‹ اشتراک.</p>
+                        <div class="concepts">
+                            <article class="concept" id="host">
+                                <h3>هاست <a class="anchor" href="#host" aria-label="لینک به این مفهوم">#</a> <span class="who">مالک</span></h3>
+                                <span class="where">منو ‹ اشتراک ‹ هاست‌ها</span>
+                                <p>سمت کلاینت یک اینباند. هاست یک مدخل در برنامه‌ی کاربر است: یک نام، یک آدرس و یک پورت، به‌علاوه‌ی هر چیزی که از اینباندش به ارث می‌برد. اشتراک یعنی فهرست هاست‌هایی که کاربر اجازه‌ی استفاده از آن‌ها را دارد.</p>
+                                <dl>
+                                    <dt>قابلیت دیده شدن هاست</dt><dd>برای هاست تازه خاموش است. روشنش کنید تا هاست در اشتراک‌ها قرار بگیرد.</dd>
+                                    <dt>نام</dt><dd>اسمی که کاربران می‌بینند. ایموجی پرچم در ابتدای آن به شکل پرچم نشان داده می‌شود.</dd>
+                                    <dt>اینباند</dt><dd>اجباری است. هاست پروتکل، انتقال و امنیتش را از آن می‌گیرد.</dd>
+                                    <dt>آدرس، پورت</dt><dd>معمولاً دامنه یا IP نود و پورت اینباند. اگر چند دامنه را با کاما جدا کنید، هر درخواست یکی از آن‌ها را به‌طور تصادفی می‌گیرد.</dd>
+                                </dl>
+                                <p>خاموش کردن هاست کسی را فوراً قطع نمی‌کند: کاربرانی که آن را دارند، تا وقتی برنامه‌شان اشتراک را به‌روز نکند، همچنان وصل می‌شوند.</p>
+                                <div class="related"><a href="#host-options">گزینه‌های هاست</a><a href="#inbound">اینباند</a></div>
+                            </article>
+                            <article class="concept" id="host-options">
+                                <h3>گزینه‌های هاست <a class="anchor" href="#host-options" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">هاست ‹ گزینه‌ها ‹ افزودن</span>
+                                <p>تنظیمات اضافه برای موارد خاص. هاست تازه بدون هیچ‌کدام از آن‌ها کار می‌کند و یک گزینه‌ی اشتباه می‌تواند اتصال را قطع کند، پس فقط آنچه لازم دارید اضافه کنید.</p>
+                                <dl>
+                                    <dt>SNI</dt><dd>نام سرور را بازنویسی می‌کند. با REALITY باید یکی از Server names اینباند باشد.</dd>
+                                    <dt>بازنویسی SNI از آدرس دامنه</dt><dd>آدرس را به‌عنوان SNI به کار می‌برد. با چند دامنه یا دامنه‌ی wildcard به درد می‌خورد.</dd>
+                                    <dt>SNI خالی بماند</dt><dd>SNI را اجباراً خالی می‌کند و بر همه‌ی تنظیمات دیگر SNI مقدم است.</dd>
+                                    <dt>مخفی کردن هاست</dt><dd>هاست در اشتراک‌های معمولی نمی‌آید. قالب‌های Mihomo، Xray JSON پیشرفته و خام همچنان می‌توانند از آن استفاده کنند.</dd>
+                                    <dt>به هم زدن هاست‌ها</dt><dd>هاست‌هایی که این گزینه را دارند، با ترتیب تصادفی به بالای فهرست می‌روند.</dd>
+                                    <dt>شناسه مسیر VLESS</dt><dd>اتصال را علامت‌گذاری می‌کند تا مسیریابی پروفایل بتواند آن را به مسیر خاصی بفرستد.</dd>
+                                    <dt>نودها</dt><dd>پیوندی نمایشی به نودها، فقط برای راحتی خودتان. چیزی را تغییر نمی‌دهد.</dd>
+                                </dl>
+                            </article>
+                            <article class="concept" id="templates">
+                                <h3>قالب‌ها <a class="anchor" href="#templates" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">منو ‹ اشتراک ‹ قالب‌ها</span>
+                                <p>کانفیگ‌های پایه‌ای که Umiji اشتراک را از آن‌ها می‌سازد، یک مجموعه برای هر نوع کلاینت: <strong>Xray JSON</strong>، <strong>Mihomo</strong>، <strong>Stash</strong>، <strong>Singbox</strong> و <strong>Clash</strong>. Umiji تشخیص می‌دهد چه نوع برنامه‌ای درخواست داده و قالب همان نوع را با هاست‌های کاربر پر می‌کند. قوانین مسیریابی، DNS و تنظیمات برنامه این‌جا تعریف می‌شوند.</p>
+                                <p>هر نوع یک قالب <strong>Default</strong> دارد. می‌توانید قالب‌های بیشتری اضافه کنید و آن‌ها را از طریق یک <a href="#external-squad">اسکواد خارجی</a> یا یک <a href="#response-rules">قانون پاسخ</a> به گروه‌ها بدهید؛ قانون پاسخ بر اسکواد خارجی مقدم است.</p>
+                            </article>
+                            <article class="concept" id="subscription-settings">
+                                <h3>تنظیمات اشتراک <a class="anchor" href="#subscription-settings" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">منو ‹ اشتراک ‹ تنظیمات اشتراک</span>
+                                <p>رفتار اشتراک برای همه‌ی کاربران. اسکوادهای خارجی می‌توانند هر کدام از این‌ها را برای یک گروه بازنویسی کنند.</p>
+                                <dl>
+                                    <dt>ارائه JSON در لینک پایه پیشفرض</dt><dd>برنامه‌هایی که از JSON پشتیبانی می‌کنند، آن را از همان لینک ساده می‌گیرند، بدون افزودن <code>/json</code>.</dd>
+                                    <dt>هاست رندوم</dt><dd>ترتیب فهرست هاست‌ها را در هر پاسخ به هم می‌زند.</dd>
+                                    <dt>نمایش توضیحات سفارشی</dt><dd>کاربران منقضی، محدود و غیرفعال به جای فهرست خالی، پیام‌های شما را به شکل مدخل‌هایی در برنامه‌شان می‌بینند.</dd>
+                                    <dt>تنظیمات HWID</dt><dd>کلید روشن و خاموش محدودیت دستگاه، سقف پیش‌فرض و پیام‌ها. <a href="#hwid">HWID</a> را ببینید.</dd>
+                                    <dt>هدرهای پاسخ</dt><dd>مدخل بعدی را ببینید.</dd>
+                                </dl>
+                            </article>
+                            <article class="concept" id="response-headers">
+                                <h3>هدرهای پاسخ <a class="anchor" href="#response-headers" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">اشتراک ‹ تنظیمات اشتراک ‹ هدرهای پاسخ</span>
+                                <p>هدرهای HTTP که با هر اشتراک فرستاده می‌شوند. بسیاری از برنامه‌ها آن‌ها را می‌خوانند: <code>profile-title</code> نام اشتراک را در برنامه تعیین می‌کند، <code>profile-update-interval</code> فاصله‌ی به‌روزرسانی را به ساعت مشخص می‌کند، و <code>support-url</code> و <code>profile-web-page-url</code> لینک اضافه می‌کنند.</p>
+                                <p>اگر مقداری را با <code>umijiEncodeBase64:</code> شروع کنید، Umiji آن را کدگذاری می‌کند؛ برنامه‌ها برای متن غیرلاتین، مثل یک عنوان فارسی، به این کدگذاری نیاز دارند. <code>{{SUBSCRIPTION_URL}}</code> با لینک کاربر جایگزین می‌شود.</p>
+                            </article>
+                            <article class="concept" id="response-rules">
+                                <h3>قوانین پاسخ <a class="anchor" href="#response-rules" aria-label="لینک به این مفهوم">#</a> <span class="who">پیشرفته</span></h3>
+                                <span class="where">منو ‹ اشتراک ‹ قوانین پاسخ</span>
+                                <p>تعیین می‌کنند هر کلاینت وقتی اشتراک را درخواست می‌کند چه بگیرد. هر قانون با هدرهای درخواست، مثل User-Agent برنامه، تطبیق داده می‌شود و پاسخ را تعیین می‌کند، مثلاً یک قالب مشخص. قوانین بر بازنویسی‌های اسکواد خارجی مقدم‌اند. دیباگر یک دستور cURL به شما می‌دهد تا ببینید یک درخواست به کدام قانون می‌خورد.</p>
+                                <p>یک قانون اشتباه می‌تواند اشتراک همه را خراب کند، برای همین صفحه پیش از ویرایش از شما تأیید می‌گیرد.</p>
+                            </article>
+                            <article class="concept" id="subscription-page">
+                                <h3>صفحه‌ی اشتراک <a class="anchor" href="#subscription-page" aria-label="لینک به این مفهوم">#</a> <span class="who">مالک · فروشنده · مشتری</span></h3>
+                                <span class="where">منو ‹ اشتراک ‹ صفحه اشتراک</span>
+                                <p>چیزی که کاربران با باز کردن لینکشان در مرورگر می‌بینند. بالای صفحه مصرفشان را به شکل موجی نشان می‌دهد که با مصرف ترافیک پایین می‌رود، همراه با تاریخ انقضا. زیر آن، مراحل نصب برای پلتفرمشان آمده است: کدام برنامه را نصب کنند، دکمه‌ای برای افزودن اشتراک، و نحوه‌ی اتصال. فارسی و انگلیسی از قبل در آن هست.</p>
+                                <p>می‌توانید چند صفحه داشته باشید و برای هر اسکواد خارجی یکی را انتخاب کنید. هر فروشنده صفحه‌ی خودش را برای برندسازی دارد، با یکی از هشت رنگ اصلی: رز، یاقوتی، زمردی، فیروزه‌ای، آسمانی، لاجوردی، بنفش و ارکیده. تغییرات بلافاصله و بدون ری‌استارت دیده می‌شوند.</p>
+                                <div class="related"><a href="#client-app">برنامه‌های کلاینت</a><a href="#broker">فروشنده</a></div>
+                            </article>
+                            <article class="concept" id="client-app">
+                                <h3>برنامه‌های کلاینت <a class="anchor" href="#client-app" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>برنامه‌هایی که کاربرانتان با آن‌ها وصل می‌شوند، مثل Happ، v2rayNG، FlClashX و Clash Meta روی Android. هر کدام لینک اشتراک را وارد می‌کند، هاست‌ها را نشان می‌دهد و به هاستی که کاربر انتخاب کند وصل می‌شود. اینکه صفحه‌ی اشتراک کدام برنامه‌ها و چه مراحل نصبی را پیشنهاد دهد، برای هر پلتفرم در تنظیمات همان صفحه تعیین می‌شود.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- BROKERS -->
+                    <section class="group-block" id="brokers">
+                        <div class="group-title">
+                            <h2>فروشنده‌ها و فروش</h2>
+                        </div>
+                        <p>فروش از طریق نماینده‌ها. منو ‹ کاربرها ‹ فروشنده‌ها، و بخش تلگرام خود فروشنده.</p>
+                        <figure class="shot">
+                            <div class="window">
+                                <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>panel.example.com/dashboard/broker/overview</span></div>
+                                <img src="../../assets/shots/fa/broker-overview.webp" width="1600" height="1000" loading="lazy" alt="صفحه‌ی «نمای کلی» یک فروشنده: سهمیه‌ی ترافیک مصرف‌شده، تعداد کاربران از سقف، انقضای حساب و وضعیت، و بعد کاربران بر اساس وضعیت و آمار آنلاین." />
+                            </div>
+                            <figcaption>اولین چیزی که فروشنده می‌بیند: سهمیه، سقف کاربران و انقضای حسابش.</figcaption>
+                        </figure>
+                        <div class="concepts">
+                            <article class="concept" id="broker">
+                                <h3>فروشنده <a class="anchor" href="#broker" aria-label="لینک به این مفهوم">#</a> <span class="who">مالک</span></h3>
+                                <span class="where">منو ‹ کاربرها ‹ فروشنده‌ها ‹ ساخت فروشنده</span>
+                                <p>حسابی که سرویس شما را می‌فروشد. هر فروشنده فقط کاربران خودش را مدیریت می‌کند، در محدوده‌ای که شما تعیین می‌کنید:</p>
+                                <dl>
+                                    <dt>سهمیه ترافیک</dt><dd>همه‌ی کاربران فروشنده در آن شریک‌اند. وقتی تمام شود، همه‌شان متوقف می‌شوند تا وقتی سهمیه را بالا ببرید یا مصرف را بازنشانی کنید.</dd>
+                                    <dt>سقف کاربران</dt><dd>فروشنده حداکثر چند کاربر می‌تواند داشته باشد.</dd>
+                                    <dt>انقضای حساب</dt><dd>بعد از آن، فروشنده همچنان می‌تواند وارد شود و ببیند، اما نمی‌تواند چیزی را تغییر دهد، و همه‌ی کاربرانش منقضی می‌شوند.</dd>
+                                    <dt>گذرواژه</dt><dd>دست‌کم 24 کاراکتر، با حروف بزرگ و کوچک انگلیسی و عدد.</dd>
+                                </dl>
+                                <p>هر فروشنده یک اسکواد خارجی و یک صفحه‌ی اشتراک مخصوص خودش، هم‌نام خودش، دارد که می‌تواند آن‌ها را با برند خودش شخصی کند. قالب‌ها، هاست‌ها و HWID در اختیار خود شما می‌مانند.</p>
+                                <div class="related"><a href="#broker-panel">پنل فروشنده</a><a href="#telegram-bot">ربات فروشگاه تلگرام</a></div>
+                            </article>
+                            <article class="concept" id="broker-panel">
+                                <h3>پنل فروشنده <a class="anchor" href="#broker-panel" aria-label="لینک به این مفهوم">#</a> <span class="who">فروشنده</span></h3>
+                                <p>فروشنده‌ها با آدرس پنل شما وارد می‌شوند و منوی مخصوص خودشان را دارند: <strong>نمای کلی</strong> با سهمیه، سقف کاربران و انقضا؛ <strong>کاربرها</strong>؛ <strong>اسکوادهای داخلی</strong> مجاز، بر اساس کشور و پروتکل؛ <strong>صفحه اشتراک</strong> و <strong>تنظیمات اشتراک</strong> خودشان؛ صفحه‌های <strong>ربات تلگرام</strong>؛ و <strong>باز کردن سریع</strong>. هشدارها پیش از تمام شدن سهمیه یا حساب به آن‌ها خبر می‌دهند.</p>
+                            </article>
+                            <article class="concept" id="telegram-bot">
+                                <h3>ربات فروشگاه تلگرام <a class="anchor" href="#telegram-bot" aria-label="لینک به این مفهوم">#</a> <span class="who">فروشنده</span></h3>
+                                <span class="where">ربات تلگرام ‹ تنظیمات ربات</span>
+                                <p>هر فروشنده می‌تواند فروشگاهی در تلگرام داشته باشد. مشتری‌ها کیف پولشان را شارژ می‌کنند، بعد با یک لمس پلن می‌خرند و لینک اشتراکشان را در همان چت می‌گیرند. هر اشتراکی که فروخته می‌شود یکی از کاربران فروشنده است و در محدودیت‌های او حساب می‌شود.</p>
+                                <p>برای وصل کردنش: با <bdi>@BotFather</bdi> یک ربات بسازید، یک گروه بسازید و Topics (تاپیک‌ها) را در آن روشن کنید، ربات را ادمینی کنید که بتواند تاپیک‌ها را مدیریت کند، و بعد توکن ربات را وارد کنید. «یافتن شناسه گروه» شناسه‌ی گروه را برایتان پر می‌کند: کافی است در گروه <code>/find</code> را بفرستید. این گروه اتاق کارکنان می‌شود و رسیدها، سفارش‌ها و آمار به آن می‌رسند.</p>
+                                <figure class="shot">
+                                    <div class="window">
+                                        <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>panel.example.com/dashboard/broker/telegram-bot</span></div>
+                                        <img src="../../assets/shots/fa/bot.webp" width="1600" height="1000" loading="lazy" alt="تنظیمات ربات تلگرام: فیلدهای «توکن ربات» و «شناسه چت گروه کارکنان» با دکمه‌ی «ذخیره و اتصال»، و «یافتن شناسه گروه» کنارشان." />
+                                    </div>
+                                </figure>
+                            </article>
+                            <article class="concept" id="plans">
+                                <h3>پلن‌ها و دسته‌بندی‌ها <a class="anchor" href="#plans" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p><strong>پلن</strong> چیزی است که مشتری‌ها می‌خرند: یک محدودیت ترافیک، یک مدت، اسکواد داخلی‌ای که روی آن اجرا می‌شود، <a href="#ip-limit">لیمیت اختیاری دستگاه هم‌زمان</a> (بتا) و قیمتی به تومان. ترافیک 0 یعنی نامحدود، اما همه‌ی آن مصرف از سهمیه‌ی فروشنده کم می‌شود. برای اینکه پلنی را بدون حذف کردن دیگر نفروشید، متوقفش کنید. <strong>دسته‌بندی‌ها</strong> پلن‌ها را در بخش‌های منوی خرید ربات گروه‌بندی می‌کنند.</p>
+                                <p>تا وقتی فروشنده غیرفعال یا منقضی است، سهمیه‌اش تمام شده یا به سقف کاربرانش رسیده، فروش خودبه‌خود متوقف می‌ماند.</p>
+                            </article>
+                            <article class="concept" id="payments">
+                                <h3>کیف پول، پرداخت و رسید <a class="anchor" href="#payments" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>مشتری‌ها از کیف پولی داخل ربات پرداخت می‌کنند. برای شارژ آن، با یکی از روش‌های فروشنده پول واریز می‌کنند (کارت بانکی، کیف پول رمزارز، یا روش‌های دیگر مثل PayPal، Wise، IBAN، SBP یا YooMoney) و عکس رسید را می‌فرستند. کارکنان آن را در گروه یا در صفحه‌ی سفارش‌ها تأیید یا رد می‌کنند و در هر دو حالت به مشتری خبر داده می‌شود. فروشنده‌ها می‌توانند با شناسه‌ی تلگرام مشتری، کیف پولش را دستی هم شارژ کنند.</p>
+                            </article>
+                            <article class="concept" id="orders">
+                                <h3>سفارش‌ها <a class="anchor" href="#orders" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">ربات تلگرام ‹ سفارش‌ها</span>
+                                <p>شارژهایی که منتظر بررسی‌اند، و هر چیزی که ربات فروخته است.</p>
+                            </article>
+                            <article class="concept" id="referrals">
+                                <h3>دعوت از دوستان <a class="anchor" href="#referrals" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>هر مشتری در «🤝 دعوت از دوستان» یک لینک دعوت شخصی دارد. وقتی شارژ کسی که اولین بار ربات را با آن لینک باز کرده تأیید شود، دعوت‌کننده سهمی از آن شارژ می‌گیرد، به درصدی که فروشنده تعیین می‌کند. دعوت فقط یک سطح دارد، و 0٪ آن را خاموش و دکمه‌اش را پنهان می‌کند. اعتباری که دستی از پنل اضافه شود پاداشی ندارد.</p>
+                            </article>
+                            <article class="concept" id="trial">
+                                <h3>تست رایگان <a class="anchor" href="#trial" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>یک پلن آزمایشی رایگان، با ترافیک، مدت، اسکواد و <a href="#ip-limit">لیمیت اختیاری دستگاه هم‌زمان</a> (بتا) مخصوص خودش، که هر حساب تلگرام فقط یک بار می‌تواند در «🎁 تست رایگان» بگیرد. هر تست یکی از کاربران فروشنده است. با بازنشانی، همه‌ی حساب‌ها دوباره می‌توانند آن را بگیرند و تست‌هایی که قبلاً داده شده‌اند همچنان کار می‌کنند.</p>
+                                <p>مدت می‌تواند روز یا ساعت باشد. سقف روزانه‌ی اختیاری، وقتی پر شود، تا پایان آن روز (به وقت UTC) دیگر تستی نمی‌دهد و به مشتری گفته می‌شود فردا برگردد. <strong>حذف کاربران تست منقضی‌شده</strong> هر کاربر تست را یک روز بعد از پایانش حذف می‌کند تا دیگر از سقف کاربران فروشنده کم نکند. روشن کردن آن، تست‌هایی را هم که قبلاً تمام شده‌اند حذف می‌کند، و کاربران تستی که دستی تمدید شده‌اند هم بعد از پایان دوباره حذف می‌شوند.</p>
+                            </article>
+                            <article class="concept" id="channels">
+                                <h3>کانال‌های اجباری <a class="anchor" href="#channels" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>کانال‌هایی که مشتری‌ها پیش از استفاده از ربات باید عضوشان شوند. ربات باید در هر کدام ادمین باشد: اگر نتواند عضویت را بررسی کند، همه را راه می‌دهد. یک لینک کانال عمومی جداگانه هم می‌تواند به شکل دکمه‌ی «📣 کانال ما» کنار «💬 پشتیبانی» نمایش داده شود.</p>
+                            </article>
+                            <article class="concept" id="bot-texts">
+                                <h3>متن‌ها و زبان‌ها <a class="anchor" href="#bot-texts" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">ربات تلگرام ‹ متن‌ها و زبان‌ها</span>
+                                <p>همه‌ی پیام‌هایی که ربات می‌فرستد را می‌توان به هر زبانی که ربات بلد است بازنویسی کرد، با پیش‌نمایش زنده روی گوشی. ربات انگلیسی، فارسی، عربی، روسی، ترکی و چینی ساده‌شده بلد است. فروشنده زبان‌ها را روشن می‌کند و یکی را پیش‌فرض می‌گذارد. مشتری تازه، اگر ربات زبان برنامه‌ی تلگرامش را بلد باشد، با همان زبان شروع می‌کند، و وقتی بیش از یک زبان روشن باشد، دکمه‌ی 🌐 برای عوض کردن زبان دارد. گروه کارکنان همیشه زبان پیش‌فرض را می‌گیرد.</p>
+                            </article>
+                            <article class="concept" id="bot-stats">
+                                <h3>آمار ربات <a class="anchor" href="#bot-stats" aria-label="لینک به این مفهوم">#</a></h3>
+                                <span class="where">ربات تلگرام ‹ آمار</span>
+                                <p>مشتری‌ها، فروش، شارژها، تست‌های رایگان و دعوت‌ها، روزبه‌روز و به وقت UTC. ادمین‌های گروه می‌توانند همین عددها را با <code>/stats</code> بخواهند. هر روز یک خلاصه در تاپیک آمار گروه کارکنان فرستاده می‌شود، و مشتری‌های تازه، خریدها، تست‌ها و پاداش‌ها هم همان لحظه که اتفاق می‌افتند آن‌جا گزارش می‌شوند.</p>
+                            </article>
+                            <article class="concept" id="broadcast">
+                                <h3>پیام همگانی ربات‌ها <a class="anchor" href="#broadcast" aria-label="لینک به این مفهوم">#</a> <span class="who">مالک</span></h3>
+                                <span class="where">منو ‹ کاربرها ‹ پیام همگانی ربات‌ها</span>
+                                <p>پیامی از طرف شما به مشتری‌های همه‌ی ربات‌های وصل‌شده‌ی فروشنده‌ها، با یک تصویر اختیاری تا 10 MB. ربات خود هر فروشنده آن را در پس‌زمینه می‌فرستد. ارسال قابل برگشت نیست. فروشنده‌ها اطلاعیه‌ای می‌بینند که می‌گوید ممکن است اعلان‌های پلتفرم به مشترکانشان برسد.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- TOOLS -->
+                    <section class="group-block" id="tools">
+                        <div class="group-title">
+                            <h2>ابزارها</h2>
+                        </div>
+                        <p>برای اینکه بفهمید چه خبر است. منو ‹ ابزارها.</p>
+                        <div class="concepts">
+                            <article class="concept" id="hwid-inspector"><h3>بازرسی HWID <a class="anchor" href="#hwid-inspector" aria-label="لینک به این مفهوم">#</a></h3><p>دستگاه‌هایی که از هر اشتراک استفاده کرده‌اند، طبق گزارش برنامه‌هایی که شناسه‌ی سخت‌افزاری می‌فرستند. با آن ببینید چه کسی لینکش را با دیگران شریک شده، و دستگاهی را حذف کنید تا دستگاه تازه زیر سقف جا شود.</p></article>
+                            <article class="concept" id="srh-inspector"><h3>بازرسی SRH <a class="anchor" href="#srh-inspector" aria-label="لینک به این مفهوم">#</a></h3><p>تاریخچه‌ی درخواست‌های اشتراک: هر بار که برنامه‌ای اشتراک را دریافت کرده، کدام برنامه بوده و چه گرفته است. وقتی کاربری می‌گوید «برنامه‌ام چیزی نشان نمی‌دهد»، اول این‌جا را نگاه کنید.</p></article>
+                            <article class="concept" id="torrent-reports"><h3>گزارش‌های Torrent Blocker <a class="anchor" href="#torrent-reports" aria-label="لینک به این مفهوم">#</a></h3><p>ترافیک تورنتی که نودهایتان مسدود کرده‌اند، بر اساس کاربر و نود. وقتی <a href="#plugins">پلاگین</a> مسدودکننده‌ی تورنت روی یک نود اجرا شود، این گزارش پر می‌شود.</p></article>
+                            <article class="concept" id="sessions"><h3>کاوشگر نشست‌ها <a class="anchor" href="#sessions" aria-label="لینک به این مفهوم">#</a></h3><p>اینکه هر کاربر همین حالا از کدام آدرس‌های IP وصل است.</p></article>
+                            <article class="concept" id="http-stats"><h3>آمار HTTP <a class="anchor" href="#http-stats" aria-label="لینک به این مفهوم">#</a></h3><p>اینکه هر مسیر API پنل، از آخرین ری‌استارت پنل تا حالا، به چند درخواست پاسخ داده است.</p></article>
+                            <article class="concept" id="quick-open"><h3>باز کردن سریع <a class="anchor" href="#quick-open" aria-label="لینک به این مفهوم">#</a> <span class="who">مالک · فروشنده</span></h3><p>کاربران را سریع پیدا کنید، کاربرانی را که اخیراً باز کرده‌اید دوباره باز کنید، یا به هر صفحه‌ای بروید. فروشنده‌ها هم آن را دارند.</p></article>
+                        </div>
+                    </section>
+
+                    <!-- SETTINGS -->
+                    <section class="group-block" id="settings">
+                        <div class="group-title">
+                            <h2>تنظیمات</h2>
+                        </div>
+                        <div class="concepts">
+                            <article class="concept" id="umiji-settings"><h3>تنظیمات Umiji <a class="anchor" href="#umiji-settings" aria-label="لینک به این مفهوم">#</a></h3><span class="where">منو ‹ تنظیمات Umiji</span><p>تنظیمات خود پنل: روش‌های احراز هویت، توکن‌های API، برندینگ و قابلیت‌های پنل.</p></article>
+                            <article class="concept" id="auth">
+                                <h3>روش‌های احراز هویت <a class="anchor" href="#auth" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>اینکه ادمین‌ها چطور وارد شوند: با <strong>گذرواژه</strong>، <strong>کلید عبور (Passkey)</strong>، <strong>تلگرام</strong>، یا یک ارائه‌دهنده‌ی OAuth2: <strong>GitHub</strong>، <strong>Yandex</strong>، <strong>Keycloak</strong>، <strong>PocketID</strong> یا هر سرور OAuth2 دیگر. کلید عبور به آدرس کامل HTTPS پنل شما نیاز دارد. همیشه دست‌کم یک روش را فعال نگه دارید که مطمئنید با آن می‌توانید وارد شوید.</p>
+                            </article>
+                            <article class="concept" id="api-tokens">
+                                <h3>توکن‌های API <a class="anchor" href="#api-tokens" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>کلیدهایی برای برنامه‌هایی که با API پنل کار می‌کنند، از جمله سرور صفحه‌ی اشتراک که یکی از آن‌ها را در <code>UMIJI_API_TOKEN</code> لازم دارد. هر توکن فقط یک بار، درست بعد از ساخته شدن، نشان داده می‌شود، پس آن را جای امنی کپی کنید. درخواست‌هایی که اسکریپت‌ها بدون توکن بفرستند رد می‌شوند. دامنه‌های دسترسی، درخواست‌ها و همه‌ی اندپوینت‌ها در <a href="../api/#auth">راهنمای API</a> آمده‌اند.</p>
+                            </article>
+                            <article class="concept" id="branding">
+                                <h3>برندینگ <a class="anchor" href="#branding" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>لوگو و عنوان خودتان در صفحه‌ی ورود و در منو. لوگو یک آدرس تصویر یا یک آدرس <code>data:</code> است. برای رنگی کردن یک کلمه از عنوان، از <code>{color}word</code> استفاده کنید، با یک رنگ hex یا نام یک رنگ؛ متن بدون این علامت سفید است.</p>
+                            </article>
+                            <article class="concept" id="languages">
+                                <h3>زبان‌ها <a class="anchor" href="#languages" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>پنل به‌طور کامل به انگلیسی و فارسی است، با چیدمان راست‌به‌چپ برای فارسی، و بخشی از آن به روسی و چینی هم ترجمه شده است. زبان را با دکمه‌ی 文A در بالای صفحه عوض کنید. در فارسی، عددها با رقم‌های فارسی نمایش داده می‌شوند، اما آنچه تایپ، ذخیره و کپی می‌کنید همان رقم‌های <code>0-9</code> لاتین می‌ماند.</p>
+                            </article>
+                            <article class="concept" id="home">
+                                <h3>داشبورد خانه <a class="anchor" href="#home" aria-label="لینک به این مفهوم">#</a></h3>
+                                <p>ترافیک، کاربران و وضعیت اجرای خود پنل. کارت‌های اجرا هر پروسه‌ی Umiji را نشان می‌دهند: <strong>API</strong> که به پنل و اشتراک‌ها پاسخ می‌دهد، <strong>scheduler</strong> که کارهای زمان‌دار را در صف می‌گذارد، و <strong>processor</strong> که آن‌ها را اجرا می‌کند، مثل بررسی سلامت نودها و شمارش ترافیک.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <p class="empty">چیزی پیدا نشد. کلمه‌ی کوتاه‌تری را امتحان کنید، یا <a href="../guide/">راهنمای راه‌اندازی را دنبال کنید</a>.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="wrap">
+                <span><bdi class="jp" lang="ja">海路</bdi> · Umiji نرم‌افزاری آزاد با مجوز AGPL-3.0 است.</span>
+                <nav aria-label="پانویس">
+                    <a href="../">خانه</a>
+                    <a href="../guide/">راهنمای راه‌اندازی</a>
+                    <a href="../api/">API</a>
+                    <a href="https://github.com/therewasluna/umiji">GitHub</a>
+                    <a href="https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md">DEPLOY.md <span>(انگلیسی)</span></a>
+                </nav>
+            </div>
+        </footer>
+        <script src="../../assets/site.js" defer></script>
+    </body>
+</html>

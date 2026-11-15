@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <title>Concepts · Umiji</title>
+        <meta
+            name="description"
+            content="Every concept in the Umiji panel explained: users, nodes, config profiles, inbounds, hosts, squads, templates, subscription pages, brokers, store bots, tools and settings."
+        />
+        <meta name="theme-color" content="#130C11" />
+        <link rel="alternate" hreflang="en" href="https://umiji.wiki/concepts/" />
+        <link rel="alternate" hreflang="fa" href="https://umiji.wiki/fa/concepts/" />
+        <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="../assets/favicon-32.png" sizes="32x32" type="image/png" />
+        <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700&family=Unbounded:wght@500;600&display=swap"
+        />
+        <!-- only the letters of the language switch and of 海路 -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@600&family=Noto+Sans+JP:wght@400;600&text=%D9%81%D8%A7%D8%B1%D8%B3%DB%8C%E6%B5%B7%E8%B7%AF&display=swap" />
+        <link rel="stylesheet" href="../assets/site.css" />
+    </head>
+    <body>
+        <a class="skip" href="#main">Skip to content</a>
+
+        <header class="topbar">
+            <div class="wrap">
+                <a class="brand" href="../" aria-label="Umiji wiki home">
+                    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
+                            <path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" />
+                            <path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" />
+                        </g>
+                    </svg>
+                    <span class="word"><span class="umi">Umi</span><span class="ji">ji</span></span>
+                </a>
+                <nav class="nav" aria-label="Main">
+                    <a href="../guide/">Setup guide</a>
+                    <a href="./" aria-current="page">Concepts</a>
+                    <a href="../api/">API</a>
+                </nav>
+                <div class="tools">
+                    <a class="icon-btn gh" href="https://github.com/therewasluna/umiji" aria-label="Umiji on GitHub">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" /></svg>
+                    </a>
+                    <a class="icon-btn lang-btn" href="../fa/concepts/" lang="fa" hreflang="fa" aria-label="فارسی، نسخه‌ی فارسی همین صفحه">فارسی</a>
+                </div>
+            </div>
+        </header>
+
+        <main id="main">
+            <div class="page-head">
+                <div class="wrap">
+                    <h1>Every idea in the panel, explained.</h1>
+                    <p>
+                        Grouped the way the panel's menu is. Each entry says what the thing is, where to find it and
+                        what it connects to.
+                    </p>
+                    <label class="search">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+                        <input id="concept-search" type="search" placeholder="Search concepts, like “reality” or “quota”" aria-label="Search concepts" autocomplete="off" />
+                        <kbd aria-hidden="true">/</kbd>
+                    </label>
+                </div>
+                <svg class="waves" viewBox="0 0 16 16" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-linecap="round" stroke-width="1.6"><path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /><path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /></g></svg>
+            </div>
+
+            <div class="wrap docs">
+                <aside class="toc collapsible" aria-label="Concepts">
+                    <button class="toc-toggle" type="button" aria-expanded="false">
+                        All concepts
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+                    </button>
+                    <div class="group"><span>The basics</span><ul>
+                        <li><a href="#roles">Owner, brokers, customers</a></li>
+                        <li><a href="#xray">Xray-core</a></li>
+                        <li><a href="#route">How it fits together</a></li>
+                    </ul></div>
+                    <div class="group"><span>Users</span><ul>
+                        <li><a href="#user">User</a></li>
+                        <li><a href="#user-status">Status</a></li>
+                        <li><a href="#traffic">Traffic limit and reset</a></li>
+                        <li><a href="#expiry">Expiry date</a></li>
+                        <li><a href="#subscription-link">Subscription link</a></li>
+                        <li><a href="#hwid">HWID device limit</a></li>
+                        <li><a href="#ip-limit">Simultaneous IP limit</a></li>
+                        <li><a href="#ip-limit-risks">IP limit risks</a></li>
+                        <li><a href="#ip-limit-cdn">IP limit behind a CDN</a></li>
+                        <li><a href="#tags">Tags and description</a></li>
+                        <li><a href="#bulk">Bulk actions</a></li>
+                        <li><a href="#internal-squad">Internal squad</a></li>
+                        <li><a href="#external-squad">External squad</a></li>
+                    </ul></div>
+                    <div class="group"><span>Nodes</span><ul>
+                        <li><a href="#node">Node</a></li>
+                        <li><a href="#auto-install">Automatic install</a></li>
+                        <li><a href="#manual-setup">Manual setup</a></li>
+                        <li><a href="#consumption">Consumption multiplier</a></li>
+                        <li><a href="#node-proxy">Node proxy</a></li>
+                        <li><a href="#ssh">SSH terminal</a></li>
+                        <li><a href="#plugins">Plugins</a></li>
+                        <li><a href="#node-stats">Statistics and metrics</a></li>
+                        <li><a href="#infra-billing">Infra billing</a></li>
+                    </ul></div>
+                    <div class="group"><span>Config profiles</span><ul>
+                        <li><a href="#config-profile">Config profile</a></li>
+                        <li><a href="#editor">Visual and JSON editor</a></li>
+                        <li><a href="#inbound">Inbound</a></li>
+                        <li><a href="#protocols">Protocols</a></li>
+                        <li><a href="#transport">Transport</a></li>
+                        <li><a href="#reality">REALITY and TLS</a></li>
+                        <li><a href="#keys">Generate keys</a></li>
+                        <li><a href="#mtproto">MTProto (Telegram)</a></li>
+                        <li><a href="#snippets">Snippets</a></li>
+                    </ul></div>
+                    <div class="group"><span>Subscription</span><ul>
+                        <li><a href="#host">Host</a></li>
+                        <li><a href="#host-options">Host options</a></li>
+                        <li><a href="#templates">Templates</a></li>
+                        <li><a href="#subscription-settings">Subscription settings</a></li>
+                        <li><a href="#response-headers">Response headers</a></li>
+                        <li><a href="#response-rules">Response rules</a></li>
+                        <li><a href="#subscription-page">Subscription page</a></li>
+                        <li><a href="#client-app">Client apps</a></li>
+                    </ul></div>
+                    <div class="group"><span>Brokers and sales</span><ul>
+                        <li><a href="#broker">Broker</a></li>
+                        <li><a href="#broker-panel">The broker's panel</a></li>
+                        <li><a href="#telegram-bot">Telegram store bot</a></li>
+                        <li><a href="#plans">Plans and categories</a></li>
+                        <li><a href="#payments">Wallet, payments, receipts</a></li>
+                        <li><a href="#orders">Orders</a></li>
+                        <li><a href="#referrals">Referrals</a></li>
+                        <li><a href="#trial">Free trial</a></li>
+                        <li><a href="#channels">Required channels</a></li>
+                        <li><a href="#bot-texts">Texts and languages</a></li>
+                        <li><a href="#bot-stats">Bot stats</a></li>
+                        <li><a href="#broadcast">Bot Broadcast</a></li>
+                    </ul></div>
+                    <div class="group"><span>Tools</span><ul>
+                        <li><a href="#hwid-inspector">HWID Inspector</a></li>
+                        <li><a href="#srh-inspector">SRH Inspector</a></li>
+                        <li><a href="#torrent-reports">Torrent Blocker Reports</a></li>
+                        <li><a href="#sessions">Sessions Explorer</a></li>
+                        <li><a href="#http-stats">HTTP Stats</a></li>
+                        <li><a href="#quick-open">Quick Open</a></li>
+                    </ul></div>
+                    <div class="group"><span>Settings</span><ul>
+                        <li><a href="#umiji-settings">Umiji Settings</a></li>
+                        <li><a href="#auth">Sign-in methods</a></li>
+                        <li><a href="#api-tokens">API tokens</a></li>
+                        <li><a href="#branding">Branding</a></li>
+                        <li><a href="#languages">Languages</a></li>
+                        <li><a href="#home">Home dashboard</a></li>
+                    </ul></div>
+                </aside>
+
+                <div>
+                    <!-- BASICS -->
+                    <section class="group-block" id="basics">
+                        <div class="group-title">
+                            <h2>The basics</h2>
+                        </div>
+                        <div class="concepts">
+                            <article class="concept" id="roles">
+                                <h3>Owner, brokers and customers <a class="anchor" href="#roles" aria-label="Link to this concept">#</a></h3>
+                                <p>Three kinds of people meet Umiji. The <strong>owner</strong> runs the panel: servers, users, subscriptions, resellers and sales. The first account registered on a new panel becomes the owner's admin account.</p>
+                                <p><strong>Brokers</strong> are resellers. They sign in at the same address but see a smaller panel with only their own users. <strong>Customers</strong>, the end users, never see the panel. They meet Umiji through a subscription link, the subscription page and a broker's Telegram bot.</p>
+                                <div class="related"><a href="#broker">Broker</a><a href="#broker-panel">The broker's panel</a><a href="#subscription-page">Subscription page</a></div>
+                            </article>
+                            <article class="concept" id="xray">
+                                <h3>Xray-core <a class="anchor" href="#xray" aria-label="Link to this concept">#</a></h3>
+                                <p>The open-source proxy engine that carries your users' traffic. It runs inside the Umiji node on each server. The panel never carries traffic itself: it writes Xray's configuration, adds and removes users, and reads back traffic numbers.</p>
+                                <p>The node's Xray version shows on each node's card. Xray's own documentation, at <a href="https://xtls.github.io/en/config/">xtls.github.io</a>, explains every field you can set in a config profile.</p>
+                                <div class="related"><a href="#node">Node</a><a href="#config-profile">Config profile</a></div>
+                            </article>
+                            <article class="concept" id="route">
+                                <h3>How it fits together <a class="anchor" href="#route" aria-label="Link to this concept">#</a></h3>
+                                <p>A <a href="#config-profile">config profile</a> holds <a href="#inbound">inbounds</a>. A <a href="#node">node</a> runs one profile and turns on some of its inbounds. A <a href="#host">host</a> points at one inbound and tells apps where to connect. An <a href="#internal-squad">internal squad</a> is a set of inbounds, and a <a href="#user">user</a> in that squad gets every visible host on those inbounds through their <a href="#subscription-link">subscription link</a>.</p>
+                                <p>So when someone asks “why can't this user see Germany?”, walk the route: is the Germany host visible, is its inbound in one of the user's squads, and is that inbound on in a connected node?</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- USERS -->
+                    <section class="group-block" id="users">
+                        <div class="group-title">
+                            <h2>Users</h2>
+                        </div>
+                        <p>Everyone with a subscription. Menu › Users.</p>
+                        <div class="concepts">
+                            <article class="concept" id="user">
+                                <h3>User <a class="anchor" href="#user" aria-label="Link to this concept">#</a> <span class="who">Owner · Broker</span></h3>
+                                <span class="where">Users › Create</span>
+                                <p>One subscription: a person, or one of their devices, that connects through your servers. A user has a status, a traffic limit, an expiry date, the internal squads that decide which servers they get, and one personal subscription link.</p>
+                                <dl>
+                                    <dt>Username</dt><dd>Required, and can't be changed later.</dd>
+                                    <dt>Telegram ID, email</dt><dd>Optional contact details.</dd>
+                                    <dt>Traffic limit</dt><dd>In GiB or other units. 0 means unlimited.</dd>
+                                    <dt>Expiry date</dt><dd>When the subscription ends.</dd>
+                                    <dt>Internal squads</dt><dd>Which inbounds, and so which hosts, the user gets.</dd>
+                                    <dt>External squad</dt><dd>Optional overrides for how their subscription is built.</dd>
+                                </dl>
+                                <div class="related"><a href="#user-status">Status</a><a href="#traffic">Traffic</a><a href="#internal-squad">Internal squad</a></div>
+                            </article>
+                            <article class="concept" id="user-status">
+                                <h3>Status <a class="anchor" href="#user-status" aria-label="Link to this concept">#</a></h3>
+                                <p>Every user is in one of four states, counted at the top of the Users page.</p>
+                                <dl>
+                                    <dt>Active</dt><dd>Can connect.</dd>
+                                    <dt>Limited</dt><dd>Used up their traffic limit. Resetting their traffic makes them active again.</dd>
+                                    <dt>Expired</dt><dd>Past their expiry date. Extending it brings them back.</dd>
+                                    <dt>Disabled</dt><dd>Turned off by hand.</dd>
+                                </dl>
+                                <p>What a limited, expired or disabled user sees in their app is set under <a href="#subscription-settings">custom remarks</a>.</p>
+                            </article>
+                            <article class="concept" id="traffic">
+                                <h3>Traffic limit and reset strategy <a class="anchor" href="#traffic" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">User › Traffic &amp; limits</span>
+                                <p>The traffic limit caps how much a user can download and upload. When it's used up, the user becomes <em>Limited</em>. The reset strategy sets how often the counter goes back to zero.</p>
+                                <dl>
+                                    <dt>Never reset</dt><dd>The default. The limit is for the whole subscription.</dd>
+                                    <dt>Day, week, month</dt><dd>Resets on a calendar schedule.</dd>
+                                    <dt>Month rolling</dt><dd>Resets every month counted from the user's own start, not the calendar.</dd>
+                                </dl>
+                                <p>A node's <a href="#consumption">consumption multiplier</a> changes how fast traffic counts on that node. You can also reset one user's traffic by hand, or many at once.</p>
+                            </article>
+                            <article class="concept" id="expiry">
+                                <h3>Expiry date <a class="anchor" href="#expiry" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">User › Access settings</span>
+                                <p>The date and time the subscription ends. The quick buttons add one month, three months or a year, and “year 2099” means practically never. Expiring users show in orange on the Users page so you can renew them in time.</p>
+                            </article>
+                            <article class="concept" id="subscription-link">
+                                <h3>Subscription link <a class="anchor" href="#subscription-link" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">User › Subscription URL</span>
+                                <p>Every user's personal address, like <code>https://sub.example.com/&lt;id&gt;</code>. Added to an app, it delivers the list of hosts the user may use, built for that app. Opened in a browser, it shows the <a href="#subscription-page">subscription page</a>. Apps re-fetch it from time to time, so changes you make reach users without sending a new link.</p>
+                                <p>Treat it like a password. <strong>Revoke subscription</strong>, under the user's More actions, makes a new link and stops the old one.</p>
+                                <div class="related"><a href="#host">Host</a><a href="#templates">Templates</a><a href="#client-app">Client apps</a></div>
+                            </article>
+                            <article class="concept" id="hwid">
+                                <h3>HWID device limit <a class="anchor" href="#hwid" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">User › Device &amp; tag settings · Subscription › Settings › HWID settings</span>
+                                <p>Limits how many devices can use one subscription. Supporting apps send a hardware ID with each request, and once a user reaches their limit, new devices are turned away with a message you write.</p>
+                                <p>It only works when <strong>HWID limit</strong> is turned on in Subscription › Settings, and not every client app sends an ID. The <strong>fallback device limit</strong> applies to users without their own. A user can also opt out with <strong>Disable HWID limit</strong>.</p>
+                                <div class="related"><a href="#hwid-inspector">HWID Inspector</a><a href="#ip-limit">Simultaneous IP limit</a></div>
+                            </article>
+                            <article class="concept" id="ip-limit">
+                                <h3>Simultaneous IP limit <a class="anchor" href="#ip-limit" aria-label="Link to this concept">#</a> <span class="who">Beta</span></h3>
+                                <span class="where">User › Device &amp; tag settings · Telegram bot › Plans · Telegram bot › Free trial</span>
+                                <p>Limits how many IPs can use one user at the same time, across all nodes. Unlike the HWID limit, it also stops people who copied the raw config or UUID, because it watches live connections instead of subscription downloads.</p>
+                                <p>An IP holds a slot while it has an open connection, so devices on one Wi‑Fi count once, and a new IP is refused while every slot is taken. Over IPv6, every address in one <code>/64</code> counts as one. Each node enforces it at once, and the panel compares nodes every 30 seconds. Empty means unlimited.</p>
+                                <p><strong>Devices at once</strong> on a plan or on the free trial gives every subscription the bot creates from it this limit.</p>
+                                <div class="note warn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" /></svg>
+                                    <p><strong>This is a beta and won't always work.</strong> It can let extra devices in, and it can turn away a paying user's own phone. Read the <a href="#ip-limit-risks">risks</a> before you turn it on.</p>
+                                </div>
+                                <div class="related"><a href="#ip-limit-risks">IP limit risks</a><a href="#hwid">HWID device limit</a><a href="#plans">Plans and categories</a></div>
+                            </article>
+                            <article class="concept" id="ip-limit-risks">
+                                <h3>IP limit risks <a class="anchor" href="#ip-limit-risks" aria-label="Link to this concept">#</a> <span class="who">Beta</span></h3>
+                                <p>The <a href="#ip-limit">simultaneous IP limit</a> counts IP addresses, not people or devices, so it gets some cases wrong in both directions. Try it on a few users before you sell it in plans.</p>
+                                <p><strong>It can refuse a paying user's own device.</strong> A phone that moves from Wi‑Fi to mobile data gets a new IP while its old connections are still open on the node. With a limit of 1 it's refused until they close: up to about a minute and a half on RAW, and up to about 6 minutes on WebSocket, gRPC and XHTTP. A phone using Wi‑Fi and mobile data together, or IPv4 and IPv6 together, can count as two devices.</p>
+                                <p><strong>Extra devices can get in.</strong> A second device on another node works for up to about 30 seconds before it's cut, and the cut closes its connections mid-use. If the panel can't reach a node, or a node's core has just restarted, that node counts only its own IPs for a while, so one user can get a slot on every node.</p>
+                                <p><strong>A connected device can lose its slot to a newcomer.</strong> The panel only keeps a slot for a device it sees online. If it misses one for a moment, because that device's node restarted, a config profile edit restarted the cores, or a node didn't answer, a device waiting on another node can take the slot, and the first one is cut.</p>
+                                <p><strong>People on one network count as one.</strong> Everyone behind the same router or office shares an IP, and mobile carriers often put many customers behind one IP too. Friends sharing a config on the same network or carrier can all get in.</p>
+                                <p><strong>Behind a CDN or a relay it needs setup on the node.</strong> Without it, connections arrive from the CDN's or the relay's addresses, so one device can look like several and get refused at random, and an app could even claim an address of its choosing. Follow <a href="#ip-limit-cdn">IP limit behind a CDN</a> before you limit users on such an inbound.</p>
+                                <p><strong>Nodes need the current Umiji node.</strong> A node with an older version or a stock Xray core doesn't enforce the limit at all. The panel only writes a warning to its log.</p>
+                                <p><strong>Some paths skip it.</strong> <a href="#bulk">Bulk actions</a> never set a limit. On UDP transports like mKCP, a device that already got in can't be cut, only refused next time.</p>
+                                <div class="related"><a href="#ip-limit">Simultaneous IP limit</a><a href="#hwid">HWID device limit</a></div>
+                            </article>
+                            <article class="concept" id="ip-limit-cdn">
+                                <h3>IP limit behind a CDN <a class="anchor" href="#ip-limit-cdn" aria-label="Link to this concept">#</a> <span class="who">Beta</span></h3>
+                                <span class="where">Config profile › Inbound › Sockopt · nginx on the node</span>
+                                <p>When an inbound sits behind a CDN, like Cloudflare, users connect to the CDN and the CDN connects to the node. The node then sees the CDN's addresses, which change from one connection to the next, so the <a href="#ip-limit">simultaneous IP limit</a> counts one phone as several devices and refuses it at random. Two changes on the node give it each user's real IP.</p>
+                                <p>Only HTTP transports go through a CDN: XHTTP, WebSocket, HTTPUpgrade and gRPC. RAW with <a href="#reality">REALITY</a> and the <a href="#mtproto">MTProto</a> inbound reach the node directly, so they already see real IPs.</p>
+                                <p><strong>1. Let Xray take the IP from the header.</strong> In the config profile, open the inbound, find <strong>Sockopt</strong> and add <code>X-Forwarded-For</code> to <strong>Trusted X-Forwarded-For</strong>. Set <strong>Listen</strong> to <code>127.0.0.1</code> too, so only nginx on the same server can reach the inbound. In JSON:</p>
+                                <pre data-copy><code>"listen": "127.0.0.1",
+"port": 10001,
+"streamSettings": {
+  "network": "xhttp",
+  "xhttpSettings": { "path": "/xh" },
+  "sockopt": { "trustedXForwardedFor": ["X-Forwarded-For"] }
+}</code></pre>
+                                <p><strong>2. Put nginx on the node in front of Xray.</strong> Xray uses the first address in <code>X-Forwarded-For</code>, and the app can write that one itself: the CDN keeps whatever the app sent and adds the real address after it. Someone sharing a config could make every device claim the same address and get past the limit. nginx on the node trusts only the CDN, reads the header from the end to find the real address, and passes Xray just that one.</p>
+                                <pre data-copy><code>map $http_upgrade $connection_upgrade {
+    default upgrade;
+    ''      close;
+}
+
+<span class="c"># The CDN's ranges, one line each. Cloudflare lists them on https://www.cloudflare.com/ips/</span>
+set_real_ip_from 173.245.48.0/20;
+set_real_ip_from 2400:cb00::/32;
+<span class="c"># ...the other ranges</span>
+real_ip_header X-Forwarded-For;
+real_ip_recursive on;
+
+server {
+    listen 443 ssl http2;
+    server_name node1.example.com;
+    ssl_certificate     /etc/letsencrypt/live/node1.example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/node1.example.com/privkey.pem;
+
+    <span class="c"># XHTTP: the inbound on 127.0.0.1:10001, path /xh</span>
+    location /xh {
+        proxy_pass http://127.0.0.1:10001;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_buffering off;
+        proxy_request_buffering off;
+        client_max_body_size 0;
+        proxy_read_timeout 1h;
+    }
+
+    <span class="c"># WebSocket or HTTPUpgrade: the inbound on 127.0.0.1:10002, path /ws</span>
+    location /ws {
+        proxy_pass http://127.0.0.1:10002;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_read_timeout 1h;
+    }
+
+    <span class="c"># gRPC: the inbound on 127.0.0.1:10003, service name gr</span>
+    location /gr {
+        grpc_pass grpc://127.0.0.1:10003;
+        grpc_set_header X-Forwarded-For $remote_addr;
+        grpc_read_timeout 1h;
+        client_max_body_size 0;
+    }
+}</code></pre>
+                                <p>Get a certificate for the node's domain first, with <code>certbot certonly --nginx -d node1.example.com</code> (turn off Cloudflare's <code>Always Use HTTPS</code> while it runs) or a Cloudflare origin certificate. Then run <code>nginx -t &amp;&amp; systemctl reload nginx</code>. In Cloudflare, set SSL to <code>Full (strict)</code>, and turn on gRPC under Network if you use it. Keep only the <code>location</code> blocks you need, with your inbounds' ports and paths.</p>
+                                <p><strong>3. Point the host at the CDN.</strong> The <a href="#host">host</a> for that inbound uses the CDN domain as its address, port 443, TLS, and the same path or service name.</p>
+                                <p><strong>Check it.</strong> Connect one phone and open <a href="#sessions">Sessions Explorer</a>: the user should show the phone's own IP, not a CDN address. If you see CDN addresses, step 1 is missing.</p>
+                                <p><strong>A relay server in front of the node</strong>, which just forwards TCP, hides IPs the same way. If it can send the PROXY protocol, like HAProxy's <code>send-proxy</code> or <code>proxy_protocol on</code> in nginx's <code>stream</code> block, turn on <strong>Accept Proxy Protocol</strong> in the inbound's <strong>Sockopt</strong>. The inbound then accepts only connections that start with that header, so let only the relay reach its port in the node's firewall. Anyone else could claim any address.</p>
+                                <div class="related"><a href="#ip-limit">Simultaneous IP limit</a><a href="#ip-limit-risks">IP limit risks</a><a href="#host">Host</a></div>
+                            </article>
+                            <article class="concept" id="tags">
+                                <h3>Tags and description <a class="anchor" href="#tags" aria-label="Link to this concept">#</a></h3>
+                                <p>A tag, like <code>PREMIUM</code>, labels users for your own sorting and filtering. It shows as a chip in the users list. The description is a free note only you see.</p>
+                            </article>
+                            <article class="concept" id="bulk">
+                                <h3>Bulk actions <a class="anchor" href="#bulk" aria-label="Link to this concept">#</a></h3>
+                                <p>Select users with the checkboxes to update, reset traffic, revoke subscriptions, extend expiry dates or delete many at once. The ⋮ menu next to Create has the same actions for every user. Bulk jobs run in the background and the panel tells you when they're queued.</p>
+                            </article>
+                            <article class="concept" id="internal-squad">
+                                <h3>Internal squad <a class="anchor" href="#internal-squad" aria-label="Link to this concept">#</a> <span class="who">Owner</span></h3>
+                                <span class="where">Menu › Internal Squads</span>
+                                <p>A group of users and the inbounds they can use. It's how you control access: a user gets hosts only for inbounds in their squads. A user can be in several squads, and gets everything those squads allow together.</p>
+                                <p>For example, make a <code>Free</code> squad with one country and a <code>Premium</code> squad with the rest. Free users join Free, paying users join both. The squad's card shows its members and inbounds, and its menu can add or remove every user at once.</p>
+                                <p>Brokers see only the squads you allow them, shown by country and protocol, never with node details.</p>
+                                <div class="related"><a href="#inbound">Inbound</a><a href="#external-squad">External squad</a><a href="#broker">Broker</a></div>
+                            </article>
+                            <article class="concept" id="external-squad">
+                                <h3>External squad <a class="anchor" href="#external-squad" aria-label="Link to this concept">#</a> <span class="who">Owner</span></h3>
+                                <span class="where">Menu › External Squads</span>
+                                <p>Where an internal squad decides <em>what</em> a user can reach, an external squad changes <em>how</em> their subscription is built. A user has at most one. Without one, the global subscription settings and the Default templates apply.</p>
+                                <dl>
+                                    <dt>Templates</dt><dd>Use a different template per client type for this group.</dd>
+                                    <dt>Settings</dt><dd>Override subscription settings, like the profile title. An override set to an empty value still overrides. Delete it with the trash icon to undo.</dd>
+                                    <dt>Hosts</dt><dd>Override host fields for every host these users get.</dd>
+                                    <dt>Subscription page</dt><dd>Which page these users see.</dd>
+                                </dl>
+                                <p>Each broker gets an external squad of its own, named after it, so its users always get the broker's page and settings.</p>
+                                <div class="related"><a href="#templates">Templates</a><a href="#response-rules">Response rules</a><a href="#broker">Broker</a></div>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- NODES -->
+                    <section class="group-block" id="nodes">
+                        <div class="group-title">
+                            <h2>Nodes</h2>
+                        </div>
+                        <p>The servers that carry traffic. Menu › Nodes.</p>
+                        <div class="concepts">
+                            <article class="concept" id="node">
+                                <h3>Node <a class="anchor" href="#node" aria-label="Link to this concept">#</a> <span class="who">Owner</span></h3>
+                                <span class="where">Nodes › Create</span>
+                                <p>A server running the Umiji node: a small Docker container with Xray-core inside. The panel talks to it over an mTLS connection on the node port, sends it a config profile and its users, and reads traffic back.</p>
+                                <dl>
+                                    <dt>Internal name</dt><dd>Only you see it.</dd>
+                                    <dt>Country</dt><dd>Sets the flag in the list.</dd>
+                                    <dt>Address, node port</dt><dd>Where the panel reaches the node. The port defaults to 2222 and must be open to the panel.</dd>
+                                    <dt>Core configuration</dt><dd>The config profile the node runs, and which of its inbounds are on.</dd>
+                                    <dt>Traffic limit</dt><dd>Optional cap for the whole node.</dd>
+                                </dl>
+                                <p>The list shows each node's status, users online, load, traffic and Xray version. A red dot means the panel can't reach it.</p>
+                                <div class="related"><a href="#auto-install">Automatic install</a><a href="#config-profile">Config profile</a><a href="#ssh">SSH terminal</a></div>
+                            </article>
+                            <article class="concept" id="auto-install">
+                                <h3>Automatic install <a class="anchor" href="#auto-install" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">Nodes › Create › Automatic install</span>
+                                <p>Give the panel the server's IP, SSH port and root password. It logs in over SSH, checks the system, sets up Docker, writes the node's <code>docker-compose.yml</code>, starts the node, checks it can reach it, and adds it to the panel. You watch each step with live output.</p>
+                                <p>The password is used once and never stored. The server needs Linux on x86_64 or ARM64 and a root login. If it stops at the handshake, open the node port in the server's firewall. The install keeps running if you close the window.</p>
+                            </article>
+                            <article class="concept" id="manual-setup">
+                                <h3>Manual setup <a class="anchor" href="#manual-setup" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">Nodes › Create › Manual setup</span>
+                                <p>The panel shows a <code>docker-compose.yml</code> with the node's secret key. You copy it to the server and start it yourself, and the panel waits until it connects and reports “Xray Core is up and running”.</p>
+                            </article>
+                            <article class="concept" id="consumption">
+                                <h3>Consumption multiplier <a class="anchor" href="#consumption" aria-label="Link to this concept">#</a></h3>
+                                <p>Counts traffic on a node faster or slower than it really is: 1.0 is normal, 0.5 counts half, 2.0 counts double. With a 1 GiB limit and a 2.0 node, a user can really use only 0.5 GiB there. Useful when some servers cost more than others.</p>
+                            </article>
+                            <article class="concept" id="node-proxy">
+                                <h3>Node proxy <a class="anchor" href="#node-proxy" aria-label="Link to this concept">#</a></h3>
+                                <p>If the panel can't reach a node directly, set the node's <strong>Proxy URL</strong> to a <code>socks5://</code> or <code>http://</code> proxy. The panel then talks to that node only through the proxy. A proxy on the panel's own server must listen on Docker's address, not only on <code>127.0.0.1</code>.</p>
+                            </article>
+                            <article class="concept" id="ssh">
+                                <h3>SSH terminal <a class="anchor" href="#ssh" aria-label="Link to this concept">#</a></h3>
+                                <p>A shell on the node, in the browser, on a computer or a phone. Each node gets its own key, made in your browser and kept there in an encrypted vault. The panel never sees the private keys.</p>
+                                <p>Write down the 12-word recovery phrase: it's the only way to restore the keys. You can export an encrypted backup, and the terminal warns you if a server's host key changes.</p>
+                            </article>
+                            <article class="concept" id="plugins">
+                                <h3>Plugins <a class="anchor" href="#plugins" aria-label="Link to this concept">#</a> <span class="who">Beta</span></h3>
+                                <span class="where">Menu › Nodes › Plugins</span>
+                                <p>Add-ons that run on your nodes next to Xray, like the torrent blocker that fills <a href="#torrent-reports">Torrent Blocker Reports</a>. Shared lists can feed several plugins, and syncing pushes changes to every node that uses them. It's an advanced feature, so read each plugin's notes before turning it on.</p>
+                            </article>
+                            <article class="concept" id="node-stats">
+                                <h3>Statistics and metrics <a class="anchor" href="#node-stats" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">Menu › Nodes › Statistics · Metrics</span>
+                                <p><strong>Statistics</strong> shows traffic per node over a period you pick. <strong>Metrics</strong> shows live numbers the nodes report right now.</p>
+                            </article>
+                            <article class="concept" id="infra-billing">
+                                <h3>Infra billing <a class="anchor" href="#infra-billing" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">Menu › Nodes › Infra Billing</span>
+                                <p>A record of what your servers cost and when payments are due. Add your hosting providers, link nodes to them with their price and next payment date, and log each payment in the history.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- CONFIG PROFILES -->
+                    <section class="group-block" id="profiles">
+                        <div class="group-title">
+                            <h2>Config profiles</h2>
+                        </div>
+                        <p>The Xray setups your nodes run. Menu › Config Profiles.</p>
+                        <div class="concepts">
+                            <article class="concept" id="config-profile">
+                                <h3>Config profile <a class="anchor" href="#config-profile" aria-label="Link to this concept">#</a> <span class="who">Owner</span></h3>
+                                <p>A complete Xray server configuration: inbounds, outbounds, routing, DNS and the rest. Each node runs one profile, and many nodes can share the same one. Umiji fills in the users of managed inbounds for you, so a profile never lists users itself.</p>
+                                <p>The profile's card shows how many inbounds it has and how many nodes run it. Both are clickable.</p>
+                                <div class="related"><a href="#editor">Editor</a><a href="#inbound">Inbound</a><a href="#snippets">Snippets</a></div>
+                            </article>
+                            <article class="concept" id="editor">
+                                <h3>Visual and JSON editor <a class="anchor" href="#editor" aria-label="Link to this concept">#</a></h3>
+                                <p>A profile opens in the <strong>Visual</strong> editor: forms for every Xray field, grouped into Inbounds, Outbounds, Routing, DNS, Log, Policy, Observatory, FakeDNS, Geodata and Advanced. The <strong>JSON</strong> tab shows the same config as text, with Xray's documentation on hover. Both edit one document, and undo works across them.</p>
+                                <p>A lightweight Xray core in your browser checks each change. Red dots lead you down to the field that's missing or wrong. <strong>Save anyway</strong> skips the check, for the rare case you know better. The ☰ menu next to Save copies the config, generates key pairs and loads examples from GitHub.</p>
+                            </article>
+                            <article class="concept" id="inbound">
+                                <h3>Inbound <a class="anchor" href="#inbound" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">Config profile › Inbounds › New inbound</span>
+                                <p>One port a node listens on, with a protocol and its settings. Its <strong>tag</strong> is a unique name: hosts, squads and nodes all point at an inbound by its tag. Each inbound has tabs for General, Settings, Transport, Security, Socket, Finalmask and Sniffing.</p>
+                                <p>An inbound does nothing for users until a node turns it on, a host points at it and a squad includes it.</p>
+                                <div class="related"><a href="#protocols">Protocols</a><a href="#host">Host</a><a href="#internal-squad">Internal squad</a></div>
+                            </article>
+                            <article class="concept" id="protocols">
+                                <h3>Protocols <a class="anchor" href="#protocols" aria-label="Link to this concept">#</a></h3>
+                                <p>Umiji manages the users of these inbounds for you:</p>
+                                <dl>
+                                    <dt>VLESS</dt><dd>Light and modern. Pair it with REALITY or XHTTP. The usual first choice.</dd>
+                                    <dt>Trojan</dt><dd>Password-based and looks like HTTPS. Needs TLS.</dd>
+                                    <dt>Shadowsocks</dt><dd>A simple encrypted proxy. The 2022 ciphers are recommended.</dd>
+                                    <dt>Hysteria 2</dt><dd>Based on QUIC and fast on lossy links. Needs TLS.</dd>
+                                    <dt>MTProto</dt><dd>A Telegram proxy. See <a href="#mtproto">MTProto</a>.</dd>
+                                </dl>
+                                <p>Mixed (SOCKS5 and HTTP), HTTP, Tunnel, WireGuard and TUN inbounds also work, but Umiji passes them to Xray exactly as written and doesn't manage their users.</p>
+                            </article>
+                            <article class="concept" id="transport">
+                                <h3>Transport <a class="anchor" href="#transport" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">Inbound › Transport</span>
+                                <p>How the protocol's bytes travel: RAW (plain TCP), XHTTP, WebSocket, HTTPUpgrade, gRPC or mKCP. Some pass through CDNs and HTTP proxies (WebSocket, HTTPUpgrade, gRPC, XHTTP), others go straight to the node. The host inherits the transport, so apps get it right automatically.</p>
+                            </article>
+                            <article class="concept" id="reality">
+                                <h3>REALITY and TLS <a class="anchor" href="#reality" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">Inbound › Security</span>
+                                <p><strong>REALITY</strong> needs no certificate and no domain of your own. It borrows the TLS of a real website, the <strong>Target</strong>, so to an observer a connection looks like a visit to that site. <strong>Server names</strong> lists the names clients may use, and work like a password: a host using a name that isn't on the list won't connect. The private key and short IDs are generated for you.</p>
+                                <p><strong>TLS</strong> uses your own domain and certificate, and is what Trojan and Hysteria 2 need. For VLESS over TLS or REALITY on RAW, Umiji adds the <code>xtls-rprx-vision</code> flow by default.</p>
+                                <div class="related"><a href="#keys">Generate keys</a><a href="#host-options">Host options</a></div>
+                            </article>
+                            <article class="concept" id="keys">
+                                <h3>Generate keys <a class="anchor" href="#keys" aria-label="Link to this concept">#</a></h3>
+                                <p>Key pairs are made in your browser. Use the sparkle button inside a field, or <strong>Generate keypair</strong> in the editor's ☰ menu. Besides REALITY's x25519 keys, it makes ML-DSA-65 and ML-KEM-768 keys for VLESS encryption.</p>
+                            </article>
+                            <article class="concept" id="mtproto">
+                                <h3>MTProto (Telegram proxy) <a class="anchor" href="#mtproto" aria-label="Link to this concept">#</a></h3>
+                                <p>An inbound that works as a Telegram proxy. It looks like a normal HTTPS site, and users add it right inside the Telegram app, with no VPN app. Each user gets their own secret, so usage counts per user like any other inbound, and revoking the user changes it.</p>
+                                <p>It only takes the settings the Telegram app can use, so most fields are locked. VPN apps never receive these hosts, while the subscription page shows the <code>tg://</code> link. A <strong>sponsored channel</strong> from @MTProxybot can be set on the inbound or per user, and brokers set it for their own users. The user's tag wins.</p>
+                            </article>
+                            <article class="concept" id="snippets">
+                                <h3>Snippets <a class="anchor" href="#snippets" aria-label="Link to this concept">#</a></h3>
+                                <p>Reusable pieces of config shared by many profiles. Define an outbound or a routing rule once as a snippet, then write <code>{ "snippet": "name" }</code> in any profile's <code>outbounds</code> or <code>rules</code>. Change the snippet and every profile that uses it changes too.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- SUBSCRIPTION -->
+                    <section class="group-block" id="subscription">
+                        <div class="group-title">
+                            <h2>Subscription</h2>
+                        </div>
+                        <p>What users receive when their app asks for the subscription. Menu › Subscription.</p>
+                        <div class="concepts">
+                            <article class="concept" id="host">
+                                <h3>Host <a class="anchor" href="#host" aria-label="Link to this concept">#</a> <span class="who">Owner</span></h3>
+                                <span class="where">Menu › Subscription › Hosts</span>
+                                <p>The client side of an inbound. A host is one entry in the user's app: a name, an address and a port, plus everything it inherits from its inbound. A subscription is the list of hosts a user may use.</p>
+                                <dl>
+                                    <dt>Host visibility</dt><dd>Off for a new host. Turn it on to include the host in subscriptions.</dd>
+                                    <dt>Remark</dt><dd>The name users see. A flag emoji at the start shows as a flag.</dd>
+                                    <dt>Inbound</dt><dd>Required. The host takes its protocol, transport and security from it.</dd>
+                                    <dt>Address, port</dt><dd>Usually the node's domain or IP and the inbound's port. Several domains separated by commas means each request gets one of them at random.</dd>
+                                </dl>
+                                <p>Turning a host off doesn't cut anyone off right away: users who already have it keep connecting until their app refreshes the subscription.</p>
+                                <div class="related"><a href="#host-options">Host options</a><a href="#inbound">Inbound</a></div>
+                            </article>
+                            <article class="concept" id="host-options">
+                                <h3>Host options <a class="anchor" href="#host-options" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">Host › Options › Add</span>
+                                <p>Extra settings for special cases. A new host works without any of them, and a wrong one can stop connections, so add only what you need.</p>
+                                <dl>
+                                    <dt>SNI</dt><dd>Overrides the server name. With REALITY it must be one of the inbound's server names.</dd>
+                                    <dt>Override SNI from address</dt><dd>Uses the address as the SNI. Handy with several domains or a wildcard.</dd>
+                                    <dt>Keep SNI blank</dt><dd>Forces an empty SNI and beats every other SNI setting.</dd>
+                                    <dt>Hidden host</dt><dd>Left out of normal subscriptions. Mihomo, advanced Xray JSON and raw templates can still use it.</dd>
+                                    <dt>Shuffle</dt><dd>Shuffled hosts go to the top of the list in random order.</dd>
+                                    <dt>vlessRouteId</dt><dd>Tags the connection so the profile's routing can send it a particular way.</dd>
+                                    <dt>Nodes</dt><dd>A visual link to nodes for your own navigation. It changes nothing.</dd>
+                                </dl>
+                            </article>
+                            <article class="concept" id="templates">
+                                <h3>Templates <a class="anchor" href="#templates" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">Menu › Subscription › Templates</span>
+                                <p>The base configs Umiji builds a subscription from, one set per client type: <strong>Xray JSON</strong>, <strong>Mihomo</strong>, <strong>Stash</strong>, <strong>Singbox</strong> and <strong>Clash</strong>. Umiji spots which kind of app is asking and fills that type's template with the user's hosts. Routing rules, DNS and app settings live here.</p>
+                                <p>Each type has a <strong>Default</strong> template. You can add more and hand them to groups through an <a href="#external-squad">external squad</a> or a <a href="#response-rules">response rule</a>, and a response rule wins over an external squad.</p>
+                            </article>
+                            <article class="concept" id="subscription-settings">
+                                <h3>Subscription settings <a class="anchor" href="#subscription-settings" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">Menu › Subscription › Settings</span>
+                                <p>How subscriptions behave for every user. External squads can override any of these for a group.</p>
+                                <dl>
+                                    <dt>Serve JSON at base subscription</dt><dd>Apps that support JSON get it from the plain link, without adding <code>/json</code>.</dd>
+                                    <dt>Randomize hosts</dt><dd>Shuffles the host list in each response.</dd>
+                                    <dt>Show custom remarks</dt><dd>Expired, limited and disabled users see your messages as entries in their app, instead of an empty list.</dd>
+                                    <dt>HWID settings</dt><dd>The device limit switch, the fallback limit and the messages. See <a href="#hwid">HWID</a>.</dd>
+                                    <dt>Response headers</dt><dd>See below.</dd>
+                                </dl>
+                            </article>
+                            <article class="concept" id="response-headers">
+                                <h3>Response headers <a class="anchor" href="#response-headers" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">Subscription › Settings › Response headers</span>
+                                <p>HTTP headers sent with every subscription. Many apps read them: <code>profile-title</code> names the subscription in the app, <code>profile-update-interval</code> sets how often it refreshes, in hours, and <code>support-url</code> and <code>profile-web-page-url</code> add links.</p>
+                                <p>Start a value with <code>umijiEncodeBase64:</code> and Umiji encodes it, which apps need for non-Latin text. <code>{{SUBSCRIPTION_URL}}</code> is replaced with the user's link.</p>
+                            </article>
+                            <article class="concept" id="response-rules">
+                                <h3>Response rules <a class="anchor" href="#response-rules" aria-label="Link to this concept">#</a> <span class="who">Advanced</span></h3>
+                                <span class="where">Menu › Subscription › Response Rules</span>
+                                <p>Decide what each client gets when it asks for a subscription. A rule matches the request's headers, like the app's User-Agent, and sets the response, for example a specific template. Rules beat external squad overrides. The debugger gives you a cURL command to test which rule a request would hit.</p>
+                                <p>A wrong rule can break subscriptions for everyone, so the page asks you to confirm before you edit.</p>
+                            </article>
+                            <article class="concept" id="subscription-page">
+                                <h3>Subscription page <a class="anchor" href="#subscription-page" aria-label="Link to this concept">#</a> <span class="who">Owner · Broker · Customer</span></h3>
+                                <span class="where">Menu › Subscription › Subscription Page</span>
+                                <p>What users see when they open their link in a browser. The top shows their usage as a tide that drains as traffic is used, and the expiry date. Below it, install steps for their platform: which app to get, a button to add the subscription and how to connect. Persian and English are built in.</p>
+                                <p>You can keep several pages and choose one per external squad. Every broker gets its own page to brand, with one of eight main colours: rose, ruby, emerald, teal, sky, sapphire, plum and orchid. Changes show up right away, without a restart.</p>
+                                <div class="related"><a href="#client-app">Client apps</a><a href="#broker">Broker</a></div>
+                            </article>
+                            <article class="concept" id="client-app">
+                                <h3>Client apps <a class="anchor" href="#client-app" aria-label="Link to this concept">#</a></h3>
+                                <p>The apps your users connect with, like Happ, v2rayNG, FlClashX and Clash Meta on Android. Each one imports the subscription link, shows the hosts, and connects to the one the user picks. Which apps the subscription page offers, and their install steps, is set per platform in the page's config.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- BROKERS -->
+                    <section class="group-block" id="brokers">
+                        <div class="group-title">
+                            <h2>Brokers and sales</h2>
+                        </div>
+                        <p>Selling through resellers. Menu › Users › Brokers, and the broker's own Telegram section.</p>
+                        <figure class="shot">
+                            <div class="window">
+                                <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>panel.example.com/dashboard/broker/overview</span></div>
+                                <img src="../assets/shots/broker-overview.webp" width="1600" height="1000" loading="lazy" alt="A broker's Overview page: traffic quota used, users out of the limit, account expiry and status, then users by status and online stats." />
+                            </div>
+                            <figcaption>What a broker sees first: their quota, users limit and expiry.</figcaption>
+                        </figure>
+                        <div class="concepts">
+                            <article class="concept" id="broker">
+                                <h3>Broker <a class="anchor" href="#broker" aria-label="Link to this concept">#</a> <span class="who">Owner</span></h3>
+                                <span class="where">Menu › Users › Brokers › Create broker</span>
+                                <p>An account that sells your service. Each broker manages only its own users, within the limits you set:</p>
+                                <dl>
+                                    <dt>Traffic quota</dt><dd>All of the broker's users share it. When it runs out, they're all paused until you raise it or reset the usage.</dd>
+                                    <dt>Users limit</dt><dd>How many users the broker can have.</dd>
+                                    <dt>Expiry date</dt><dd>After it, the broker can still sign in and look, but can't change anything, and all of its users expire.</dd>
+                                    <dt>Password</dt><dd>At least 24 characters, with upper and lower case letters and numbers.</dd>
+                                </dl>
+                                <p>Each broker gets its own external squad and subscription page, named after it, which they can brand. Templates, hosts and HWID stay with you.</p>
+                                <div class="related"><a href="#broker-panel">The broker's panel</a><a href="#telegram-bot">Telegram store bot</a></div>
+                            </article>
+                            <article class="concept" id="broker-panel">
+                                <h3>The broker's panel <a class="anchor" href="#broker-panel" aria-label="Link to this concept">#</a> <span class="who">Broker</span></h3>
+                                <p>Brokers sign in at your panel's address and get a menu of their own: an <strong>Overview</strong> with their quota, users limit and expiry; <strong>Users</strong>; <strong>Internal Squads</strong> they may use, by country and protocol; their <strong>Subscription Page</strong> and <strong>Subscription Settings</strong>; the <strong>Telegram bot</strong> pages; and <strong>Quick Open</strong>. Alerts warn them before the quota or the account runs out.</p>
+                            </article>
+                            <article class="concept" id="telegram-bot">
+                                <h3>Telegram store bot <a class="anchor" href="#telegram-bot" aria-label="Link to this concept">#</a> <span class="who">Broker</span></h3>
+                                <span class="where">Telegram Bot › Settings</span>
+                                <p>Each broker can run a shop in Telegram. Customers top up a wallet, then buy a plan in one tap and get their subscription link in the chat. Every subscription sold is one of the broker's users and counts toward their limits.</p>
+                                <p>To connect it: create a bot with @BotFather, make a group with Topics turned on, add the bot as an admin that can manage topics, then paste the bot token. The Group ID Finder fills in the group: send <code>/find</code> in it. The group becomes the staff room where receipts, orders and stats arrive.</p>
+                                <figure class="shot">
+                                    <div class="window">
+                                        <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>panel.example.com/dashboard/broker/telegram-bot</span></div>
+                                        <img src="../assets/shots/bot.webp" width="1600" height="1000" loading="lazy" alt="The Telegram Bot settings: bot token and staff group fields with a Save and connect button, and the Group ID Finder beside them." />
+                                    </div>
+                                </figure>
+                            </article>
+                            <article class="concept" id="plans">
+                                <h3>Plans and categories <a class="anchor" href="#plans" aria-label="Link to this concept">#</a></h3>
+                                <p>A <strong>plan</strong> is what customers buy: a traffic limit, a duration, the internal squad it runs on, an optional <a href="#ip-limit">limit on devices at once</a> (beta) and a price in Toman. Traffic 0 means unlimited, but all of that usage comes out of the broker's quota. Pause a plan to stop selling it without deleting it. <strong>Categories</strong> group plans into sections of the bot's buy menu.</p>
+                                <p>Sales pause on their own while the broker is disabled, expired, out of quota or at their users limit.</p>
+                            </article>
+                            <article class="concept" id="payments">
+                                <h3>Wallet, payments and receipts <a class="anchor" href="#payments" aria-label="Link to this concept">#</a></h3>
+                                <p>Customers pay from a wallet inside the bot. To top it up, they pay to one of the broker's methods (bank cards, crypto wallets, or others like PayPal, Wise, IBAN, SBP or YooMoney) and send a photo of the receipt. Staff approve or reject it in the group or on the Orders page, and the customer is told either way. Brokers can also credit a wallet by hand by the customer's Telegram ID.</p>
+                            </article>
+                            <article class="concept" id="orders">
+                                <h3>Orders <a class="anchor" href="#orders" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">Telegram Bot › Orders</span>
+                                <p>Top-ups waiting for review, and everything the bot has sold.</p>
+                            </article>
+                            <article class="concept" id="referrals">
+                                <h3>Referrals <a class="anchor" href="#referrals" aria-label="Link to this concept">#</a></h3>
+                                <p>Every customer gets a personal invite link under “🤝 Invite friends”. When someone who first opened the bot through it gets a top-up approved, the inviter gets a share of it, a percentage the broker sets. It's one level only, and 0% turns it off and hides the button. Credit added by hand from the panel pays no reward.</p>
+                            </article>
+                            <article class="concept" id="trial">
+                                <h3>Free trial <a class="anchor" href="#trial" aria-label="Link to this concept">#</a></h3>
+                                <p>A free test plan, with its own traffic, duration, squad and optional <a href="#ip-limit">limit on devices at once</a> (beta), that each Telegram account can claim once under “🎁 Free trial”. Each trial is one of the broker's users. Reset lets every account claim it again, and trials already given out keep working.</p>
+                                <p>The duration can be in days or hours. An optional daily cap stops handing out trials for the rest of the UTC day once it's reached; customers are told to come back tomorrow. <strong>Delete expired trial users</strong> removes each trial user a day after it expires, so it stops counting toward the broker's users. Turning it on also deletes trials that expired earlier, and trial users extended by hand once they expire again.</p>
+                            </article>
+                            <article class="concept" id="channels">
+                                <h3>Required channels <a class="anchor" href="#channels" aria-label="Link to this concept">#</a></h3>
+                                <p>Channels customers must join before they can use the bot. The bot must be an admin of each: if it can't check membership, it lets everyone through. A separate public channel link can show as an “Our channel” button next to Support.</p>
+                            </article>
+                            <article class="concept" id="bot-texts">
+                                <h3>Texts and languages <a class="anchor" href="#bot-texts" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">Telegram Bot › Texts</span>
+                                <p>Every message the bot sends can be rewritten in each language it speaks, with a live phone preview. The bot speaks English, Persian, Arabic, Russian, Turkish and Simplified Chinese. The broker turns languages on and picks a default. New customers start in their Telegram app's language when the bot speaks it, and with more than one language on, they get a 🌐 button to switch. The staff group always gets the default.</p>
+                            </article>
+                            <article class="concept" id="bot-stats">
+                                <h3>Bot stats <a class="anchor" href="#bot-stats" aria-label="Link to this concept">#</a></h3>
+                                <span class="where">Telegram Bot › Stats</span>
+                                <p>Customers, sales, top-ups, free trials and referrals, by day in UTC. Group admins can ask for the same numbers with <code>/stats</code>, and a daily summary is posted in the staff group's Stats topic, along with new customers, purchases, trials and rewards as they happen.</p>
+                            </article>
+                            <article class="concept" id="broadcast">
+                                <h3>Bot Broadcast <a class="anchor" href="#broadcast" aria-label="Link to this concept">#</a> <span class="who">Owner</span></h3>
+                                <span class="where">Menu › Users › Bot Broadcast</span>
+                                <p>A message from you to the customers of every connected broker bot, with an optional image up to 10 MB. Each broker's own bot delivers it in the background. Sending can't be undone. Brokers see a notice that platform announcements may reach their subscribers.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- TOOLS -->
+                    <section class="group-block" id="tools">
+                        <div class="group-title">
+                            <h2>Tools</h2>
+                        </div>
+                        <p>For looking into what's happening. Menu › Tools.</p>
+                        <div class="concepts">
+                            <article class="concept" id="hwid-inspector"><h3>HWID Inspector <a class="anchor" href="#hwid-inspector" aria-label="Link to this concept">#</a></h3><p>The devices that have used each subscription, as reported by apps that send a hardware ID. Use it to see who shares a link, and to remove a device so a new one fits under the limit.</p></article>
+                            <article class="concept" id="srh-inspector"><h3>SRH Inspector <a class="anchor" href="#srh-inspector" aria-label="Link to this concept">#</a></h3><p>Subscription request history: every time an app fetched a subscription, which app asked and what it got. The first place to look when a user says “my app shows nothing”.</p></article>
+                            <article class="concept" id="torrent-reports"><h3>Torrent Blocker Reports <a class="anchor" href="#torrent-reports" aria-label="Link to this concept">#</a></h3><p>Torrent traffic your nodes blocked, by user and by node. It fills when the torrent blocker <a href="#plugins">plugin</a> runs on a node.</p></article>
+                            <article class="concept" id="sessions"><h3>Sessions Explorer <a class="anchor" href="#sessions" aria-label="Link to this concept">#</a></h3><p>Which IP addresses each user is connected from right now.</p></article>
+                            <article class="concept" id="http-stats"><h3>HTTP Stats <a class="anchor" href="#http-stats" aria-label="Link to this concept">#</a></h3><p>How many requests each of the panel's API routes has served since the panel last restarted.</p></article>
+                            <article class="concept" id="quick-open"><h3>Quick Open <a class="anchor" href="#quick-open" aria-label="Link to this concept">#</a> <span class="who">Owner · Broker</span></h3><p>Find users fast, reopen recent ones, or jump to any page. Brokers have it too.</p></article>
+                        </div>
+                    </section>
+
+                    <!-- SETTINGS -->
+                    <section class="group-block" id="settings">
+                        <div class="group-title">
+                            <h2>Settings</h2>
+                        </div>
+                        <div class="concepts">
+                            <article class="concept" id="umiji-settings"><h3>Umiji Settings <a class="anchor" href="#umiji-settings" aria-label="Link to this concept">#</a></h3><span class="where">Menu › Umiji Settings</span><p>The panel's own settings: sign-in methods, API tokens, branding and panel features.</p></article>
+                            <article class="concept" id="auth">
+                                <h3>Sign-in methods <a class="anchor" href="#auth" aria-label="Link to this concept">#</a></h3>
+                                <p>How admins sign in: a <strong>password</strong>, <strong>passkeys</strong>, <strong>Telegram</strong>, or an OAuth2 provider: <strong>GitHub</strong>, <strong>Yandex</strong>, <strong>Keycloak</strong>, <strong>PocketID</strong> or any generic OAuth2 server. Passkeys need the full HTTPS origin of your panel. Keep at least one method you can always use.</p>
+                            </article>
+                            <article class="concept" id="api-tokens">
+                                <h3>API tokens <a class="anchor" href="#api-tokens" aria-label="Link to this concept">#</a></h3>
+                                <p>Keys for programs that talk to the panel's API, including the subscription page server, which needs one in its <code>UMIJI_API_TOKEN</code>. A token is shown only once, right after you create it, so copy it somewhere safe. Requests from scripts without a token are refused. The <a href="../api/#auth">API guide</a> covers scopes, requests and every endpoint.</p>
+                            </article>
+                            <article class="concept" id="branding">
+                                <h3>Branding <a class="anchor" href="#branding" aria-label="Link to this concept">#</a></h3>
+                                <p>Your own logo and title on the sign-in page and in the menu. The logo is an image URL or a <code>data:</code> URL. Colour single words of the title with <code>{color}word</code>, using a hex colour or a colour name: without a marker, text is white.</p>
+                            </article>
+                            <article class="concept" id="languages">
+                                <h3>Languages <a class="anchor" href="#languages" aria-label="Link to this concept">#</a></h3>
+                                <p>The panel is complete in English and Persian, with right-to-left layout for Persian, and partly translated into Russian and Chinese. Switch with the 文A button at the top. In Persian, numbers show in Persian digits, while what you type, save and copy stays in plain 0–9.</p>
+                            </article>
+                            <article class="concept" id="home">
+                                <h3>Home dashboard <a class="anchor" href="#home" aria-label="Link to this concept">#</a></h3>
+                                <p>Traffic, users and how the panel itself is running. The runtime cards show each Umiji process: the <strong>API</strong> that serves the panel and subscriptions, the <strong>scheduler</strong> that queues timed jobs, and the <strong>processor</strong> that runs them, such as node health checks and traffic counting.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <p class="empty">Nothing matches. Try a shorter word, or <a href="../guide/">follow the setup guide</a>.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="wrap">
+                <span><span class="jp" lang="ja">海路</span> · Umiji is free software under AGPL-3.0.</span>
+                <nav aria-label="Footer">
+                    <a href="../">Home</a>
+                    <a href="../guide/">Setup guide</a>
+                    <a href="../api/">API</a>
+                    <a href="https://github.com/therewasluna/umiji">GitHub</a>
+                    <a href="https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md">DEPLOY.md</a>
+                </nav>
+            </div>
+        </footer>
+        <script src="../assets/site.js" defer></script>
+    </body>
+</html>

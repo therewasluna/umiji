@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <title>Umiji · پنل فروش Xray از طریق نماینده‌ها</title>
+        <meta
+            name="description"
+            content="Umiji پنلی برای Xray-core است که روی سرور خودتان اجرا می‌شود: نودها، کاربران، اشتراک‌ها، نماینده‌های فروش و ربات‌های فروشگاه تلگرام در یک جا. راهنمای راه‌اندازی و توضیح همه‌ی مفاهیم."
+        />
+        <meta name="theme-color" content="#130C11" />
+        <link rel="alternate" hreflang="en" href="https://umiji.wiki/" />
+        <link rel="alternate" hreflang="fa" href="https://umiji.wiki/fa/" />
+        <meta property="og:title" content="ویکی Umiji" />
+        <meta property="og:description" content="Umiji را قدم‌به‌قدم راه بیندازید و همه‌ی مفاهیم پنل را یاد بگیرید." />
+        <meta property="og:image" content="https://umiji.wiki/assets/shots/fa/users.webp" />
+        <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="../assets/favicon-32.png" sizes="32x32" type="image/png" />
+        <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" href="../assets/fonts/umiji-persian-digits.woff2" as="font" type="font/woff2" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Alexandria:wght@500..800&family=Vazirmatn:wght@400..800&display=swap"
+        />
+        <!-- only the two letters of 海路 -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600&text=%E6%B5%B7%E8%B7%AF&display=swap" />
+        <link rel="stylesheet" href="../assets/site.css" />
+    </head>
+    <body>
+        <a class="skip" href="#main">رفتن به محتوا</a>
+
+        <header class="topbar">
+            <div class="wrap">
+                <a class="brand" href="./" aria-label="خانه‌ی ویکی Umiji">
+                    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
+                            <path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" />
+                            <path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" />
+                        </g>
+                    </svg>
+                    <span class="word" dir="ltr"><span class="umi">Umi</span><span class="ji">ji</span></span>
+                </a>
+                <nav class="nav" aria-label="اصلی">
+                    <a href="guide/">راهنمای راه‌اندازی</a>
+                    <a href="concepts/">مفاهیم</a>
+                    <a href="api/">API</a>
+                </nav>
+                <div class="tools">
+                    <a class="icon-btn gh" href="https://github.com/therewasluna/umiji" aria-label="Umiji در GitHub">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" /></svg>
+                    </a>
+                    <a class="icon-btn lang-btn" href="../" lang="en" hreflang="en">English</a>
+                </div>
+            </div>
+        </header>
+
+        <main id="main">
+            <section class="hero">
+                <div class="wrap hero-grid">
+                    <div>
+                        <span class="eyebrow"><b lang="ja">海路</b> <span lang="en">umiji</span> یعنی «راه دریایی»</span>
+                        <h1>سرورهای Xray، کاربران و نماینده‌هایتان را از <em>یک پنل</em> اداره کنید.</h1>
+                        <p class="lede">
+                            Umiji پنلی برای Xray-core است که روی سرور خودتان اجرا می‌شود. نودها، کاربران و اشتراک‌ها
+                            را یک‌جا مدیریت می‌کنید. نماینده‌های فروشتان پنل خودشان را دارند، صفحه‌ی اشتراکی با برند
+                            خودشان، و یک ربات فروشگاه تلگرام که برایشان می‌فروشد.
+                        </p>
+                        <div class="cta">
+                            <a class="btn btn-primary" href="guide/">
+                                شروع راهنمای راه‌اندازی
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                            </a>
+                            <a class="btn btn-ghost" href="concepts/">یادگیری مفاهیم</a>
+                        </div>
+                        <ul class="hero-meta">
+                            <li>روی سرور خودتان</li>
+                            <li>نرم‌افزار آزاد، AGPL-3.0</li>
+                            <li>انگلیسی و فارسی</li>
+                        </ul>
+                    </div>
+
+                    <div class="stage">
+                        <div class="window">
+                            <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>panel.example.com/dashboard/management/users</span></div>
+                            <img src="../assets/shots/fa/users.webp" width="1600" height="1000" alt="صفحه‌ی کاربرهای پنل Umiji به فارسی: شمارنده‌های وضعیت، و بعد هر کاربر با وضعیت، زمان انقضا، ترافیک مصرف‌شده و اسکوادهایش." fetchpriority="high" />
+                        </div>
+                        <div class="phone">
+                            <img src="../assets/shots/fa/subpage.webp" width="780" height="1688" alt="صفحه‌ی اشتراک روی گوشی: ترافیک مصرف‌شده از سقف، به شکل موجی که بالا می‌آید، و تاریخ انقضا." />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tide" aria-hidden="true">
+                    <svg class="w3" viewBox="0 0 2880 160" preserveAspectRatio="none"><path fill="var(--tide-3)" d="M0 60 Q60 42 120 60 T240 60 T360 60 T480 60 T600 60 T720 60 T840 60 T960 60 T1080 60 T1200 60 T1320 60 T1440 60 T1560 60 T1680 60 T1800 60 T1920 60 T2040 60 T2160 60 T2280 60 T2400 60 T2520 60 T2640 60 T2760 60 T2880 60 V160 H0Z" /></svg>
+                    <svg class="w2" viewBox="0 0 2880 160" preserveAspectRatio="none"><path fill="var(--tide-2)" d="M0 78 Q60 64 120 78 T240 78 T360 78 T480 78 T600 78 T720 78 T840 78 T960 78 T1080 78 T1200 78 T1320 78 T1440 78 T1560 78 T1680 78 T1800 78 T1920 78 T2040 78 T2160 78 T2280 78 T2400 78 T2520 78 T2640 78 T2760 78 T2880 78 V160 H0Z" /></svg>
+                    <svg class="w1" viewBox="0 0 2880 160" preserveAspectRatio="none"><path fill="var(--tide-1)" d="M0 96 Q60 86 120 96 T240 96 T360 96 T480 96 T600 96 T720 96 T840 96 T960 96 T1080 96 T1200 96 T1320 96 T1440 96 T1560 96 T1680 96 T1800 96 T1920 96 T2040 96 T2160 96 T2280 96 T2400 96 T2520 96 T2640 96 T2760 96 T2880 96 V160 H0Z" /></svg>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="route-title">
+                <div class="wrap">
+                    <span class="kicker">مسیر</span>
+                    <h2 id="route-title">هشت ایستگاه، از سرور شما تا گوشی کاربر.</h2>
+                    <p class="intro">
+                        هر چیزی در Umiji جایی روی همین مسیر قرار دارد. یک بار یادش بگیرید تا همه‌ی صفحه‌های پنل
+                        برایتان معنا پیدا کند. هر ایستگاه به توضیح کاملش لینک شده است.
+                    </p>
+                    <ol class="route">
+                        <li><a href="concepts/#config-profile"><div class="stop"></div><h3>پروفایل کانفیگ</h3><p>تنظیمات Xray که سرورهایتان اجرا می‌کنند.</p></a></li>
+                        <li><a href="concepts/#inbound"><div class="stop"></div><h3>اینباند</h3><p>یک پورت و پروتکل داخل پروفایل، مثل VLESS با REALITY.</p></a></li>
+                        <li><a href="concepts/#node"><div class="stop"></div><h3>نود</h3><p>سروری که پروفایل را با Xray-core اجرا می‌کند.</p></a></li>
+                        <li><a href="concepts/#host"><div class="stop"></div><h3>هاست</h3><p>آدرسی که کاربران به آن وصل می‌شوند و در برنامه‌شان دیده می‌شود.</p></a></li>
+                        <li><a href="concepts/#internal-squad"><div class="stop"></div><h3>اسکواد داخلی</h3><p>اینکه یک گروه از کاربران از کدام اینباندها استفاده کنند.</p></a></li>
+                        <li><a href="concepts/#user"><div class="stop"></div><h3>کاربر</h3><p>یک اشتراک، با محدودیت ترافیک و تاریخ انقضا.</p></a></li>
+                        <li><a href="concepts/#subscription-link"><div class="stop"></div><h3>لینک اشتراک</h3><p>یک لینک شخصی که همه‌ی هاست‌های مجاز کاربر را با خود دارد.</p></a></li>
+                        <li><a href="concepts/#client-app"><div class="stop"></div><h3>برنامه‌ی کلاینت</h3><p>Happ، v2rayNG، FlClashX و برنامه‌های دیگر لینک را وارد می‌کنند و وصل می‌شوند.</p></a></li>
+                    </ol>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="inside-title">
+                <div class="wrap">
+                    <span class="kicker">چه چیزهایی دارد</span>
+                    <h2 id="inside-title">هر آنچه برای فروش لازم دارید، در یک پنل آرام و مرتب.</h2>
+                    <div class="features">
+                        <div class="feature">
+                            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3" /><path d="M7 9h4M7 13h10M7 17h6" /></svg></span>
+                            <div><h3>ویرایشگر بصری کانفیگ</h3><p>پروفایل‌های Xray را با فرم بسازید، نه با JSON. همه‌ی فیلدها هست، نمای JSON یک کلیک فاصله دارد و یک هسته‌ی واقعی Xray هر تغییر را بررسی می‌کند.</p></div>
+                        </div>
+                        <div class="feature">
+                            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2" /><rect x="3" y="13" width="18" height="7" rx="2" /><path d="M7 7.5h.01M7 16.5h.01" /></svg></span>
+                            <div><h3>نود در یک قدم</h3><p>IP سرور و رمز root را به پنل بدهید. پنل از طریق SSH، Docker و نود را نصب می‌کند و نود را برایتان اضافه می‌کند. رمز فقط یک بار استفاده می‌شود و هیچ‌جا ذخیره نمی‌شود.</p></div>
+                        </div>
+                        <div class="feature">
+                            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 17l-2 2a2.8 2.8 0 0 1-4-4l3-3a2.8 2.8 0 0 1 4 0" /><path d="M13 7l2-2a2.8 2.8 0 0 1 4 4l-3 3a2.8 2.8 0 0 1-4 0" /><path d="M9 15l6-6" /></svg></span>
+                            <div><h3>فروشنده‌ها</h3><p>حساب‌های نماینده‌ی فروش که با همان پنل وارد می‌شوند و فقط کاربران خودشان را می‌بینند، در محدوده‌ی سهمیه‌ی ترافیک، سقف کاربران و تاریخ انقضایی که شما تعیین می‌کنید.</p></div>
+                        </div>
+                        <div class="feature">
+                            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 4L3 11l6 2.5M21 4l-3 16-9-6.5M21 4L9 13.5V19l3-3.5" /></svg></span>
+                            <div><h3>ربات‌های فروشگاه تلگرام</h3><p>هر فروشنده رباتی وصل می‌کند که پلن می‌فروشد، پرداخت کارت‌به‌کارت، رمزارز و روش‌های دیگر را با بررسی رسید می‌پذیرد و لینک اشتراک تحویل می‌دهد.</p></div>
+                        </div>
+                        <div class="feature">
+                            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="3" /><path d="M9 15q1.5-2 3 0t3 0M11 18.5h2" /></svg></span>
+                            <div><h3>صفحه‌ی اشتراک با برند خودتان</h3><p>هر فروشنده صفحه‌ای با یکی از هشت رنگ اصلی دارد، با مراحل نصب برای هر پلتفرم. تغییرات بلافاصله دیده می‌شوند و نیازی به ری‌استارت نیست.</p></div>
+                        </div>
+                        <div class="feature">
+                            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z" /><path d="M9 12l2 2 4-4" /></svg></span>
+                            <div><h3>پروکسی تلگرام (MTProto)</h3><p>پروکسی تلگرام را مثل یک اینباند معمولی اضافه کنید. کاربران آن را مستقیم داخل تلگرام اضافه می‌کنند و فروشنده‌ها می‌توانند کانال اسپانسر خودشان را نشان دهند.</p></div>
+                        </div>
+                        <div class="feature">
+                            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3" /><path d="M7 9l3 3-3 3M13 15h4" /></svg></span>
+                            <div><h3>ترمینال SSH در مرورگر</h3><p>از داخل پنل، روی کامپیوتر یا گوشی، روی هر نود شل باز کنید. کلیدها در مرورگر خودتان ساخته می‌شوند و هرگز از آن بیرون نمی‌روند.</p></div>
+                        </div>
+                        <div class="feature">
+                            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h7M7.5 3v2M5 11c2.5-1 4.5-3.5 5-6M6 7.5c1 2 3 3.5 5 4" /><path d="M12 21l4.5-10 4.5 10M13.5 18h6" /></svg></span>
+                            <div><h3>انگلیسی و فارسی</h3><p>پنل، پنل فروشنده و ربات‌ها هر دو زبان را دارند، با چیدمان راست‌به‌چپ برای فارسی. ربات‌ها عربی، روسی، ترکی و چینی هم بلدند.</p></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="sell-title">
+                <div class="wrap">
+                    <span class="kicker">ساخته‌شده برای فروش</span>
+                    <h2 id="sell-title">نماینده‌هایتان پنل و فروشگاهی می‌گیرند که حس می‌کنند مال خودشان است.</h2>
+
+                    <div class="showcase">
+                        <div class="copy">
+                            <h3>فروشنده‌ها، با محدودیت‌هایی که واقعاً اعمال می‌شوند</h3>
+                            <p>یک فروشنده بسازید و به او سهمیه‌ی ترافیک، سقف کاربران و تاریخ انقضا بدهید. فروشنده با همان آدرس وارد می‌شود و فقط کاربران خودش را مدیریت می‌کند.</p>
+                            <ul class="checks">
+                                <li>وقتی سهمیه تمام شود، کاربرانش خودبه‌خود متوقف می‌شوند</li>
+                                <li>صفحه‌ی اشتراک و تنظیمات خودش را برای برندسازی دارد</li>
+                                <li>کشورها و پروتکل‌ها را می‌بیند، نه جزئیات نودهای شما را</li>
+                            </ul>
+                        </div>
+                        <figure class="shot">
+                            <div class="window">
+                                <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>panel.example.com/dashboard/management/brokers</span></div>
+                                <img src="../assets/shots/fa/brokers.webp" width="1600" height="1000" loading="lazy" alt="صفحه‌ی فروشنده‌ها: هر فروشنده با وضعیت، ترافیک مصرف‌شده از سهمیه، تعداد کاربران از سقف و تاریخ انقضا." />
+                            </div>
+                        </figure>
+                    </div>
+
+                    <div class="showcase flip">
+                        <div class="copy">
+                            <h3>فروشگاهی در تلگرام</h3>
+                            <p>هر فروشنده یک ربات و یک گروه کارکنان وصل می‌کند. مشتری‌ها کیف پولشان را شارژ می‌کنند، با یک لمس پلن می‌خرند و لینکشان را در همان چت می‌گیرند.</p>
+                            <ul class="checks">
+                                <li>پلن‌ها و دسته‌بندی‌ها، با قیمت به تومان</li>
+                                <li>کارت‌به‌کارت، رمزارز و روش‌های دیگر، با بررسی رسید</li>
+                                <li>پاداش دعوت و تست رایگانی که هر حساب فقط یک بار می‌گیرد</li>
+                                <li>همه‌ی پیام‌ها به شش زبان قابل ویرایش‌اند، با پیش‌نمایش زنده</li>
+                            </ul>
+                        </div>
+                        <figure class="shot">
+                            <div class="window">
+                                <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>panel.example.com/dashboard/broker/telegram-texts</span></div>
+                                <img src="../assets/shots/fa/bot-texts.webp" width="1600" height="1000" loading="lazy" alt="صفحه‌ی «متن‌ها و زبان‌ها»ی ربات: کلیدهای زبان در بالا، و بعد ویرایشگر هر پیامی که ربات می‌فرستد، این‌جا پیام خوش‌آمد به فارسی." />
+                            </div>
+                        </figure>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" aria-labelledby="start-title">
+                <div class="wrap">
+                    <span class="kicker">از اینجا شروع کنید</span>
+                    <h2 id="start-title">سه راه برای شروع.</h2>
+                    <div class="doors">
+                        <a class="door" href="guide/">
+                            <span class="n">01 · راهنمای راه‌اندازی</span>
+                            <h3>از یک سرور خالی تا یک اتصال واقعی</h3>
+                            <p>ده قدم با تصویر: نصب، ساختن کانفیگ، افزودن نود، ساختن کاربر و اتصال از گوشی.</p>
+                            <span class="go">باز کردن راهنما <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
+                        </a>
+                        <a class="door" href="concepts/">
+                            <span class="n">02 · مفاهیم</span>
+                            <h3>همه‌ی مفهوم‌های پنل، با توضیح</h3>
+                            <p>کاربرها، نودها، هاست‌ها، اسکوادها، قالب‌ها، فروشنده‌ها، ربات‌ها و ابزارها: هر کدام چیست و چطور به هم وصل می‌شوند.</p>
+                            <span class="go">دیدن مفاهیم <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
+                        </a>
+                        <a class="door" href="api/">
+                            <span class="n">03 · راهنمای API</span>
+                            <h3>پنل را با کد خودتان اداره کنید</h3>
+                            <p>توکن‌ها و دامنه‌های دسترسی، وب‌هوک‌های امضاشده، و همه‌ی اندپوینت‌ها با فیلدها و یک درخواست آماده.</p>
+                            <span class="go">خواندن راهنمای API <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="wrap">
+                <span><bdi class="jp" lang="ja">海路</bdi> · Umiji نرم‌افزاری آزاد با مجوز AGPL-3.0 است.</span>
+                <nav aria-label="پانویس">
+                    <a href="guide/">راهنمای راه‌اندازی</a>
+                    <a href="concepts/">مفاهیم</a>
+                    <a href="api/">API</a>
+                    <a href="https://github.com/therewasluna/umiji">GitHub</a>
+                    <a href="https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md">DEPLOY.md <span>(انگلیسی)</span></a>
+                </nav>
+            </div>
+        </footer>
+        <script src="../assets/site.js" defer></script>
+    </body>
+</html>
