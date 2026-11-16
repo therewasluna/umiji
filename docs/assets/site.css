@@ -383,22 +383,62 @@ code {
 
 /* ---------- hero ---------- */
 
+/* centred, so the install command gets a whole line and nothing needs mirroring */
 .hero {
     position: relative;
     isolation: isolate;
     overflow: hidden;
-    padding: clamp(56px, 9vw, 104px) 0 0;
+    padding: clamp(48px, 6.5vw, 84px) 0 0;
+    text-align: center;
     background:
-        radial-gradient(60% 55% at 78% 8%, var(--glow), transparent 70%),
-        radial-gradient(40% 40% at 6% 30%, rgba(124, 77, 235, 0.12), transparent 70%);
+        radial-gradient(55% 42% at 50% 0%, var(--glow), transparent 70%),
+        radial-gradient(30% 40% at 0% 40%, rgba(124, 77, 235, 0.14), transparent 70%),
+        radial-gradient(30% 40% at 100% 40%, rgba(124, 77, 235, 0.14), transparent 70%);
 }
 
-.hero-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
-    gap: clamp(32px, 5vw, 64px);
-    padding-bottom: 56px;
+/* a faint sea chart behind the words */
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1.5px) 0 0 / 28px 28px;
+    -webkit-mask-image: radial-gradient(55% 45% at 50% 22%, #000, transparent);
+    mask-image: radial-gradient(55% 45% at 50% 22%, #000, transparent);
+}
+
+.hero-copy {
+    display: flex;
+    flex-direction: column;
     align-items: center;
+}
+
+.hero-copy > *,
+.stage {
+    animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.hero-copy > :nth-child(2) {
+    animation-delay: 0.07s;
+}
+
+.hero-copy > :nth-child(3) {
+    animation-delay: 0.14s;
+}
+
+.hero-copy > :nth-child(4) {
+    animation-delay: 0.21s;
+}
+
+.hero-copy > :nth-child(5) {
+    animation-delay: 0.28s;
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
 }
 
 .eyebrow {
@@ -426,76 +466,121 @@ code {
 }
 
 .hero h1 {
+    max-width: 14em;
     font-family: var(--display);
     font-weight: 500;
-    font-size: clamp(32px, 4.1vw, 52px);
-    line-height: 1.1;
-    letter-spacing: -0.04em;
+    font-size: clamp(34px, 4.6vw, 60px);
+    line-height: 1.08;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
 }
 
 .hero h1 em {
     font-style: normal;
-    color: var(--rose);
+    background: linear-gradient(100deg, var(--rose) 30%, var(--plum));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .hero .lede {
-    margin: 24px 0 34px;
-    max-width: 34em;
+    max-width: 30em;
+    margin: 20px 0 36px;
     color: var(--text-2);
     font-size: clamp(17px, 1.6vw, 19px);
+    text-wrap: balance;
 }
 
-.cta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-/* the one-line install under the hero's buttons */
-.hero-install {
-    margin-top: 28px;
-    max-width: 34em;
-}
-
-.hero-install p {
-    margin: 0 0 8px;
-    color: var(--text-3);
-    font-size: 14px;
-}
-
-.hero-install pre.cmd {
+/* the install command is the way in, so it gets a terminal of its own */
+.hero .term {
+    width: min(100%, 940px);
+    max-width: none;
     margin: 0;
-    font-size: 13px;
+    border-radius: 16px;
+    border-color: var(--rose-line);
+    box-shadow:
+        0 0 0 6px var(--rose-soft),
+        0 30px 90px -20px var(--glow);
 }
 
-.hero-meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 22px;
-    margin: 34px 0 0;
-    padding: 0;
-    list-style: none;
-    color: var(--text-3);
-    font-size: 14px;
+.hero .term-bar span {
+    color: var(--text-2);
 }
 
-.hero-meta li {
+.hero .term pre.cmd {
+    padding: 20px 116px 20px 46px;
+    overflow: visible;
+    background: none;
+    font-size: 14.5px;
+}
+
+/* the root prompt stays out of the copied text */
+.hero .term code::before {
+    content: '#';
+    position: absolute;
+    left: 24px;
+    color: var(--rose);
+}
+
+.hero .term .copy-btn {
+    right: 14px;
+    padding: 10px 18px;
+    border: 0;
+    border-radius: 10px;
+    background: var(--rose-btn);
+    color: #fff;
+    font-size: 13.5px;
+    font-weight: 600;
+}
+
+.hero .term .copy-btn:hover {
+    background: #b42f69;
+    color: #fff;
+}
+
+.hero-link {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    margin-top: 24px;
+    color: var(--text-2);
+    font-weight: 500;
 }
 
-.hero-meta li::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--rose);
+.hero-link:hover {
+    color: var(--rose);
+    text-decoration: none;
 }
 
+.hero-link svg {
+    width: 17px;
+    height: 17px;
+    color: var(--rose);
+    transition: transform 0.2s;
+}
+
+.hero-link:hover svg {
+    transform: translateX(3px);
+}
+
+/* the panel rises out of the tide, the phone in front of it */
 .stage {
     position: relative;
-    padding-bottom: 40px;
+    max-width: 1060px;
+    margin: clamp(40px, 5vw, 64px) auto 0;
+    padding-inline: 5%;
+    perspective: 2200px;
+    text-align: start;
+    animation-delay: 0.35s;
+}
+
+.stage::before {
+    content: '';
+    position: absolute;
+    inset: 8% 10% 0;
+    z-index: -1;
+    background: radial-gradient(closest-side, var(--glow), transparent);
+    filter: blur(40px);
 }
 
 .window {
@@ -540,16 +625,18 @@ code {
 }
 
 .stage .window {
-    transform: perspective(1600px) rotateY(-7deg) rotateX(2deg);
-    transform-origin: 0 50%;
+    transform: rotateX(9deg);
+    transform-origin: 50% 100%;
+    -webkit-mask-image: linear-gradient(#000 55%, transparent 96%);
+    mask-image: linear-gradient(#000 55%, transparent 96%);
 }
 
 .phone {
     position: absolute;
-    inset-inline-start: -6%;
-    bottom: -4px;
-    width: 30%;
-    min-width: 132px;
+    inset-inline-start: 0;
+    bottom: 6%;
+    width: 24%;
+    min-width: 116px;
     padding: 7px;
     border-radius: 34px;
     background: #0d080b;
@@ -606,26 +693,38 @@ code {
     }
 }
 
-@media (max-width: 900px) {
-    .hero-grid {
-        grid-template-columns: minmax(0, 1fr);
-    }
+@media (max-width: 720px) {
     .stage {
-        margin-top: 8px;
-        margin-inline-start: 7%;
+        padding-inline: 14% 0;
     }
     .stage .window {
         transform: none;
     }
+    .phone {
+        width: 34%;
+        border-radius: 24px;
+        padding: 5px;
+    }
+    .phone img {
+        border-radius: 19px;
+    }
 }
 
+/* on a phone the copy button moves up into the title bar, so the command gets the whole width */
 @media (max-width: 520px) {
-    .stage {
-        margin-inline-start: 14%;
+    .hero .term pre.cmd {
+        padding: 14px 16px 16px 34px;
+        font-size: 13.5px;
     }
-    .phone {
-        inset-inline-start: -16%;
-        width: 38%;
+    .hero .term code::before {
+        left: 16px;
+    }
+    .hero .term pre.cmd .copy-btn {
+        top: -30px;
+        right: 8px;
+        transform: none;
+        padding: 6px 12px;
+        font-size: 12.5px;
     }
 }
 
@@ -665,12 +764,11 @@ code {
     font-size: 18px;
 }
 
-/* the route: how the pieces connect */
+/* the route: a card per stop, joined by a flowing wave. The colour drifts from rose (your server) to violet (the phone). */
 .route {
-    position: relative;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 40px 28px;
+    gap: 40px;
     margin: 56px 0 0;
     padding: 0;
     list-style: none;
@@ -678,62 +776,90 @@ code {
 }
 
 .route li {
+    --c: color-mix(in oklab, var(--plum) var(--mix, 0%), var(--rose));
     position: relative;
     counter-increment: stop;
 }
 
+.route li:nth-child(2) { --mix: 14%; }
+.route li:nth-child(3) { --mix: 28%; }
+.route li:nth-child(4) { --mix: 42%; }
+.route li:nth-child(5) { --mix: 57%; }
+.route li:nth-child(6) { --mix: 71%; }
+.route li:nth-child(7) { --mix: 85%; }
+.route li:nth-child(8) { --mix: 100%; }
+
 .route a {
+    position: relative;
     display: block;
     height: 100%;
+    padding: 26px 24px 24px;
+    overflow: hidden;
+    border-radius: 20px;
+    border: 1px solid var(--line-2);
+    background:
+        radial-gradient(110% 70% at 0% 0%, color-mix(in srgb, var(--c) 13%, transparent), transparent 65%),
+        var(--surface);
     color: inherit;
+    transition:
+        transform 0.25s,
+        border-color 0.25s,
+        box-shadow 0.25s;
+}
+
+[dir='rtl'] .route a {
+    background:
+        radial-gradient(110% 70% at 100% 0%, color-mix(in srgb, var(--c) 13%, transparent), transparent 65%),
+        var(--surface);
 }
 
 .route a:hover {
     text-decoration: none;
+    transform: translateY(-4px);
+    border-color: color-mix(in srgb, var(--c) 50%, transparent);
+    box-shadow: 0 26px 50px -26px color-mix(in srgb, var(--c) 70%, transparent);
 }
 
-.route a:hover h3 {
-    color: var(--rose);
+/* the stop's number, large and hollow, in the far corner */
+.route a::before {
+    content: counter(stop, decimal-leading-zero);
+    position: absolute;
+    top: 18px;
+    inset-inline-end: 20px;
+    color: transparent;
+    -webkit-text-stroke: 1px color-mix(in srgb, var(--c) 55%, transparent);
+    font: 600 44px/1 var(--display);
+    letter-spacing: -0.04em;
 }
 
 .route .stop {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
-}
-
-.route .stop::before {
-    content: counter(stop, decimal-leading-zero);
     display: grid;
     place-items: center;
-    width: 40px;
-    height: 40px;
-    flex: none;
-    border-radius: 12px;
-    border: 1px solid var(--rose-line);
-    background: var(--rose-soft);
-    color: var(--rose);
-    font: 600 13px/1 var(--mono);
+    width: 48px;
+    height: 48px;
+    margin-bottom: 22px;
+    border-radius: 14px;
+    border: 1px solid color-mix(in srgb, var(--c) 40%, transparent);
+    background: color-mix(in srgb, var(--c) 14%, transparent);
+    box-shadow: 0 0 28px -8px color-mix(in srgb, var(--c) 70%, transparent);
+    color: var(--c);
+    transition:
+        background 0.25s,
+        color 0.25s;
 }
 
-.route .stop::after {
-    content: '';
-    flex: 1;
-    height: 12px;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='12' viewBox='0 0 24 12'%3E%3Cpath d='M0 6q3-4 6 0t6 0 6 0 6 0' fill='none' stroke='%23ff7db5' stroke-opacity='.45' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E")
-        repeat-x left center / 24px 12px;
+.route .stop svg {
+    width: 22px;
+    height: 22px;
 }
 
-.route li:nth-child(4n) .stop::after,
-.route li:last-child .stop::after {
-    display: none;
+.route a:hover .stop {
+    background: var(--c);
+    color: #fff;
 }
 
 .route h3 {
     font-size: 17px;
-    transition: color 0.15s;
 }
 
 .route p {
@@ -743,30 +869,81 @@ code {
     line-height: 1.6;
 }
 
+/* the wave that flows on to the next stop, across the gap at the height of the icons */
+.route li::after {
+    content: '';
+    position: absolute;
+    top: 44px;
+    inset-inline-start: 100%;
+    width: 40px;
+    height: 12px;
+    background: var(--c);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='12' viewBox='0 0 20 12'%3E%3Cpath d='M0 6q2.5-4 5 0t5 0 5 0 5 0' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") 0 50% / 20px 12px repeat-x;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='12' viewBox='0 0 20 12'%3E%3Cpath d='M0 6q2.5-4 5 0t5 0 5 0 5 0' fill='none' stroke='%23000' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") 0 50% / 20px 12px repeat-x;
+    animation: flow 1.4s linear infinite;
+}
+
+[dir='rtl'] .route li::after {
+    animation-direction: reverse;
+}
+
+.route li:nth-child(4n)::after,
+.route li:last-child::after {
+    display: none;
+}
+
+@keyframes flow {
+    to {
+        -webkit-mask-position: 20px 50%;
+        mask-position: 20px 50%;
+    }
+}
+
+/* where the browser can, each card rises in as it scrolls into view */
+@supports (animation-timeline: view()) {
+    .route li {
+        animation: rise linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 55%;
+    }
+}
+
 @media (max-width: 900px) {
     .route {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 32px;
     }
-    .route li:nth-child(2n) .stop::after {
+    .route li::after {
+        width: 32px;
+    }
+    .route li:nth-child(2n)::after {
         display: none;
     }
 }
 
+/* one column: the wave turns and runs down from card to card */
 @media (max-width: 520px) {
     .route {
         grid-template-columns: 1fr;
-        gap: 22px;
+        gap: 28px;
     }
-    .route .stop::after {
-        display: none;
+    .route li:not(:last-child)::after {
+        display: block;
+        top: calc(100% + 8px);
+        inset-inline-start: 34px;
+        width: 28px;
+        transform: rotate(90deg);
+    }
+    [dir='rtl'] .route li::after {
+        animation-direction: normal;
     }
 }
 
 /* features: calm rows, not a wall of cards */
 .features {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0 56px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0 40px;
     margin: 48px 0 0;
 }
 
@@ -804,7 +981,13 @@ code {
     font-size: 15.5px;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 960px) {
+    .features {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 620px) {
     .features {
         grid-template-columns: 1fr;
     }
@@ -1854,9 +2037,10 @@ mark {
     font-size: 14px;
 }
 
-:root[lang='fa'] .route .stop::before {
+/* the route's numbers in Persian digits, from the panel's font */
+:root[lang='fa'] .route a::before {
     font-family: var(--font);
-    font-size: 15px;
+    font-weight: 700;
 }
 
 :root[lang='fa'] .do li::before {
@@ -1869,20 +2053,10 @@ mark {
     font-size: 13px;
 }
 
-/* mirror what has a direction: the tilt of the hero window and the arrows */
-[dir='rtl'] .stage .window {
-    transform: perspective(1600px) rotateY(7deg) rotateX(2deg);
-    transform-origin: 100% 50%;
-}
-
-@media (max-width: 900px) {
-    [dir='rtl'] .stage .window {
-        transform: none;
-    }
-}
-
+/* mirror what has a direction: the arrows */
 [dir='rtl'] .btn svg,
-[dir='rtl'] .door .go svg {
+[dir='rtl'] .door .go svg,
+[dir='rtl'] .hero-link svg {
     transform: scaleX(-1);
 }
 
@@ -1890,10 +2064,12 @@ mark {
     transform: scaleX(-1) translateX(4px);
 }
 
-[dir='rtl'] .hero {
-    background:
-        radial-gradient(60% 55% at 22% 8%, var(--glow), transparent 70%),
-        radial-gradient(40% 40% at 94% 30%, rgba(124, 77, 235, 0.12), transparent 70%);
+[dir='rtl'] .hero-link:hover svg {
+    transform: scaleX(-1) translateX(3px);
+}
+
+[dir='rtl'] .hero h1 em {
+    background-image: linear-gradient(-100deg, var(--rose) 30%, var(--plum));
 }
 
 [dir='rtl'] .page-head {

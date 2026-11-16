@@ -62,33 +62,22 @@
 
         <main id="main">
             <section class="hero">
-                <div class="wrap hero-grid">
-                    <div>
-                        <span class="eyebrow"><b lang="ja">海路</b> umiji means “sea route”</span>
-                        <h1>Run your Xray servers, users and resellers from <em>one panel</em>.</h1>
-                        <p class="lede">
-                            Umiji is a self-hosted panel for Xray-core. You manage nodes, users and subscriptions in one
-                            place. Your resellers get their own panel, a branded subscription page and a Telegram store
-                            bot that sells for them.
-                        </p>
-                        <div class="cta">
-                            <a class="btn btn-primary" href="guide/">
-                                Start the setup guide
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-                            </a>
-                            <a class="btn btn-ghost" href="concepts/">Learn the concepts</a>
-                        </div>
-                        <div class="hero-install">
-                            <p>Or install it now: on your server, as root, run</p>
-                            <pre data-copy class="cmd"><code>bash &lt;(curl -fsSL https://raw.githubusercontent.com/therewasluna/umiji/main/install.sh)</code></pre>
-                        </div>
-                        <ul class="hero-meta">
-                            <li>Self-hosted</li>
-                            <li>Free software, AGPL-3.0</li>
-                            <li>English and Persian</li>
-                        </ul>
-                    </div>
+                <div class="wrap hero-copy">
+                    <span class="eyebrow"><b lang="ja">海路</b> umiji means “sea route”</span>
+                    <h1>Run your Xray servers, users and resellers from <em>one panel</em>.</h1>
+                    <p class="lede">Self-hosted, with reseller panels, branded subscription pages and Telegram store bots.</p>
 
+                    <div class="term">
+                        <div class="term-bar"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><span>root@your-server</span></div>
+                        <pre data-copy class="cmd"><code>bash &lt;(curl -fsSL https://raw.githubusercontent.com/therewasluna/umiji/main/install.sh)</code></pre>
+                    </div>
+                    <a class="hero-link" href="guide/">
+                        New to this? Follow the setup guide
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                    </a>
+                </div>
+
+                <div class="wrap">
                     <div class="stage">
                         <div class="window">
                             <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>panel.example.com/dashboard/management/users</span></div>
@@ -111,19 +100,16 @@
                 <div class="wrap">
                     <span class="kicker">The route</span>
                     <h2 id="route-title">Eight stops from your server to your user's phone.</h2>
-                    <p class="intro">
-                        Everything in Umiji sits somewhere on this route. Learn it once and every page of the panel makes
-                        sense. Each stop links to its full explanation.
-                    </p>
+                    <p class="intro">Learn it once and every page of the panel makes sense.</p>
                     <ol class="route">
-                        <li><a href="concepts/#config-profile"><div class="stop"></div><h3>Config profile</h3><p>The Xray setup your servers run.</p></a></li>
-                        <li><a href="concepts/#inbound"><div class="stop"></div><h3>Inbound</h3><p>A port and protocol inside a profile, like VLESS with REALITY.</p></a></li>
-                        <li><a href="concepts/#node"><div class="stop"></div><h3>Node</h3><p>A server that runs the profile with Xray-core.</p></a></li>
-                        <li><a href="concepts/#host"><div class="stop"></div><h3>Host</h3><p>The address users connect to, listed in their app.</p></a></li>
-                        <li><a href="concepts/#internal-squad"><div class="stop"></div><h3>Internal squad</h3><p>Which inbounds a group of users may use.</p></a></li>
-                        <li><a href="concepts/#user"><div class="stop"></div><h3>User</h3><p>One subscription, with a traffic limit and an expiry date.</p></a></li>
-                        <li><a href="concepts/#subscription-link"><div class="stop"></div><h3>Subscription link</h3><p>One personal link that carries every host the user may use.</p></a></li>
-                        <li><a href="concepts/#client-app"><div class="stop"></div><h3>Client app</h3><p>Happ, v2rayNG, FlClashX and others import the link and connect.</p></a></li>
+                        <li><a href="concepts/#config-profile"><span class="stop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4H7a2 2 0 0 0-2 2v4l-2 2 2 2v4a2 2 0 0 0 2 2h1M16 4h1a2 2 0 0 1 2 2v4l2 2-2 2v4a2 2 0 0 1-2 2h-1" /></svg></span><h3>Config profile</h3><p>The Xray setup your servers run.</p></a></li>
+                        <li><a href="concepts/#inbound"><span class="stop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3" /></svg></span><h3>Inbound</h3><p>A port and protocol inside a profile, like VLESS with REALITY.</p></a></li>
+                        <li><a href="concepts/#node"><span class="stop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2" /><rect x="3" y="13" width="18" height="7" rx="2" /><path d="M7 7.5h.01M7 16.5h.01" /></svg></span><h3>Node</h3><p>A server that runs the profile with Xray-core.</p></a></li>
+                        <li><a href="concepts/#host"><span class="stop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" /></svg></span><h3>Host</h3><p>The address users connect to, listed in their app.</p></a></li>
+                        <li><a href="concepts/#internal-squad"><span class="stop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2" /><path d="M3.5 19a5.5 5.5 0 0 1 11 0M16 5.2a3 3 0 0 1 0 5.6M17.5 14.2a5.5 5.5 0 0 1 3 4.8" /></svg></span><h3>Internal squad</h3><p>Which inbounds a group of users may use.</p></a></li>
+                        <li><a href="concepts/#user"><span class="stop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5" /><path d="M5 20a7 7 0 0 1 14 0" /></svg></span><h3>User</h3><p>One subscription, with a traffic limit and an expiry date.</p></a></li>
+                        <li><a href="concepts/#subscription-link"><span class="stop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17l-2 2a2.8 2.8 0 0 1-4-4l3-3a2.8 2.8 0 0 1 4 0" /><path d="M13 7l2-2a2.8 2.8 0 0 1 4 4l-3 3a2.8 2.8 0 0 1-4 0" /><path d="M9 15l6-6" /></svg></span><h3>Subscription link</h3><p>One personal link that carries every host the user may use.</p></a></li>
+                        <li><a href="concepts/#client-app"><span class="stop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3" /><path d="M11 18.5h2" /></svg></span><h3>Client app</h3><p>Happ, v2rayNG, FlClashX and others import the link and connect.</p></a></li>
                     </ol>
                 </div>
             </section>
@@ -135,35 +121,27 @@
                     <div class="features">
                         <div class="feature">
                             <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3" /><path d="M7 9h4M7 13h10M7 17h6" /></svg></span>
-                            <div><h3>A visual config editor</h3><p>Build Xray profiles with forms instead of JSON. Every field is there, the JSON view is one click away, and a real Xray core checks each change.</p></div>
+                            <div><h3>A visual config editor</h3><p>Forms instead of JSON, checked by a real Xray core.</p></div>
                         </div>
                         <div class="feature">
                             <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2" /><rect x="3" y="13" width="18" height="7" rx="2" /><path d="M7 7.5h.01M7 16.5h.01" /></svg></span>
-                            <div><h3>Nodes in one step</h3><p>Give the panel a server's IP and root password. It installs Docker and the node over SSH and adds it for you. The password is used once and never stored.</p></div>
-                        </div>
-                        <div class="feature">
-                            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 17l-2 2a2.8 2.8 0 0 1-4-4l3-3a2.8 2.8 0 0 1 4 0" /><path d="M13 7l2-2a2.8 2.8 0 0 1 4 4l-3 3a2.8 2.8 0 0 1-4 0" /><path d="M9 15l6-6" /></svg></span>
-                            <div><h3>Brokers</h3><p>Reseller accounts that sign in to the same panel and see only their own users, inside the traffic quota, users limit and expiry date you set.</p></div>
-                        </div>
-                        <div class="feature">
-                            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 4L3 11l6 2.5M21 4l-3 16-9-6.5M21 4L9 13.5V19l3-3.5" /></svg></span>
-                            <div><h3>Telegram store bots</h3><p>Each broker connects a bot that sells plans, takes card-to-card, crypto or other payments with receipt review, and hands out subscription links.</p></div>
+                            <div><h3>Nodes in one step</h3><p>An IP and a root password. The panel installs the rest over SSH.</p></div>
                         </div>
                         <div class="feature">
                             <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="3" /><path d="M9 15q1.5-2 3 0t3 0M11 18.5h2" /></svg></span>
-                            <div><h3>Branded subscription pages</h3><p>Every broker gets a page in one of eight main colours, with install steps for each platform. Edits show up right away, with no restarts.</p></div>
+                            <div><h3>Branded subscription pages</h3><p>A page per broker, with install steps for every platform.</p></div>
                         </div>
                         <div class="feature">
                             <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z" /><path d="M9 12l2 2 4-4" /></svg></span>
-                            <div><h3>Telegram proxy (MTProto)</h3><p>Add a Telegram proxy as an ordinary inbound. Users add it right inside Telegram, and brokers can show their own sponsored channel.</p></div>
+                            <div><h3>Telegram proxy (MTProto)</h3><p>An ordinary inbound, with each broker's sponsored channel.</p></div>
                         </div>
                         <div class="feature">
                             <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3" /><path d="M7 9l3 3-3 3M13 15h4" /></svg></span>
-                            <div><h3>SSH terminal in the browser</h3><p>Open a shell on any node from the panel, on a computer or a phone. Keys are made in your browser and never leave it.</p></div>
+                            <div><h3>SSH terminal in the browser</h3><p>A shell on any node, from a computer or a phone.</p></div>
                         </div>
                         <div class="feature">
                             <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h7M7.5 3v2M5 11c2.5-1 4.5-3.5 5-6M6 7.5c1 2 3 3.5 5 4" /><path d="M12 21l4.5-10 4.5 10M13.5 18h6" /></svg></span>
-                            <div><h3>English and Persian</h3><p>The panel, the broker panel and the bots speak both, right to left included. The bots also speak Arabic, Russian, Turkish and Chinese.</p></div>
+                            <div><h3>English and Persian</h3><p>Right to left included. The bots speak four more.</p></div>
                         </div>
                     </div>
                 </div>
@@ -177,11 +155,10 @@
                     <div class="showcase">
                         <div class="copy">
                             <h3>Brokers, with limits that hold</h3>
-                            <p>Create a broker, give them a traffic quota, a users limit and an expiry date. They sign in at the same address and manage only their own users.</p>
                             <ul class="checks">
+                                <li>A traffic quota, a users limit and an expiry date</li>
                                 <li>Users pause on their own when the quota runs out</li>
-                                <li>Their own subscription page and settings to brand</li>
-                                <li>They see countries and protocols, never your node details</li>
+                                <li>They see countries and protocols, never your nodes</li>
                             </ul>
                         </div>
                         <figure class="shot">
@@ -195,12 +172,10 @@
                     <div class="showcase flip">
                         <div class="copy">
                             <h3>A store in Telegram</h3>
-                            <p>Each broker connects a bot and a staff group. Customers top up a wallet, buy a plan in one tap and get their link in the chat.</p>
                             <ul class="checks">
-                                <li>Plans and categories, priced in Toman</li>
-                                <li>Card-to-card, crypto and other methods, with receipt review</li>
-                                <li>Referral rewards and a once-per-account free trial</li>
-                                <li>Every message editable in six languages, with a live preview</li>
+                                <li>Wallet top-ups and one-tap plans, priced in Toman</li>
+                                <li>Card-to-card and crypto, with receipt review</li>
+                                <li>Referrals, a free trial and texts in six languages</li>
                             </ul>
                         </div>
                         <figure class="shot">
@@ -221,19 +196,19 @@
                         <a class="door" href="guide/">
                             <span class="n">01 · Setup guide</span>
                             <h3>From an empty server to a working connection</h3>
-                            <p>Ten steps with screenshots: install, make a config, add a node, create a user and connect from a phone.</p>
+                            <p>Ten steps, with screenshots.</p>
                             <span class="go">Open the guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
                         </a>
                         <a class="door" href="concepts/">
                             <span class="n">02 · Concepts</span>
                             <h3>Every idea in the panel, explained</h3>
-                            <p>Users, nodes, hosts, squads, templates, brokers, bots and tools: what each one is and how they connect.</p>
+                            <p>What each piece is and how they connect.</p>
                             <span class="go">Browse concepts <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
                         </a>
                         <a class="door" href="api/">
                             <span class="n">03 · API guide</span>
                             <h3>Run the panel from your own code</h3>
-                            <p>Tokens and scopes, webhooks you can trust, and every endpoint with its fields and a ready request.</p>
+                            <p>Tokens, webhooks and every endpoint.</p>
                             <span class="go">Read the API guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
                         </a>
                     </div>

@@ -63,33 +63,22 @@
 
         <main id="main">
             <section class="hero">
-                <div class="wrap hero-grid">
-                    <div>
-                        <span class="eyebrow"><b lang="ja">海路</b> <span lang="en">umiji</span> یعنی «راه دریایی»</span>
-                        <h1>سرورهای Xray، کاربران و نماینده‌هایتان را از <em>یک پنل</em> اداره کنید.</h1>
-                        <p class="lede">
-                            Umiji پنلی برای Xray-core است که روی سرور خودتان اجرا می‌شود. نودها، کاربران و اشتراک‌ها
-                            را یک‌جا مدیریت می‌کنید. نماینده‌های فروشتان پنل خودشان را دارند، صفحه‌ی اشتراکی با برند
-                            خودشان، و یک ربات فروشگاه تلگرام که برایشان می‌فروشد.
-                        </p>
-                        <div class="cta">
-                            <a class="btn btn-primary" href="guide/">
-                                شروع راهنمای راه‌اندازی
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
-                            </a>
-                            <a class="btn btn-ghost" href="concepts/">یادگیری مفاهیم</a>
-                        </div>
-                        <div class="hero-install">
-                            <p>یا همین حالا نصبش کنید: روی سرورتان، با کاربر root، این را اجرا کنید</p>
-                            <pre data-copy class="cmd"><code>bash &lt;(curl -fsSL https://raw.githubusercontent.com/therewasluna/umiji/main/install.sh)</code></pre>
-                        </div>
-                        <ul class="hero-meta">
-                            <li>روی سرور خودتان</li>
-                            <li>نرم‌افزار آزاد، AGPL-3.0</li>
-                            <li>انگلیسی و فارسی</li>
-                        </ul>
-                    </div>
+                <div class="wrap hero-copy">
+                    <span class="eyebrow"><b lang="ja">海路</b> <span lang="en">umiji</span> یعنی «راه دریایی»</span>
+                    <h1>سرورهای Xray، کاربران و نماینده‌هایتان را از <em>یک پنل</em> اداره کنید.</h1>
+                    <p class="lede">روی سرور خودتان، با پنل نماینده‌ها، صفحه‌ی اشتراک با برند خودشان و ربات فروشگاه تلگرام.</p>
 
+                    <div class="term">
+                        <div class="term-bar"><i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i><span>root@your-server</span></div>
+                        <pre data-copy class="cmd"><code>bash &lt;(curl -fsSL https://raw.githubusercontent.com/therewasluna/umiji/main/install.sh)</code></pre>
+                    </div>
+                    <a class="hero-link" href="guide/">
+                        تازه‌کارید؟ راهنمای راه‌اندازی را دنبال کنید
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                    </a>
+                </div>
+
+                <div class="wrap">
                     <div class="stage">
                         <div class="window">
                             <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>panel.example.com/dashboard/management/users</span></div>
@@ -112,19 +101,16 @@
                 <div class="wrap">
                     <span class="kicker">مسیر</span>
                     <h2 id="route-title">هشت ایستگاه، از سرور شما تا گوشی کاربر.</h2>
-                    <p class="intro">
-                        هر چیزی در Umiji جایی روی همین مسیر قرار دارد. یک بار یادش بگیرید تا همه‌ی صفحه‌های پنل
-                        برایتان معنا پیدا کند. هر ایستگاه به توضیح کاملش لینک شده است.
-                    </p>
+                    <p class="intro">یک بار یادش بگیرید تا همه‌ی صفحه‌های پنل برایتان معنا پیدا کند.</p>
                     <ol class="route">
-                        <li><a href="concepts/#config-profile"><div class="stop"></div><h3>پروفایل کانفیگ</h3><p>تنظیمات Xray که سرورهایتان اجرا می‌کنند.</p></a></li>
-                        <li><a href="concepts/#inbound"><div class="stop"></div><h3>اینباند</h3><p>یک پورت و پروتکل داخل پروفایل، مثل VLESS با REALITY.</p></a></li>
-                        <li><a href="concepts/#node"><div class="stop"></div><h3>نود</h3><p>سروری که پروفایل را با Xray-core اجرا می‌کند.</p></a></li>
-                        <li><a href="concepts/#host"><div class="stop"></div><h3>هاست</h3><p>آدرسی که کاربران به آن وصل می‌شوند و در برنامه‌شان دیده می‌شود.</p></a></li>
-                        <li><a href="concepts/#internal-squad"><div class="stop"></div><h3>اسکواد داخلی</h3><p>اینکه یک گروه از کاربران از کدام اینباندها استفاده کنند.</p></a></li>
-                        <li><a href="concepts/#user"><div class="stop"></div><h3>کاربر</h3><p>یک اشتراک، با محدودیت ترافیک و تاریخ انقضا.</p></a></li>
-                        <li><a href="concepts/#subscription-link"><div class="stop"></div><h3>لینک اشتراک</h3><p>یک لینک شخصی که همه‌ی هاست‌های مجاز کاربر را با خود دارد.</p></a></li>
-                        <li><a href="concepts/#client-app"><div class="stop"></div><h3>برنامه‌ی کلاینت</h3><p>Happ، v2rayNG، FlClashX و برنامه‌های دیگر لینک را وارد می‌کنند و وصل می‌شوند.</p></a></li>
+                        <li><a href="concepts/#config-profile"><span class="stop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4H7a2 2 0 0 0-2 2v4l-2 2 2 2v4a2 2 0 0 0 2 2h1M16 4h1a2 2 0 0 1 2 2v4l2 2-2 2v4a2 2 0 0 1-2 2h-1" /></svg></span><h3>پروفایل کانفیگ</h3><p>تنظیمات Xray که سرورهایتان اجرا می‌کنند.</p></a></li>
+                        <li><a href="concepts/#inbound"><span class="stop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3" /></svg></span><h3>اینباند</h3><p>یک پورت و پروتکل داخل پروفایل، مثل VLESS با REALITY.</p></a></li>
+                        <li><a href="concepts/#node"><span class="stop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2" /><rect x="3" y="13" width="18" height="7" rx="2" /><path d="M7 7.5h.01M7 16.5h.01" /></svg></span><h3>نود</h3><p>سروری که پروفایل را با Xray-⁠core اجرا می‌کند.</p></a></li>
+                        <li><a href="concepts/#host"><span class="stop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" /></svg></span><h3>هاست</h3><p>آدرسی که کاربران به آن وصل می‌شوند و در برنامه‌شان دیده می‌شود.</p></a></li>
+                        <li><a href="concepts/#internal-squad"><span class="stop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2" /><path d="M3.5 19a5.5 5.5 0 0 1 11 0M16 5.2a3 3 0 0 1 0 5.6M17.5 14.2a5.5 5.5 0 0 1 3 4.8" /></svg></span><h3>اسکواد داخلی</h3><p>اینکه یک گروه از کاربران از کدام اینباندها استفاده کنند.</p></a></li>
+                        <li><a href="concepts/#user"><span class="stop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.5" /><path d="M5 20a7 7 0 0 1 14 0" /></svg></span><h3>کاربر</h3><p>یک اشتراک، با محدودیت ترافیک و تاریخ انقضا.</p></a></li>
+                        <li><a href="concepts/#subscription-link"><span class="stop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 17l-2 2a2.8 2.8 0 0 1-4-4l3-3a2.8 2.8 0 0 1 4 0" /><path d="M13 7l2-2a2.8 2.8 0 0 1 4 4l-3 3a2.8 2.8 0 0 1-4 0" /><path d="M9 15l6-6" /></svg></span><h3>لینک اشتراک</h3><p>یک لینک شخصی که همه‌ی هاست‌های مجاز کاربر را با خود دارد.</p></a></li>
+                        <li><a href="concepts/#client-app"><span class="stop" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="3" /><path d="M11 18.5h2" /></svg></span><h3>برنامه‌ی کلاینت</h3><p>Happ، v2rayNG، FlClashX و برنامه‌های دیگر لینک را وارد می‌کنند و وصل می‌شوند.</p></a></li>
                     </ol>
                 </div>
             </section>
@@ -136,35 +122,27 @@
                     <div class="features">
                         <div class="feature">
                             <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3" /><path d="M7 9h4M7 13h10M7 17h6" /></svg></span>
-                            <div><h3>ویرایشگر بصری کانفیگ</h3><p>پروفایل‌های Xray را با فرم بسازید، نه با JSON. همه‌ی فیلدها هست، نمای JSON یک کلیک فاصله دارد و یک هسته‌ی واقعی Xray هر تغییر را بررسی می‌کند.</p></div>
+                            <div><h3>ویرایشگر بصری کانفیگ</h3><p>پروفایل‌ها را با فرم می‌سازید و یک هسته‌ی واقعی Xray هر تغییر را بررسی می‌کند.</p></div>
                         </div>
                         <div class="feature">
                             <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="2" /><rect x="3" y="13" width="18" height="7" rx="2" /><path d="M7 7.5h.01M7 16.5h.01" /></svg></span>
-                            <div><h3>نود در یک قدم</h3><p>IP سرور و رمز root را به پنل بدهید. پنل از طریق SSH، Docker و نود را نصب می‌کند و نود را برایتان اضافه می‌کند. رمز فقط یک بار استفاده می‌شود و هیچ‌جا ذخیره نمی‌شود.</p></div>
-                        </div>
-                        <div class="feature">
-                            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 17l-2 2a2.8 2.8 0 0 1-4-4l3-3a2.8 2.8 0 0 1 4 0" /><path d="M13 7l2-2a2.8 2.8 0 0 1 4 4l-3 3a2.8 2.8 0 0 1-4 0" /><path d="M9 15l6-6" /></svg></span>
-                            <div><h3>فروشنده‌ها</h3><p>حساب‌های نماینده‌ی فروش که با همان پنل وارد می‌شوند و فقط کاربران خودشان را می‌بینند، در محدوده‌ی سهمیه‌ی ترافیک، سقف کاربران و تاریخ انقضایی که شما تعیین می‌کنید.</p></div>
-                        </div>
-                        <div class="feature">
-                            <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 4L3 11l6 2.5M21 4l-3 16-9-6.5M21 4L9 13.5V19l3-3.5" /></svg></span>
-                            <div><h3>ربات‌های فروشگاه تلگرام</h3><p>هر فروشنده رباتی وصل می‌کند که پلن می‌فروشد، پرداخت کارت‌به‌کارت، رمزارز و روش‌های دیگر را با بررسی رسید می‌پذیرد و لینک اشتراک تحویل می‌دهد.</p></div>
+                            <div><h3>نود در یک قدم</h3><p>یک IP و رمز root کافی است. پنل بقیه را از طریق SSH نصب می‌کند.</p></div>
                         </div>
                         <div class="feature">
                             <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="3" /><path d="M9 15q1.5-2 3 0t3 0M11 18.5h2" /></svg></span>
-                            <div><h3>صفحه‌ی اشتراک با برند خودتان</h3><p>هر فروشنده صفحه‌ای با یکی از هشت رنگ اصلی دارد، با مراحل نصب برای هر پلتفرم. تغییرات بلافاصله دیده می‌شوند و نیازی به ری‌استارت نیست.</p></div>
+                            <div><h3>صفحه‌ی اشتراک با برند خودتان</h3><p>برای هر فروشنده یک صفحه، با مراحل نصب برای هر پلتفرم.</p></div>
                         </div>
                         <div class="feature">
                             <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z" /><path d="M9 12l2 2 4-4" /></svg></span>
-                            <div><h3>پروکسی تلگرام (MTProto)</h3><p>پروکسی تلگرام را مثل یک اینباند معمولی اضافه کنید. کاربران آن را مستقیم داخل تلگرام اضافه می‌کنند و فروشنده‌ها می‌توانند کانال اسپانسر خودشان را نشان دهند.</p></div>
+                            <div><h3>پروکسی تلگرام (MTProto)</h3><p>یک اینباند معمولی، با کانال اسپانسر هر فروشنده.</p></div>
                         </div>
                         <div class="feature">
                             <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="3" /><path d="M7 9l3 3-3 3M13 15h4" /></svg></span>
-                            <div><h3>ترمینال SSH در مرورگر</h3><p>از داخل پنل، روی کامپیوتر یا گوشی، روی هر نود شل باز کنید. کلیدها در مرورگر خودتان ساخته می‌شوند و هرگز از آن بیرون نمی‌روند.</p></div>
+                            <div><h3>ترمینال SSH در مرورگر</h3><p>شل روی هر نود، از کامپیوتر یا گوشی.</p></div>
                         </div>
                         <div class="feature">
                             <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h7M7.5 3v2M5 11c2.5-1 4.5-3.5 5-6M6 7.5c1 2 3 3.5 5 4" /><path d="M12 21l4.5-10 4.5 10M13.5 18h6" /></svg></span>
-                            <div><h3>انگلیسی و فارسی</h3><p>پنل، پنل فروشنده و ربات‌ها هر دو زبان را دارند، با چیدمان راست‌به‌چپ برای فارسی. ربات‌ها عربی، روسی، ترکی و چینی هم بلدند.</p></div>
+                            <div><h3>انگلیسی و فارسی</h3><p>با چیدمان راست‌به‌چپ. ربات‌ها چهار زبان دیگر هم بلدند.</p></div>
                         </div>
                     </div>
                 </div>
@@ -178,11 +156,10 @@
                     <div class="showcase">
                         <div class="copy">
                             <h3>فروشنده‌ها، با محدودیت‌هایی که واقعاً اعمال می‌شوند</h3>
-                            <p>یک فروشنده بسازید و به او سهمیه‌ی ترافیک، سقف کاربران و تاریخ انقضا بدهید. فروشنده با همان آدرس وارد می‌شود و فقط کاربران خودش را مدیریت می‌کند.</p>
                             <ul class="checks">
+                                <li>سهمیه‌ی ترافیک، سقف کاربران و تاریخ انقضا</li>
                                 <li>وقتی سهمیه تمام شود، کاربرانش خودبه‌خود متوقف می‌شوند</li>
-                                <li>صفحه‌ی اشتراک و تنظیمات خودش را برای برندسازی دارد</li>
-                                <li>کشورها و پروتکل‌ها را می‌بیند، نه جزئیات نودهای شما را</li>
+                                <li>کشورها و پروتکل‌ها را می‌بیند، نه نودهای شما را</li>
                             </ul>
                         </div>
                         <figure class="shot">
@@ -196,12 +173,10 @@
                     <div class="showcase flip">
                         <div class="copy">
                             <h3>فروشگاهی در تلگرام</h3>
-                            <p>هر فروشنده یک ربات و یک گروه کارکنان وصل می‌کند. مشتری‌ها کیف پولشان را شارژ می‌کنند، با یک لمس پلن می‌خرند و لینکشان را در همان چت می‌گیرند.</p>
                             <ul class="checks">
-                                <li>پلن‌ها و دسته‌بندی‌ها، با قیمت به تومان</li>
-                                <li>کارت‌به‌کارت، رمزارز و روش‌های دیگر، با بررسی رسید</li>
-                                <li>پاداش دعوت و تست رایگانی که هر حساب فقط یک بار می‌گیرد</li>
-                                <li>همه‌ی پیام‌ها به شش زبان قابل ویرایش‌اند، با پیش‌نمایش زنده</li>
+                                <li>شارژ کیف پول و خرید پلن با یک لمس، به تومان</li>
+                                <li>کارت‌به‌کارت و رمزارز، با بررسی رسید</li>
+                                <li>پاداش دعوت، تست رایگان و متن‌ها به شش زبان</li>
                             </ul>
                         </div>
                         <figure class="shot">
@@ -222,19 +197,19 @@
                         <a class="door" href="guide/">
                             <span class="n">01 · راهنمای راه‌اندازی</span>
                             <h3>از یک سرور خالی تا یک اتصال واقعی</h3>
-                            <p>ده قدم با تصویر: نصب، ساختن کانفیگ، افزودن نود، ساختن کاربر و اتصال از گوشی.</p>
+                            <p>ده قدم، با تصویر.</p>
                             <span class="go">باز کردن راهنما <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
                         </a>
                         <a class="door" href="concepts/">
                             <span class="n">02 · مفاهیم</span>
                             <h3>همه‌ی مفهوم‌های پنل، با توضیح</h3>
-                            <p>کاربرها، نودها، هاست‌ها، اسکوادها، قالب‌ها، فروشنده‌ها، ربات‌ها و ابزارها: هر کدام چیست و چطور به هم وصل می‌شوند.</p>
+                            <p>هر بخش چیست و چطور به هم وصل می‌شوند.</p>
                             <span class="go">دیدن مفاهیم <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
                         </a>
                         <a class="door" href="api/">
                             <span class="n">03 · راهنمای API</span>
                             <h3>پنل را با کد خودتان اداره کنید</h3>
-                            <p>توکن‌ها و دامنه‌های دسترسی، وب‌هوک‌های امضاشده، و همه‌ی اندپوینت‌ها با فیلدها و یک درخواست آماده.</p>
+                            <p>توکن‌ها، وب‌هوک‌ها و همه‌ی اندپوینت‌ها.</p>
                             <span class="go">خواندن راهنمای API <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg></span>
                         </a>
                     </div>
