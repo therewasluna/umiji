@@ -42,8 +42,9 @@ server: a node installed next to the panel is added to the panel's Nodes for you
 [setup guide](https://umiji.wiki/guide/) walks through it, and
 [DEPLOY.md](https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md) does the same install by hand.
 
-It also adds the `umiji` command. Type `umiji` on the server later for a menu: install more parts, update, change the
-owner's password, back up or restore the panel's database, and uninstall.
+It also adds the `umiji` command. Type `umiji` on the server later for a menu: install more parts, update, switch the
+store bots between polling and webhook, change the owner's password, back up or restore the panel's database, and
+uninstall.
 
 ## A fork of Remnawave
 

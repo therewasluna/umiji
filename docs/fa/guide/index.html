@@ -204,6 +204,8 @@
                                     <tr><td><code>Panel domain</code></td><td>دامنه‌ی پنل.</td></tr>
                                     <tr><td><code>Sub page domain</code></td><td>دامنه‌ی صفحه‌ی اشتراک.</td></tr>
                                     <tr><td><code>How should the panel get HTTPS?</code></td><td>عدد 1 برای Caddy داخلی، عدد 2 برای nginx خودتان.</td></tr>
+                                    <tr><td><code>How should the store bots get their messages?</code></td><td>ربات‌های فروشگاه پیام‌ها را چطور بگیرند. عدد 1 (polling) یعنی پنل خودش از تلگرام می‌پرسد و همه‌جا کار می‌کند. عدد 2 (webhook) یعنی تلگرام پیام‌ها را به پنل می‌فرستد و دامنه‌ای لازم است که تلگرام به آن برسد؛ <kbd>Enter</kbd> دامنه‌ی پنل را برمی‌دارد.</td></tr>
+                                    <tr><td><code>Who should serve …?</code></td><td>فقط وقتی دامنه‌ی webhook با دامنه‌ی پنل فرق دارد. عدد 1 یعنی Caddy داخلی گواهی‌اش را می‌گیرد، عدد 2 یعنی reverse proxy یا تونل خودتان.</td></tr>
                                     <tr><td><code>Admin username</code></td><td>نام کاربری مدیر.</td></tr>
                                     <tr><td><code>Admin password</code></td><td>رمز عبور مدیر. موقع نوشتن دیده نمی‌شود؛ <kbd>Enter</kbd> یک رمز قوی می‌سازد.</td></tr>
                                     <tr><td><code>Node port</code></td><td>پورتی که پنل با آن به نود وصل می‌شود. 2222 را با <kbd>Enter</kbd> بپذیرید.</td></tr>
@@ -219,7 +221,7 @@
                         <h3 id="umiji">بعداً: دستور <code>umiji</code></h3>
                         <p>
                             روی سرور <code>umiji</code> را بنویسید تا منویی باز شود: نصب بخش‌های دیگر، به‌روزرسانی، بکاپ،
-                            برگرداندن بکاپ، تازه کردن رمز مدیر یا حذف. بکاپ‌ها در <bdi><code>/opt/umiji/backups/</code></bdi>
+                            برگرداندن بکاپ، تازه کردن رمز مدیر، جابه‌جا کردن ربات‌های فروشگاه بین polling و webhook یا حذف. بکاپ‌ها در <bdi><code>/opt/umiji/backups/</code></bdi>
                             ذخیره می‌شوند. همه‌چیز را در خود دارند، پس پیش خودتان نگهشان دارید، و هر چند وقت یک بار از سرور
                             بیرونشان بیاورید. این را روی کامپیوتر خودتان اجرا کنید:
                         </p>

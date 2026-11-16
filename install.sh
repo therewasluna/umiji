@@ -6,7 +6,8 @@
 #
 # Add panel, sub or node at the end to tick that part in the menu. It also installs itself as the
 # umiji command: run on a server that already has Umiji, it shows a menu to install more, update,
-# change the owner's password, back up or restore the panel's database, and uninstall.
+# switch the store bots between polling and webhook, change the owner's password, back up or restore
+# the panel's database, and uninstall.
 
 set -uo pipefail
 
@@ -25,6 +26,8 @@ NODE_IMAGE=ghcr.io/therewasluna/umiji-node:latest
 # The Subpage preset in Umiji Settings → API Tokens.
 SUB_SCOPES='"subscription-page-configs:list","subscription-page-configs:get","subscriptions:subpage-config","system:metadata","users:by-username"'
 CMD=/usr/local/bin/umiji
+# Where Telegram posts the store bots' messages in webhook mode (REST_API.BROKER_BOT.WEBHOOK).
+BOT_HOOK_PATH=/api/broker-bot/webhook/
 # Same as hashPassword in the backend (common/utils/password): scrypt over an HMAC keyed with APP_SECRET.
 HASH_JS='const c=require("crypto");let p="";process.stdin.setEncoding("utf8").on("data",d=>p+=d).on("end",()=>{const k=c.createHmac("sha256",process.env.APP_SECRET).update(p).digest("hex"),s=c.randomBytes(16).toString("hex");process.stdout.write(s+":"+c.scryptSync(k,s,64).toString("hex"))})'
 # Adds the node on this server to the panel, from inside the panel's container. It signs a 10-minute
@@ -222,6 +225,29 @@ check_domain() {
         bad "That isn't a domain. Type it like panel.example.com, without https://"
         return 1
     fi
+}
+
+# A webhook domain, maybe with a port: Telegram only calls 443, 80, 88 and 8443.
+check_hook_domain() {
+    local d=${1,,} port=''
+    d=${d#http://}
+    d=${d#https://}
+    d=${d%%/*}
+    if [[ $d == *:* ]]; then
+        port=${d##*:}
+        d=${d%:*}
+        if [[ ! $port =~ ^(443|80|88|8443)$ ]]; then
+            bad "Telegram only calls ports 443, 80, 88 and 8443."
+            return 1
+        fi
+    fi
+    d=$(check_domain "$d") || return 1
+    if [[ $d == "$SUB_DOMAIN" ]]; then
+        bad "That's the sub page's domain. Use the panel's, or a domain of its own."
+        return 1
+    fi
+    [[ $port == 443 ]] && port=''
+    printf '%s' "$d${port:+:$port}"
 }
 
 check_ip() {
@@ -537,6 +563,7 @@ s_panel_files() {
     set_env "$f" SUB_PAGE_HERE "$SUB_PAGE_HERE"
     set_env "$f" SUB_PAGE_IP "$SUB_PAGE_IP"
     set_env "$f" COMPOSE_PROFILES "$PANEL_PROFILES"
+    write_bot_hook
     echo "Wrote $f"
 }
 
@@ -547,6 +574,77 @@ s_panel_wait() {
     wait_container umiji 300 && return 0
     hint "See the panel's log: cd $PANEL_DIR && docker compose logs umiji"
     return 1
+}
+
+# ── Store bots: polling or webhook ────────────────────────────────────────────────────────────────
+
+# Caddy serves the webhook: on the panel's domain, or on a domain of its own (BOT_HOOK_CADDY).
+hook_by_caddy() { [[ -n $BOT_HOOK && -n $PANEL_PROFILES && ($BOT_HOOK == "$PANEL_DOMAIN" || $BOT_HOOK_CADDY == 1) ]]; }
+
+# The setting in the panel's .env, and a Caddy site for a webhook domain of its own. The Caddyfile
+# imports bot-webhook*.caddy; an older one gets that line added once.
+write_bot_hook() {
+    local f=$PANEL_DIR/caddy/bot-webhook.caddy cf=$PANEL_DIR/caddy/Caddyfile
+    set_env "$PANEL_DIR/.env" BROKER_BOT_WEBHOOK_DOMAIN "$BOT_HOOK"
+    if ((BOT_HOOK_CADDY)); then
+        grep -q '^import bot-webhook' "$cf" ||
+            printf '\n# The store bots'\'' webhook on a domain of its own: umiji, then Store bots.\nimport bot-webhook*.caddy\n' >>"$cf"
+        cat >"$f" <<EOF
+# Written by the umiji command (Store bots). Telegram posts the store bots' messages here; anything
+# else on this domain gets 404.
+$BOT_HOOK {
+	handle $BOT_HOOK_PATH* {
+		reverse_proxy umiji:3000 {
+			header_up X-Umiji-Real-IP {client_ip}
+		}
+	}
+	handle {
+		respond 404
+	}
+}
+EOF
+        echo "Wrote $f"
+    else
+        rm -f "$f"
+    fi
+    echo "BROKER_BOT_WEBHOOK_DOMAIN=$BOT_HOOK"
+}
+
+s_bot_save() {
+    [[ -f $PANEL_DIR/caddy/bot-webhook.caddy ]] && cp -f "$PANEL_DIR/caddy/bot-webhook.caddy" "$TMP/bot-webhook.old"
+    write_bot_hook
+}
+
+# A graceful reload. If Caddy refuses the new site, the old file goes back, so a later restart of
+# Caddy can't take the panel down with it.
+s_caddy_reload() {
+    docker exec umiji-caddy caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile && return 0
+    if [[ -f $TMP/bot-webhook.old ]]; then
+        cp -f "$TMP/bot-webhook.old" "$PANEL_DIR/caddy/bot-webhook.caddy"
+    else
+        rm -f "$PANEL_DIR/caddy/bot-webhook.caddy"
+    fi
+    hint "Caddy didn't take the new site, so its old settings stay. See why: docker logs umiji-caddy"
+    return 1
+}
+
+# The panel reads .env when it starts, then points every connected bot at the new place.
+s_panel_recreate() { cd "$PANEL_DIR" && docker compose up -d --no-deps --force-recreate umiji; }
+
+# Posts to the webhook the way Telegram does; the panel answers 200 for an unknown bot. It's this
+# server's view, not Telegram's, so a miss is only a warning. It waits while Caddy gets a certificate.
+s_bot_hook_check() {
+    local url="https://$BOT_HOOK$BOT_HOOK_PATH$(cat /proc/sys/kernel/random/uuid)" t=0 code=''
+    while :; do
+        code=$(curl -s -o /dev/null -w '%{http_code}' -m 10 -X POST -H 'content-type: application/json' -d '{}' "$url")
+        echo "POST $url: $code"
+        [[ $code == 200 ]] && return 0
+        hook_by_caddy && ((t < 120)) || break
+        sleep 5
+        t=$((t + 5))
+    done
+    [[ $code == 000 ]] && code='no answer'
+    soft_fail "https://$BOT_HOOK doesn't answer like the panel yet ($code). See below"
 }
 
 # The sub page runs on this server and reaches the panel inside Docker.
@@ -1115,6 +1213,9 @@ questions_panel() {
     ask_https PANEL_PROFILES "the panel"
 
     printf '\n'
+    ask_bot_updates 1
+
+    printf '\n'
     note "Your admin account. The first account owns the panel, so making it now means nobody else can."
     ask_admin
 
@@ -1122,6 +1223,42 @@ questions_panel() {
     check_dns "$PANEL_DOMAIN"
     [[ $SUB_PAGE_HERE == yes ]] && check_dns "$SUB_DOMAIN"
     return 0
+}
+
+# Polling or webhook for the brokers' store bots. Sets BOT_HOOK (empty for polling) and BOT_HOOK_CADDY.
+ask_bot_updates() {
+    local def=$1 cur=${2:-} pick
+    choose pick "How should the store bots get their messages?" "$def" \
+        "Polling|the panel asks Telegram; works everywhere (recommended)" \
+        "Webhook|Telegram calls the panel; needs a domain Telegram can reach"
+    BOT_HOOK='' BOT_HOOK_CADDY=0
+    ((pick == 2)) || return 0
+    note "Telegram will post each bot's messages to https://<domain>$BOT_HOOK_PATH…"
+    ask BOT_HOOK "Webhook domain" "${cur:-$PANEL_DOMAIN}" check_hook_domain
+    [[ $BOT_HOOK == "$PANEL_DOMAIN" ]] && return 0
+    # Caddy publishes 443 only, so a domain with a port is the user's own to serve.
+    if [[ -n $PANEL_PROFILES && $BOT_HOOK != *:* ]]; then
+        choose pick "Who should serve $BOT_HOOK?" 1 \
+            "Built-in Caddy|gets its certificate itself; the domain must point at this server" \
+            "My own|another reverse proxy or a tunnel on this server (nginx, Cloudflare Tunnel)"
+        if ((pick == 1)); then
+            BOT_HOOK_CADDY=1
+            # The menu skips the network check, where this is found.
+            [[ -n $SERVER_IP ]] || SERVER_IP=${UMIJI_SERVER_IP:-$(public_ip)}
+            check_dns "$BOT_HOOK"
+        fi
+    fi
+}
+
+# The webhook on a domain the user serves: what their reverse proxy needs.
+bot_hook_steps() {
+    say "Point https://$BOT_HOOK$BOT_HOOK_PATH at http://127.0.0.1:3000 on this server, with a valid"
+    say "certificate. The panel needs X-Forwarded-For and X-Forwarded-Proto https. In nginx:"
+    say "     ${B}location $BOT_HOOK_PATH {${R}"
+    say "     ${B}    proxy_pass http://127.0.0.1:3000;${R}"
+    say "     ${B}    proxy_set_header X-Forwarded-For \$remote_addr;${R}"
+    say "     ${B}    proxy_set_header X-Forwarded-Proto https;${R}"
+    say "     ${B}}${R}"
 }
 
 ask_token() {
@@ -1302,6 +1439,9 @@ summary_and_plan() {
     if ((WANT_PANEL)); then
         if ((HAVE[0])); then say "Panel      update, in $PANEL_DIR"; else say "Panel      https://$PANEL_DOMAIN  ${D}$https $DOT $PANEL_DIR$R"; fi
     fi
+    if ((WANT_PANEL && !HAVE[0])); then
+        if [[ -n $BOT_HOOK ]]; then say "Store bots webhook at https://$BOT_HOOK"; else say "Store bots polling"; fi
+    fi
     if ((WANT_SUB)); then
         if ((HAVE[1])); then say "Sub page   update, in $SUB_DIR"; else say "Sub page   https://$SUB_DOMAIN  ${D}$SUB_DIR$R"; fi
     fi
@@ -1341,6 +1481,8 @@ summary_and_plan() {
     fi
     ((WANT_PANEL && !HAVE[0])) && [[ -n $PANEL_PROFILES ]] &&
         plan "Getting the HTTPS certificate" "HTTPS certificate for $PANEL_DOMAIN" s_panel_cert
+    ((WANT_PANEL && !HAVE[0])) && hook_by_caddy &&
+        plan "Checking the store bots' webhook" "https://$BOT_HOOK answers like the panel" s_bot_hook_check
     if ((WANT_SUB)); then
         if ((HAVE[1])); then
             updating=1
@@ -1375,7 +1517,10 @@ summary_and_plan() {
         ((NODE_AUTO)) && plan "Adding the node to the panel" "Node added to the panel as $NODE_NAME" s_node_add
     fi
     ((updating)) && plan "Removing old images" "Old images removed" s_prune
+    confirm_plan
+}
 
+confirm_plan() {
     printf '\n  %sWhat happens now%s\n' "$B" "$R"
     local i=1 e
     for e in "${PLAN[@]}"; do
@@ -1412,7 +1557,7 @@ finish() {
         if [[ -f $TMP/node-added ]]; then say "Node       in the panel as ${B}$NODE_NAME${R}"; else say "Node       listening on port $NODE_PORT"; fi
     fi
     say "Log        ${D}$LOG${R}"
-    [[ -x $CMD ]] && say "Manage     ${B}umiji${R}  ${D}updates, backups, the owner's password, uninstalling${R}"
+    [[ -x $CMD ]] && say "Manage     ${B}umiji${R}  ${D}updates, store bots, backups, the owner's password, uninstalling${R}"
 
     if ((!(WANT_PANEL && !HAVE[0]) && !(WANT_SUB && !HAVE[1] && SUB_ALONE) && !(WANT_NODE && !HAVE[2]))); then
         printf '\n'
@@ -1428,6 +1573,11 @@ finish() {
         fi
         say "$n. Open https://$PANEL_DOMAIN and sign in."
         n=$((n + 1))
+        if [[ -n $BOT_HOOK && $BOT_HOOK != "$PANEL_DOMAIN" ]] && ! hook_by_caddy; then
+            say "$n. For the store bots' webhook:"
+            bot_hook_steps
+            n=$((n + 1))
+        fi
         say "$n. Back up now and then: type umiji and pick Back up. Copy the file off this server."
         n=$((n + 1))
         if [[ $SUB_PAGE_HERE == no ]]; then
@@ -1493,8 +1643,9 @@ menu() {
     ((HAVE[1])) && say "Sub page   https://$(get_env "$SUB_DIR/.env" SUB_DOMAIN)  $(state umiji-subscription-page)"
     ((HAVE[2])) && say "Node       $NODE_DIR  $(state umiji-node)"
     if ((HAVE[0])); then
-        acts+=(password backup restore)
-        opts+=("Owner password|set a new one, if you forgot it"
+        acts+=(bots password backup restore)
+        opts+=("Store bots|polling or webhook for the brokers' Telegram bots"
+            "Owner password|set a new one, if you forgot it"
             "Back up|save the panel's whole database in one file"
             "Restore|put a backup back, in place of the database")
     fi
@@ -1509,6 +1660,58 @@ need_panel_db() {
     container_running umiji-db && return 0
     die "The panel's database isn't running." "Start the panel: cd $PANEL_DIR && docker compose up -d
 Then type umiji again."
+}
+
+do_bots() {
+    local cur had=0 inst mode
+    title "Store bots"
+    container_running umiji || die "The panel isn't running." "Start it: cd $PANEL_DIR && docker compose up -d
+Then type umiji again."
+    PANEL_DOMAIN=$(get_env "$PANEL_DIR/.env" PANEL_DOMAIN)
+    SUB_DOMAIN=$(get_env "$PANEL_DIR/.env" SUB_DOMAIN)
+    PANEL_PROFILES=$(get_env "$PANEL_DIR/.env" COMPOSE_PROFILES)
+    cur=$(get_env "$PANEL_DIR/.env" BROKER_BOT_WEBHOOK_DOMAIN)
+    [[ -f $PANEL_DIR/caddy/bot-webhook.caddy ]] && had=1
+    if [[ -n $cur ]]; then say "Now: webhook. Telegram calls https://$cur"; else say "Now: polling. The panel asks Telegram."; fi
+    note "Every connected bot moves over when the panel restarts, and a bot a broker connects later"
+    note "starts the same way."
+    printf '\n'
+    if [[ -n $cur ]]; then ask_bot_updates 1 "$cur"; else ask_bot_updates 2; fi
+
+    if [[ $BOT_HOOK == "$cur" ]] && ((BOT_HOOK_CADDY == had)); then
+        printf '\n'
+        good "That's how it runs already. Nothing changed."
+        printf '\n'
+        return 0
+    fi
+    inst=$(get_env "$PANEL_DIR/.env" API_INSTANCES)
+    if [[ -n $BOT_HOOK && ${inst:-1} != 1 ]]; then
+        die "Webhook mode needs API_INSTANCES=1 in $PANEL_DIR/.env (it says $inst)." "One instance keeps each bot's messages in order and the free trial's daily cap exact.
+Set API_INSTANCES=1, then type umiji again."
+    fi
+
+    mode=polling
+    [[ -n $BOT_HOOK ]] && mode="webhook at https://$BOT_HOOK"
+    plan "Saving the setting" "Store bots: $mode" s_bot_save
+    container_running umiji-caddy && ((had || BOT_HOOK_CADDY)) &&
+        plan "Reloading Caddy" "Caddy has the new settings" s_caddy_reload
+    plan "Restarting the panel" "Panel restarted" s_panel_recreate
+    plan "Waiting for the panel" "Panel is running" s_panel_wait
+    [[ -n $BOT_HOOK ]] && plan "Checking the webhook" "https://$BOT_HOOK answers like the panel" s_bot_hook_check
+    confirm_plan
+    ((FANCY)) && printf '\e[?25l'
+    run_plan
+    ((FANCY)) && printf '\e[?25h'
+
+    title "Done"
+    say "Store bots ${B}$mode${R}"
+    if [[ -n $BOT_HOOK ]] && ! hook_by_caddy; then
+        printf '\n'
+        bot_hook_steps
+    elif [[ -f $TMP/warn ]]; then
+        note "A new domain needs an A record pointing here, and ports 80 and 443 open in your provider's firewall."
+    fi
+    printf '\n'
 }
 
 do_password() {
@@ -1707,7 +1910,7 @@ main() {
     SUB_ALONE=0 SUB_PROFILES='' SUB_PANEL_URL='' SUB_TOKEN=''
     NODE_PORT='' NODE_SECRET='' NODE_PANEL_IP='' NODE_AUTO=0 NODE_UFW=0 SERVER_IP='' NEED_DOCKER=1
     ADMIN_USER='' ADMIN_PASS='' ADMIN_PASS_MADE=0 MAKE_OWNER=0 OWNER_QUIET=0 MAKE_TOKEN=0
-    DNS_LATER=() ACTION='' RESTORE_FILE='' KEEP_DATA=1 SUB_KEEP=0
+    DNS_LATER=() ACTION='' RESTORE_FILE='' KEEP_DATA=1 SUB_KEEP=0 BOT_HOOK='' BOT_HOOK_CADDY=0
 
     banner
     preflight
@@ -1742,6 +1945,7 @@ Then type umiji again."
             case $ACTION in
                 install) PICK=(0 0 0) ;;
                 update) WANT_PANEL=${HAVE[0]} WANT_SUB=${HAVE[1]} WANT_NODE=${HAVE[2]} ;;
+                bots) do_bots ;;
                 password) do_password ;;
                 backup) do_backup ;;
                 restore) do_restore ;;
