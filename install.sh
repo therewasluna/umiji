@@ -612,19 +612,22 @@ EOF
 
 s_bot_save() {
     [[ -f $PANEL_DIR/caddy/bot-webhook.caddy ]] && cp -f "$PANEL_DIR/caddy/bot-webhook.caddy" "$TMP/bot-webhook.old"
+    get_env "$PANEL_DIR/.env" BROKER_BOT_WEBHOOK_DOMAIN >"$TMP/bot-hook.old"
     write_bot_hook
 }
 
-# A graceful reload. If Caddy refuses the new site, the old file goes back, so a later restart of
-# Caddy can't take the panel down with it.
+# A graceful reload. If Caddy refuses the new site, the old setting goes back, so a later restart
+# can't take the panel down or send the bots to a domain nobody serves.
 s_caddy_reload() {
     docker exec umiji-caddy caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile && return 0
+    set_env "$PANEL_DIR/.env" BROKER_BOT_WEBHOOK_DOMAIN "$(cat "$TMP/bot-hook.old")"
     if [[ -f $TMP/bot-webhook.old ]]; then
         cp -f "$TMP/bot-webhook.old" "$PANEL_DIR/caddy/bot-webhook.caddy"
     else
         rm -f "$PANEL_DIR/caddy/bot-webhook.caddy"
     fi
-    hint "Caddy didn't take the new site, so its old settings stay. See why: docker logs umiji-caddy"
+    hint "Caddy refused the new site (its reason is above), so nothing was changed. A site in"
+    hint "$PANEL_DIR/caddy/Caddyfile may already use this domain."
     return 1
 }
 
@@ -1705,7 +1708,8 @@ Set API_INSTANCES=1, then type umiji again."
 
     title "Done"
     say "Store bots ${B}$mode${R}"
-    if [[ -n $BOT_HOOK ]] && ! hook_by_caddy; then
+    # Steps only when the check missed: a passing check means the user's proxy already does it.
+    if [[ -n $BOT_HOOK ]] && ! hook_by_caddy && [[ -f $TMP/warn ]]; then
         printf '\n'
         bot_hook_steps
     elif [[ -f $TMP/warn ]]; then
