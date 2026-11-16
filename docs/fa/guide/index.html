@@ -79,7 +79,7 @@
                     <h2>قدم‌ها</h2>
                     <ol>
                         <li><a href="#install"><span class="num">01</span>نصب پنل</a></li>
-                        <li><a href="#sign-in"><span class="num">02</span>ورود و وصل کردن صفحه‌ی اشتراک</a></li>
+                        <li><a href="#sign-in"><span class="num">02</span>ورود و نصب صفحه‌ی اشتراک</a></li>
                         <li><a href="#profile"><span class="num">03</span>ساختن پروفایل کانفیگ</a></li>
                         <li><a href="#inbound"><span class="num">04</span>افزودن اینباند VLESS</a></li>
                         <li><a href="#node"><span class="num">05</span>افزودن نود</a></li>
@@ -97,64 +97,64 @@
                     <section class="step" id="install">
                         <div class="step-head">
                             <span class="step-num">01</span>
-                            <div><span class="meta">روی کامپیوتر خودتان و سرور</span><h2>نصب پنل</h2></div>
+                            <div><span class="meta">روی سرور</span><h2>نصب پنل</h2></div>
                         </div>
                         <p>
-                            Umiji داخل Docker اجرا می‌شود. ایمیج‌ها را روی کامپیوتر خودتان می‌سازید و اسکریپت دیپلوی
-                            آن‌ها را از طریق SSH به سرور می‌فرستد، پس سرور فقط به Docker نیاز دارد. راهنمای کامل، با
-                            همه‌ی تنظیمات، در
+                            Umiji داخل Docker و از روی ایمیج‌های آماده اجرا می‌شود، پس سرور فقط به Docker نیاز دارد و همه‌ی
+                            دستورهای اینجا روی خود سرور اجرا می‌شوند. پنل، صفحه‌ی اشتراک و نودها هر کدام نصب جداگانه‌ی خودشان
+                            را دارند؛ این قدم نصب پنل است. راهنمای کامل، با همه‌ی تنظیمات، در
                             <a href="https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md">DEPLOY.md</a>
                             (به انگلیسی) آمده است. نسخه‌ی کوتاهش این است.
                         </p>
 
                         <h3>چه چیزهایی لازم دارید</h3>
                         <ul class="checks">
-                            <li><strong>یک سرور برای پنل</strong>، با Ubuntu یا Debian و دسترسی SSH با کاربر root و کلید.</li>
+                            <li><strong>یک سرور برای پنل</strong> با دسترسی root و پردازنده‌ی x86-64 یا ARM. Ubuntu یا Debian ساده‌ترین انتخاب است.</li>
                             <li><strong>یک سرور برای اولین نودتان</strong>. ترافیک کاربرانتان از این سرور عبور می‌کند.</li>
                             <li><strong>دو دامنه</strong>: یکی برای پنل، مثل <code>panel.example.com</code>، و یکی برای صفحه‌ی اشتراک، مثل <code>sub.example.com</code>. اول رکورد A هر دو را روی IP سرور پنل بگذارید، چون گواهی‌های HTTPS به آن‌ها نیاز دارند.</li>
-                            <li><strong>کامپیوتر خودتان</strong>، با Linux یا macOS، که Docker، Node.js نسخه‌ی 24 یا بالاتر، <code>git</code>، <code>zip</code>، <code>python3</code>، <code>openssl</code> و <code>ssh</code> رویش نصب باشد.</li>
                         </ul>
 
-                        <h3>دیپلوی</h3>
-                        <pre data-copy><code><span class="c"># <span dir="rtl">روی کامپیوتر خودتان: یک بار کد را بگیرید</span></span>
-git clone https://github.com/therewasluna/umiji-backend.git
-git clone https://github.com/therewasluna/umiji-frontend.git
-git clone https://github.com/therewasluna/umiji-subscription-page.git
-cd umiji-backend
+                        <h3>نصب</h3>
+                        <pre data-copy><code><span class="c"># <span dir="rtl">نصب Docker</span></span>
+curl -fsSL https://get.docker.com | sh
 
-<span class="c"># <span dir="rtl">سرویس‌ها را روی سرور می‌گذارد و پوشه‌ی <bdi>/opt/umiji</bdi> را می‌سازد</span></span>
-tools/deploy.sh init root@203.0.113.10</code></pre>
+<span class="c"># <span dir="rtl">فایل‌ها، در <bdi>/opt/umiji</bdi></span></span>
+mkdir -p /opt/umiji/caddy &amp;&amp; cd /opt/umiji
+base=https://raw.githubusercontent.com/therewasluna/umiji-backend/main/tools/deploy
+curl -fsSL -o docker-compose.yml $base/docker-compose.yml
+curl -fsSL -o caddy/Caddyfile    $base/caddy/Caddyfile
+curl -fsSL -o .env               $base/env.example
+chmod 600 .env
+nano .env</code></pre>
                         <p>
-                            روی سرور، فایل‌های <code>/opt/umiji/.env</code>، <code>panel.env</code> و
-                            <code>subpage.env</code> را پر کنید. یک کلید مخفی تصادفی برای برنامه و رمز پایگاه داده از قبل
-                            در آن‌ها گذاشته شده است. اگر HTTPS داخلی را که پایین‌تر آمده می‌خواهید، همین حالا آن را در <code>.env</code>
-                            تنظیم کنید. بعد همه‌چیز را بسازید و اجرا کنید:
+                            در <code>.env</code> دو دامنه‌ی خودتان را بنویسید. بقیه‌ی خط‌ها را دست نزنید: طبق آن‌ها صفحه‌ی اشتراک
+                            هم روی همین سرور اجرا می‌شود، با HTTPS داخلی.
                         </p>
-                        <pre data-copy><code><span class="c"># <span dir="rtl">روی کامپیوتر خودتان</span></span>
-tools/deploy.sh up root@203.0.113.10</code></pre>
+                        <pre data-copy><code>PANEL_DOMAIN=panel.example.com
+SUB_DOMAIN=sub.example.com</code></pre>
+                        <p>بعد اجرایش کنید. اولین اجرا ایمیج‌ها را دانلود می‌کند:</p>
+                        <pre data-copy><code>docker compose up -d</code></pre>
+                        <p>
+                            لازم نیست چیزی را دستی بسازید. پنل در اولین اجرا کلیدهای مخفی‌اش را خودش در
+                            <code>/opt/umiji/secrets/</code> می‌سازد. یک نسخه از این پوشه را کنار بکاپ‌هایتان نگه دارید، چون
+                            <code>APP_SECRET</code> داخل آن توکن ربات‌های فروشنده‌ها را هم رمز می‌کند.
+                        </p>
                         <h3 id="https">HTTPS: داخلی، یا nginx خودتان</h3>
                         <p>
-                            پنل و صفحه‌ی اشتراک فقط روی خود سرور گوش می‌دهند، روی <code>127.0.0.1:3000</code> و
-                            <code>127.0.0.1:3010</code>، و پنل فقط از راه HTTPS جواب می‌دهد. یکی از دو راه زیر را برای در دسترس
-                            گذاشتن آن‌ها انتخاب کنید. در هر دو راه، بازدیدکننده نمی‌تواند به پنل IP دروغین نشان دهد؛ محدودیت
+                            پنل فقط روی خود سرور گوش می‌دهد، روی <code>127.0.0.1:3000</code>، و فقط از راه HTTPS جواب می‌دهد.
+                            یکی از دو راه زیر را برای در دسترس گذاشتن آن انتخاب کنید. در هر دو راه، بازدیدکننده نمی‌تواند به پنل IP دروغین نشان دهد؛ محدودیت
                             تلاش‌های ورود و سابقه‌های IP پنل به همین وابسته‌اند.
                         </p>
                         <p>
-                            <strong>Caddy داخلی</strong> راه سریع برای سروری است که فقط Umiji را اجرا می‌کند. Caddy پورت‌های 80 و
-                            443 را برمی‌دارد و گواهی‌ها را خودش می‌گیرد و تمدید می‌کند. این‌ها را پیش از اجرای
-                            <code>up</code> در <code>/opt/umiji/.env</code> بگذارید، یا بعد از تغییرشان روی سرور <code>./up.sh</code>
-                            را اجرا کنید:
-                        </p>
-                        <pre data-copy><code>COMPOSE_PROFILES=panel,subpage,caddy
-CADDY_PANEL_DOMAIN=panel.example.com
-CADDY_SUBPAGE_DOMAIN=sub.example.com</code></pre>
-                        <p>
-                            هر دو دامنه باید از قبل به همین سرور اشاره کنند، و هیچ وب‌سرور دیگری نباید روی آن اجرا شود. دستور
-                            <code>docker compose logs -f umiji-caddy</code> در <code>/opt/umiji</code> رسیدن هر گواهی را نشان می‌دهد.
+                            <strong>Caddy داخلی</strong> به‌طور پیش‌فرض روشن است و تنظیمی لازم ندارد. Caddy پورت‌های 80 و 443 را
+                            برمی‌دارد، دامنه‌ها را از <code>.env</code> می‌خواند و گواهی‌ها را خودش می‌گیرد و تمدید می‌کند. هر دو
+                            دامنه باید از قبل به همین سرور اشاره کنند، و هیچ وب‌سرور دیگری نباید روی آن اجرا شود. دستور
+                            <code>docker compose logs -f umiji-caddy</code> رسیدن هر گواهی را نشان می‌دهد.
                         </p>
                         <p>
-                            <strong>nginx خودتان</strong> برای سروری مناسب است که سایت‌های دیگری هم دارد. <code>caddy</code> را در
-                            <code>COMPOSE_PROFILES</code> نگذارید، و بعد روی سرور:
+                            <strong>nginx خودتان</strong> برای سروری مناسب است که سایت‌های دیگری هم دارد. در <code>.env</code> آن خط
+                            را به <code>COMPOSE_PROFILES=</code> تغییر دهید و <code>docker compose up -d</code> را اجرا کنید، و بعد روی
+                            سرور:
                         </p>
                         <ol class="do">
                             <li>
@@ -165,9 +165,8 @@ CADDY_SUBPAGE_DOMAIN=sub.example.com</code></pre>
 ufw allow 'Nginx Full'</code></pre>
                             </li>
                             <li>
-                                فایل <code>/etc/nginx/sites-available/umiji</code> را با دامنه‌های خودتان بنویسید. روی سروری که فقط
-                                یکی از دو برنامه را اجرا می‌کند، فقط بلوک <code>server</code> همان را نگه دارید، و اگر پنل است هر دو
-                                <code>map</code> را هم.
+                                فایل <code>/etc/nginx/sites-available/umiji</code> را با دامنه‌های خودتان بنویسید. بلوک
+                                <code>server</code> صفحه‌ی اشتراک را فقط وقتی نگه دارید که صفحه‌ی اشتراک روی همین سرور اجرا می‌شود.
                                 <pre data-copy><code>map $http_upgrade $connection_upgrade {
     default upgrade;
     ''      close;
@@ -216,7 +215,7 @@ server {
     }
 }
 
-<span class="c"># <span dir="rtl">صفحه‌ی اشتراک</span></span>
+<span class="c"># <span dir="rtl">صفحه‌ی اشتراک، اگر روی همین سرور است</span></span>
 server {
     listen 80;
     server_name sub.example.com;
@@ -253,9 +252,10 @@ certbot renew --dry-run</code></pre>
                         <p>
                             <strong>پشت CDN</strong>، مثلاً ابر نارنجی Cloudflare، حالت SSL را در Cloudflare روی
                             <code>Full (strict)</code> بگذارید. بعد رنج‌های IP آن CDN را به پراکسی معرفی کنید، وگرنه همه‌ی
-                            بازدیدکننده‌ها از IPهای CDN می‌رسند و همه در یک محدودیت ورود شریک می‌شوند. با Caddy آن‌ها را در
-                            <code>CADDY_TRUSTED_PROXIES</code> بنویسید، با فاصله از هم و داخل گیومه‌ی انگلیسی (<code>"</code>)، و گزینه‌ی <code>Always Use HTTPS</code> را در Cloudflare
-                            خاموش کنید تا تمدید گواهی همچنان به Caddy برسد. با nginx این را بالای فایل اضافه کنید، برای هر رنج از
+                            بازدیدکننده‌ها از IPهای CDN می‌رسند و همه در یک محدودیت ورود شریک می‌شوند. با Caddy علامت <code>#</code> را از شش خط بالای
+                            <code>/opt/umiji/caddy/Caddyfile</code> بردارید، رنج‌ها را همان‌جا بنویسید و
+                            <code>docker compose restart umiji-caddy</code> را اجرا کنید. گزینه‌ی <code>Always Use HTTPS</code> را هم در
+                            Cloudflare خاموش کنید تا تمدید گواهی همچنان به Caddy برسد. با nginx این را بالای فایل اضافه کنید، برای هر رنج از
                             <a href="https://www.cloudflare.com/ips/"><bdi>cloudflare.com/ips</bdi></a> یک خط:
                         </p>
                         <pre data-copy><code>set_real_ip_from 173.245.48.0/20;
@@ -267,24 +267,45 @@ real_ip_recursive on;</code></pre>
                             نودهای پشت CDN برای لیمیت IP تنظیم جداگانه‌ای لازم دارند:
                             <a href="../concepts/#ip-limit-cdn">لیمیت IP پشت CDN</a> را ببینید.
                         </p>
-                        <div class="note">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 8h.01M11 12h1v4h1" /></svg>
-                            <p>در اولین اجرا، هشداری می‌گوید <code>subpage.env</code> مقدار <code>UMIJI_API_TOKEN</code> ندارد. این طبیعی است. توکن را در قدم بعد می‌سازید.</p>
-                        </div>
                     </section>
 
                     <!-- 02 -->
                     <section class="step" id="sign-in">
                         <div class="step-head">
                             <span class="step-num">02</span>
-                            <div><span class="meta">پنل · اولین بازدید</span><h2>ورود و وصل کردن صفحه‌ی اشتراک</h2></div>
+                            <div><span class="meta">پنل · اولین بازدید</span><h2>ورود و نصب صفحه‌ی اشتراک</h2></div>
                         </div>
                         <ol class="do">
-                            <li><code>https://panel.example.com</code> را باز کنید. اولین حسابی که ثبت کنید ادمین می‌شود، پس همین حالا این کار را بکنید.</li>
+                            <li><code>https://panel.example.com</code> را باز کنید. اولین حسابی که ثبت کنید مالک پنل می‌شود، پس همین حالا این کار را بکنید.</li>
                             <li>متن سلب مسئولیت را که در اولین بازدید نشان داده می‌شود بخوانید و <b>متوجه شدم و می‌پذیرم</b> را بزنید.</li>
                             <li>منو را باز کنید، به <b>تنظیمات Umiji</b> بروید، بخش <b>توکن‌های API</b> را پیدا کنید و یک توکن بسازید. همین حالا کپی‌اش کنید: فقط یک بار نشان داده می‌شود.</li>
-                            <li>روی سرور، توکن را در <code>subpage.env</code> به‌عنوان مقدار <code>UMIJI_API_TOKEN</code> بگذارید و <code>./up.sh</code> را اجرا کنید.</li>
+                            <li>
+                                روی سرور، صفحه‌ی اشتراک را در پوشه‌ی جداگانه‌ی خودش نصب کنید:
+                                <pre data-copy><code>mkdir -p /opt/umiji-sub/caddy &amp;&amp; cd /opt/umiji-sub
+base=https://raw.githubusercontent.com/therewasluna/umiji-subscription-page/main/deploy
+curl -fsSL -o docker-compose.yml $base/docker-compose.yml
+curl -fsSL -o caddy/Caddyfile    $base/caddy/Caddyfile
+curl -fsSL -o .env               $base/env.example
+chmod 600 .env
+nano .env</code></pre>
+                            </li>
+                            <li>
+                                این چهار خط را در <code>.env</code> آن بنویسید. <code>COMPOSE_PROFILES</code> خالی یعنی HTTPS با Caddy
+                                پنل است، که از قبل <code>sub.example.com</code> را سرو می‌کند.
+                                <pre data-copy><code>SUB_DOMAIN=sub.example.com
+UMIJI_PANEL_URL=http://umiji:3000
+<span class="c"># <span dir="rtl">توکنی که همین حالا کپی کردید</span></span>
+UMIJI_API_TOKEN=
+COMPOSE_PROFILES=</code></pre>
+                            </li>
+                            <li>در <code>/opt/umiji-sub</code> دستور <code>docker compose up -d</code> را اجرا کنید. Docker هشدار می‌دهد که شبکه‌ی <code>umiji-network</code> از قبل وجود دارد. این طبیعی است: صفحه‌ی اشتراک به شبکه‌ی پنل وصل می‌شود.</li>
                         </ol>
+                        <p>
+                            صفحه‌ی اشتراک را روی سرور جداگانه می‌خواهید؟ فایل
+                            <a href="https://github.com/therewasluna/umiji-subscription-page/blob/main/DEPLOY.md">DEPLOY.md</a> آن (به
+                            انگلیسی) این حالت را توضیح می‌دهد: آنجا Caddy خودش را اجرا می‌کند، و در <code>.env</code> پنل
+                            <code>SUB_PAGE_HERE=no</code> و IP آن سرور نوشته می‌شود.
+                        </p>
                         <figure class="shot">
                             <div class="window">
                                 <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>panel.example.com/auth/login</span></div>

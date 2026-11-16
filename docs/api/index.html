@@ -634,7 +634,7 @@ redis-cli XREADGROUP GROUP billing worker-1 COUNT 100 BLOCK 5000 STREAMS ioraw:e
                     <section class="guide-block" id="subscription-links">
                         <span class="kicker">More</span>
                         <div class="group-title"><h2>Subscription links</h2></div>
-                        <p>The links client apps import aren’t under the token: the short ID in the link is the key. They are served from the subscription address in <code>SUB_PUBLIC_DOMAIN</code>, by default your panel followed by <code>/api/sub</code>.</p>
+                        <p>The links client apps import aren’t under the token: the short ID in the link is the key. They are served from the subscription address in <code>SUB_PUBLIC_DOMAIN</code>, which the Docker install sets to its <code>SUB_DOMAIN</code>, the sub page's domain.</p>
                         <div class="table-wrap">
                             <table class="data">
                                 <thead><tr><th>Address</th><th>Gives</th></tr></thead>
