@@ -40,6 +40,7 @@
                 </a>
                 <nav class="nav" aria-label="Main">
                     <a href="./" aria-current="page">Setup guide</a>
+                    <a href="../migrate/">Migrate</a>
                     <a href="../concepts/">Concepts</a>
                     <a href="../troubleshooting/">Common issues</a>
                     <a href="../api/">API</a>
@@ -201,8 +202,9 @@
 
                         <h3 id="umiji">Later: the <code>umiji</code> command</h3>
                         <p>
-                            Type <code>umiji</code> on the server for a menu: install more parts, update, switch the store
-                            bots between polling and webhook, back up, restore, reset the admin password, or uninstall. Backups go to <code>/opt/umiji/backups/</code>. They hold
+                            Type <code>umiji</code> on the server for a menu: install more parts, update,
+                            <a href="../migrate/">move users from another panel</a>, switch the store bots between polling
+                            and webhook, back up, restore, reset the admin password, or uninstall. Backups go to <code>/opt/umiji/backups/</code>. They hold
                             everything, so keep them private, and copy them off the server now and then, from your computer:
                         </p>
                         <pre data-copy class="cmd"><code>scp root@203.0.113.10:/opt/umiji/backups/umiji-20261116-141537.tar .</code></pre>
@@ -615,6 +617,7 @@ real_ip_recursive on;</code></pre>
                 <nav aria-label="Footer">
                     <a href="../">Home</a>
                     <a href="../concepts/">Concepts</a>
+                    <a href="../migrate/">Migrate</a>
                     <a href="../api/">API</a>
                     <a href="../troubleshooting/">Common issues</a>
                     <a href="https://github.com/therewasluna/umiji">GitHub</a>

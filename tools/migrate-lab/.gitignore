@@ -1,0 +1,10 @@
+# Panel data, certificates and tokens the lab makes while it runs.
+/marzban/
+/pasarguard/
+/marzneshin/
+/3xui/
+/3xui2/
+/marznode/*.pem
+*.token
+*.jwt
+*.cookie

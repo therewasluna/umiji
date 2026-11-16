@@ -538,11 +538,20 @@ code {
     color: #fff;
 }
 
+/* the setup guide, and the way in from another panel */
+.hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 32px;
+    margin-top: 24px;
+    text-align: center;
+}
+
 .hero-link {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    margin-top: 24px;
     color: var(--text-2);
     font-weight: 500;
 }
@@ -3190,5 +3199,42 @@ details.manual > p {
     pre.cmd .copy-btn {
         top: 8px;
         transform: none;
+    }
+}
+
+/* Move from another panel: what comes over, and the per-panel notes */
+table.data.moves td.y {
+    color: var(--teal);
+}
+
+table.data.moves td.n {
+    color: var(--text-3);
+}
+
+dl.per-panel {
+    display: grid;
+    grid-template-columns: minmax(150px, max-content) 1fr;
+    gap: 14px 24px;
+    max-width: 46em;
+    margin: 18px 0 22px;
+}
+
+dl.per-panel dt {
+    color: var(--text);
+    font-weight: 600;
+}
+
+dl.per-panel dd {
+    margin: 0;
+    color: var(--text-2);
+}
+
+@media (max-width: 560px) {
+    dl.per-panel {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+    dl.per-panel dd {
+        margin-bottom: 12px;
     }
 }

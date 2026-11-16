@@ -1,0 +1,104 @@
+name: mig-lab
+services:
+  marzban:
+    image: gozargah/marzban:latest
+    environment:
+      SUDO_USERNAME: admin
+      SUDO_PASSWORD: AdminPass123
+      UVICORN_PORT: "8000"
+      UVICORN_HOST: 0.0.0.0
+      UVICORN_SSL_CERTFILE: /var/lib/marzban/cert.pem
+      UVICORN_SSL_KEYFILE: /var/lib/marzban/cert.key
+      UVICORN_SSL_CA_TYPE: private
+      SQLALCHEMY_DATABASE_URL: sqlite:////var/lib/marzban/db.sqlite3
+      DOCS: "true"
+      XRAY_JSON: /var/lib/marzban/xray_config.json
+    volumes: [./marzban:/var/lib/marzban]
+    ports: ['127.0.0.1:18001:8000']
+  pasarguard:
+    image: pasarguard/panel:latest
+    environment:
+      SUDO_USERNAME: admin
+      SUDO_PASSWORD: AdminPass123
+      UVICORN_PORT: "8000"
+      UVICORN_HOST: 0.0.0.0
+      UVICORN_SSL_CERTFILE: /var/lib/pasarguard/cert.pem
+      UVICORN_SSL_KEYFILE: /var/lib/pasarguard/cert.key
+      UVICORN_SSL_CA_TYPE: private
+      SQLALCHEMY_DATABASE_URL: sqlite+aiosqlite:////var/lib/pasarguard/db.sqlite3
+      DOCS: "true"
+    volumes: [./pasarguard:/var/lib/pasarguard]
+    ports: ['127.0.0.1:18002:8000']
+  marzneshin:
+    image: dawsh/marzneshin:latest
+    environment:
+      SUDO_USERNAME: admin
+      SUDO_PASSWORD: AdminPass123
+      UVICORN_PORT: "8000"
+      UVICORN_HOST: 0.0.0.0
+      UVICORN_SSL_CERTFILE: /var/lib/marzneshin/cert.pem
+      UVICORN_SSL_KEYFILE: /var/lib/marzneshin/cert.key
+      UVICORN_SSL_CA_TYPE: private
+      SQLALCHEMY_DATABASE_URL: sqlite:////var/lib/marzneshin/db.sqlite3
+      DOCS: "true"
+    volumes: [./marzneshin:/var/lib/marzneshin]
+    ports: ['127.0.0.1:18003:8000']
+  xui:
+    image: ghcr.io/mhsanaei/3x-ui:latest
+    volumes: [./3xui:/etc/x-ui]
+    ports: ['127.0.0.1:18004:2053', '127.0.0.1:18014:2096']
+  marznode:
+    image: dawsh/marznode:latest
+    environment:
+      INSECURE: "False"
+      SSL_CLIENT_CERT_FILE: /var/lib/marznode/client.pem
+      SERVICE_PORT: "53042"
+      XRAY_EXECUTABLE_PATH: /usr/local/bin/xray
+      XRAY_ASSETS_PATH: /usr/local/share/xray
+      XRAY_CONFIG_PATH: /var/lib/marznode/xray_config.json
+      SSL_CERT_FILE: /var/lib/marznode/ssl_cert.pem
+      SSL_KEY_FILE: /var/lib/marznode/ssl_key.pem
+    volumes: [./marznode:/var/lib/marznode]
+  rw-db:
+    image: postgres:17
+    environment: { POSTGRES_USER: postgres, POSTGRES_PASSWORD: postgres, POSTGRES_DB: postgres }
+    healthcheck: { test: ['CMD-SHELL', 'pg_isready -U postgres'], interval: 3s, retries: 20 }
+  rw-redis:
+    image: valkey/valkey:9-alpine
+  remnawave:
+    image: remnawave/backend:latest
+    depends_on: { rw-db: { condition: service_healthy }, rw-redis: { condition: service_started } }
+    environment:
+      APP_PORT: "3000"
+      METRICS_PORT: "3001"
+      API_INSTANCES: "1"
+      DATABASE_URL: postgresql://postgres:postgres@rw-db:5432/postgres
+      REDIS_HOST: rw-redis
+      REDIS_PORT: "6379"
+      APP_SECRET: 4f1d0c8a9e2b7d6c5a4f3e2d1c0b9a8f7e6d5c4b3a291807f6e5d4c3b2a19087
+      JWT_AUTH_SECRET: 4f1d0c8a9e2b7d6c5a4f3e2d1c0b9a8f7e6d5c4b3a291807f6e5d4c3b2a19087
+      JWT_API_TOKENS_SECRET: 9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b
+      PANEL_DOMAIN: rw.lab.local
+      FRONT_END_DOMAIN: "*"
+      SUB_PUBLIC_DOMAIN: rw.lab.local/api/sub
+      METRICS_USER: admin
+      METRICS_PASS: admin
+      IS_TELEGRAM_NOTIFICATIONS_ENABLED: "false"
+      WEBHOOK_ENABLED: "false"
+    ports: ['127.0.0.1:18005:3000']
+  hd-db:
+    image: mariadb:latest
+    environment: { MARIADB_RANDOM_ROOT_PASSWORD: "1", MYSQL_DATABASE: hiddifypanel, MYSQL_USER: hiddifypanel, MYSQL_PASSWORD: hdpass123 }
+    healthcheck: { test: ['CMD', 'healthcheck.sh', '--connect'], interval: 3s, retries: 30 }
+  hd-redis:
+    image: valkey/valkey:9-alpine
+  hiddify:
+    image: ghcr.io/hiddify/hiddify-manager:latest
+    depends_on: { hd-db: { condition: service_healthy }, hd-redis: { condition: service_started } }
+    entrypoint: ['/bin/bash', '/lab/start.sh']
+    volumes: [./hiddify/start.sh:/lab/start.sh:ro]
+    ports: ['127.0.0.1:18006:9000']
+  xui2:
+    image: ghcr.io/mhsanaei/3x-ui:v2.6.2
+    volumes: [./3xui2:/etc/x-ui]
+    ports: ['127.0.0.1:18007:2053', '127.0.0.1:18017:2096']

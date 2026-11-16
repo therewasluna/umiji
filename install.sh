@@ -6,8 +6,8 @@
 #
 # Add panel, sub or node at the end to tick that part in the menu. It also installs itself as the
 # umiji command: run on a server that already has Umiji, it shows a menu to install more, update,
-# switch the store bots between polling and webhook, change the owner's password, back up or restore
-# the panel's database, and uninstall.
+# move users from another panel (umiji migrate), switch the store bots between polling and webhook,
+# change the owner's password, back up or restore the panel's database, and uninstall.
 
 set -uo pipefail
 
@@ -74,6 +74,14 @@ const api = async (method, path, body) => {
 })().catch((err) => { console.log(err.message); process.exit(1); });
 '
 NODE_NAME='Panel server'
+# A 6-hour owner login for Migrate (moving users from another panel), signed like NODE_JS's: long enough for a big import.
+MINT_JS='
+const c = require("crypto"), e = process.env, now = Math.floor(Date.now() / 1000);
+const b64 = (o) => Buffer.from(JSON.stringify(o)).toString("base64url");
+const head = b64({ alg: "HS256", typ: "JWT" }) + "." +
+    b64({ username: e.OWNER_NAME, uuid: e.OWNER_UUID, role: "ADMIN", iat: now, exp: now + 21600 });
+process.stdout.write(head + "." + c.createHmac("sha256", e.APP_SECRET).update(head).digest("base64url"));
+'
 
 # ── Look ──────────────────────────────────────────────────────────────────────────────────────────
 
@@ -956,9 +964,10 @@ s_sub_wait() {
 
 # ── Node ──────────────────────────────────────────────────────────────────────────────────────────
 
-# Runs NODE_JS in the panel's container as its owner. Arguments are NAME=value pairs for it.
-node_api() {
-    local owner env=() kv
+# Runs a script ($1) in the panel's container as its owner. More arguments are NAME=value pairs for it.
+owner_node() {
+    local js=$1 owner env=() kv
+    shift
     owner=$(db_sql <<<"SELECT username || '|' || uuid FROM admin WHERE role = 'ADMIN' ORDER BY created_at LIMIT 1;")
     if [[ $owner != *'|'* ]]; then
         echo "The panel has no owner account yet, so it can't add the node."
@@ -967,8 +976,9 @@ node_api() {
     fi
     for kv in "OWNER_NAME=${owner%%|*}" "OWNER_UUID=${owner#*|}" "$@"; do env+=(-e "$kv"); done
     # shellcheck disable=SC2016 # $1 is for the container's shell
-    docker exec "${env[@]}" umiji sh -c '. /opt/app/docker-secrets.sh && load_secrets && exec node -e "$1"' sh "$NODE_JS"
+    docker exec "${env[@]}" umiji sh -c '. /opt/app/docker-secrets.sh && load_secrets && exec node -e "$1"' sh "$js"
 }
+node_api() { owner_node "$NODE_JS" "$@"; }
 
 # The first IPv4 gateway or subnet of the panel's Docker network. The panel reaches a node on this
 # server at the gateway, which works on clouds whose public IP isn't on the server itself.
@@ -1646,8 +1656,9 @@ menu() {
     ((HAVE[1])) && say "Sub page   https://$(get_env "$SUB_DIR/.env" SUB_DOMAIN)  $(state umiji-subscription-page)"
     ((HAVE[2])) && say "Node       $NODE_DIR  $(state umiji-node)"
     if ((HAVE[0])); then
-        acts+=(bots password backup restore)
-        opts+=("Store bots|polling or webhook for the brokers' Telegram bots"
+        acts+=(migrate bots password backup restore)
+        opts+=("Migrate|move users from Marzban, 3x-ui, Hiddify and other panels"
+            "Store bots|polling or webhook for the brokers' Telegram bots"
             "Owner password|set a new one, if you forgot it"
             "Back up|save the panel's whole database in one file"
             "Restore|put a backup back, in place of the database")
@@ -1817,6 +1828,257 @@ do_restore() {
     printf '\n'
 }
 
+# ── Move from another panel ───────────────────────────────────────────────────────────────────────
+
+check_url() {
+    local u=${1%/}
+    [[ $u =~ ^https?://[^/[:space:]]+(/[^[:space:]]*)?$ ]] && printf '%s' "$u" && return 0
+    bad "Paste the whole address, starting with https:// or http://."
+    return 1
+}
+
+# Runs migrate.mjs with the panel's image on this server's network: an old panel here may listen on
+# 127.0.0.1 only. Passwords go in as -e NAME, so they never show in the process list.
+mig_run() {
+    local img token
+    img=$(docker inspect -f '{{.Config.Image}}' umiji) || return 1
+    token=$(owner_node "$MINT_JS") || {
+        echo "$token"
+        return 1
+    }
+    UMIJI_URL=http://127.0.0.1:3000 UMIJI_TOKEN=$token SRC_TYPE=$MIG_TYPE SRC_URL=$MIG_URL SRC_USER=$MIG_USER \
+        SRC_PASS=$MIG_PASS SRC_TOKEN=$MIG_TOKEN SRC_SECRET=$MIG_SECRET SRC_INSECURE=$MIG_INSECURE \
+        TARGET_SQUAD=$MIG_SQUAD docker run --rm --network host -v "$PANEL_DIR/migrate.mjs:/migrate.mjs:ro" \
+        -e UMIJI_URL -e UMIJI_TOKEN -e SRC_TYPE -e SRC_URL -e SRC_USER -e SRC_PASS -e SRC_TOKEN -e SRC_SECRET \
+        -e SRC_INSECURE -e TARGET_SQUAD --entrypoint node "$img" /migrate.mjs "$1"
+}
+
+s_mig_run() {
+    mig_run run >"$TMP/mig-run" 2>&1
+    local rc=$?
+    # This goes to the log, so not the @env lines: they hold the old panel's secret.
+    grep -v '^@' "$TMP/mig-run"
+    case $rc in
+        0) return 0 ;;
+        7) soft_fail "Some users weren't moved; why is below" ;;
+        *)
+            hint "Nothing after the step that failed was made. Fix what it says, then run this again:"
+            hint "users already moved are skipped."
+            return 1
+            ;;
+    esac
+}
+
+# Adds VALUE to a comma list in the sub page's .env, so a second move keeps the first one's links.
+add_env_list() {
+    local f=$1 key=$2 v=$3 cur item
+    cur=$(get_env "$f" "$key")
+    for item in ${v//,/ }; do
+        [[ ,$cur, == *",$item,"* ]] || cur=${cur:+$cur,}$item
+    done
+    set_env "$f" "$key" "$cur"
+}
+
+s_mig_sub() {
+    local f=$SUB_DIR/.env line key val rc
+    while IFS= read -r line; do
+        line=${line#@env }
+        key=${line%%=*} val=${line#*=}
+        case $key in
+            MARZBAN_LEGACY_SECRET_KEY | LEGACY_SUB_PATHS) add_env_list "$f" "$key" "$val" ;;
+            *) set_env "$f" "$key" "$val" ;;
+        esac
+        echo "Set $key in $f"
+    done < <(grep '^@env ' "$TMP/mig-plan")
+    pull_images "$SUB_DIR"
+    rc=$?
+    ((rc == 1)) && return 1
+    docker compose up -d && wait_container umiji-subscription-page 60 && return $rc
+    hint "See the sub page's log: cd $SUB_DIR && docker compose logs umiji-subscription-page"
+    return 1
+}
+
+# The Caddy that serves the sub page here: the panel's, or the sub page's own. Prints "dir container".
+sub_caddy() {
+    if sub_next_to_panel && container_running umiji-caddy; then
+        echo "$PANEL_DIR/caddy umiji-caddy"
+    elif container_running umiji-sub-caddy; then
+        echo "$SUB_DIR/caddy umiji-sub-caddy"
+    else
+        return 1
+    fi
+}
+
+# Serves the old links' domain from this server: a site file next to the Caddyfile, which imports it.
+s_mig_caddy() {
+    local dir ctr f
+    read -r dir ctr < <(sub_caddy) || return 1
+    f=$dir/legacy-sub-$MIG_HOST.caddy
+    grep -q 'legacy-sub' "$dir/Caddyfile" ||
+        printf '\n# Subscription links from panels users moved from: umiji → Migrate.\nimport legacy-sub*.caddy\n' >>"$dir/Caddyfile"
+    {
+        echo '# Subscription links from the panel users moved from. Its DNS must point at this server.'
+        echo "$MIG_SITE {"
+        printf '\treverse_proxy umiji-subscription-page:3010 {\n\t\theader_up X-Forwarded-For {client_ip}\n'
+        # The sub page only answers HTTPS. Plain-http old links stay that way in users' apps, and Android's
+        # HTTP client won't follow a redirect to https, so for them Caddy vouches for the request.
+        [[ $MIG_SCHEME == http ]] && printf '\t\t# The old links were plain http; apps keep fetching them that way.\n\t\theader_up X-Forwarded-Proto https\n'
+        printf '\t}\n}\n'
+    } >"$f"
+    docker exec "$ctr" caddy reload --config /etc/caddy/Caddyfile --adapter caddyfile && return 0
+    rm -f "$f"
+    hint "Caddy refused the site (its reason is above), so nothing was changed there."
+    return 1
+}
+
+do_migrate() {
+    local pick rc names=(Marzban PasarGuard Marzneshin 3x-ui Remnawave Hiddify) origin port scheme legacy=0
+    local types=(marzban pasarguard marzneshin 3x-ui remnawave hiddify)
+    MIG_USER='' MIG_PASS='' MIG_TOKEN='' MIG_SECRET='' MIG_INSECURE='' MIG_SQUAD='' MIG_HOST='' MIG_SITE='' MIG_SCHEME=''
+    title "Move from another panel"
+    container_running umiji || die "The panel isn't running." "Start it: cd $PANEL_DIR && docker compose up -d
+Then type umiji again."
+    [[ $(owner_state) == exists ]] || die "The panel has no owner account yet." "Sign in to the panel once to make it, then type umiji again."
+    note "Users come over with their passwords, traffic, limits and expiry dates, through the old"
+    note "panel's API. Its inbounds, groups and hosts come too, where its API has them. Nothing changes"
+    note "on the old panel, and users already here are skipped, so this can run again."
+    printf '\n'
+    choose pick "Which panel are the users on?" 1 "Marzban|" "PasarGuard|" "Marzneshin|" "3x-ui|2.x or 3.x" \
+        "Remnawave|" "Hiddify|Hiddify Manager"
+    MIG_TYPE=${types[pick - 1]}
+    printf '\n'
+    case $MIG_TYPE in
+        hiddify)
+            note "The admin link Hiddify gave you: https://your.domain/<secret path>/<your admin UUID>/"
+            ask MIG_URL "Admin link" "" check_url
+            ;;
+        3x-ui)
+            note "The address you open 3x-ui at, with its secret path, like https://1.2.3.4:2053/AbCd12"
+            ask MIG_URL "3x-ui address" "" check_url
+            ;;
+        *)
+            note "The address you open ${names[pick - 1]} at, like https://old.example.com:8000"
+            ask MIG_URL "${names[pick - 1]} address" "" check_url
+            ;;
+    esac
+    case $MIG_TYPE in
+        remnawave)
+            note "Make one in Remnawave: Remnawave Settings $ARROW API Tokens."
+            ask_secret MIG_TOKEN "API token"
+            ;;
+        hiddify) ;;
+        *)
+            ask MIG_USER "Admin username"
+            ask_secret MIG_PASS "Password"
+            ;;
+    esac
+    if [[ $MIG_TYPE == marzban || $MIG_TYPE == pasarguard ]]; then
+        printf '\n'
+        note "Old subscription links are signed with a secret ${names[pick - 1]} keeps in its database, and its"
+        note "API doesn't show it. With it, apps keep updating from the old links; without it, send"
+        note "each user their new link. With the default database (SQLite), this prints it, on the old server:"
+        local dir=/opt/marzban svc=marzban
+        [[ $MIG_TYPE == pasarguard ]] && dir=/opt/pasarguard svc=pasarguard
+        say "  ${B}cd $dir && docker compose exec -T $svc python3 -c \"import sqlite3;print(sqlite3.connect('/var/lib/$svc/db.sqlite3').execute('select secret_key from jwt').fetchone()[0])\"${R}"
+        note "Another database: SELECT secret_key FROM jwt; in it. More on $WIKI/migrate/"
+        confirm "Keep the old links working?" Y && ask_secret MIG_SECRET "The secret it printed"
+    fi
+    if [[ $MIG_TYPE == hiddify ]]; then
+        printf '\n'
+        note "Hiddify's API doesn't give its inbounds, so its users need a squad here to connect: make a"
+        note "config profile and a squad first (Config profiles, then Internal squads), then name the squad."
+        confirm "Put the users in a squad now?" Y && ask MIG_SQUAD "Squad name"
+    fi
+
+    printf '\n'
+    fetch "$RAW/umiji/$BRANCH/migrate.mjs" "$PANEL_DIR/migrate.mjs" >>"$LOG" 2>&1 ||
+        die "Couldn't download the migration tool." "$(cat "$TMP/hint")"
+    while :; do
+        say "Reading ${names[pick - 1]} ..."
+        # The plan holds the old panel's secret (@env lines), so it stays out of the log.
+        mig_run plan >"$TMP/mig-plan" 2>&1
+        rc=$?
+        [[ $rc == 5 && -z $MIG_INSECURE ]] || break
+        warn "The old panel's HTTPS certificate isn't trusted, often because it made its own."
+        confirm "Go on without checking it?" N || exit 0
+        MIG_INSECURE=1
+    done
+    case $rc in
+        0) ;;
+        2) die "$(grep -v '^@' "$TMP/mig-plan" | tail -n 3)" "Check the username and password (or the token, or the admin link), then type umiji again." ;;
+        6) die "$(tail -n 3 "$TMP/mig-plan")" "Check the address, and that this server can open it: curl -kI $MIG_URL
+An old panel on another server may only let its own IP in. Open its port to this server's IP." ;;
+        *) die "$(grep -v '^@' "$TMP/mig-plan" | tail -n 6)" "Fix what it says, then type umiji again. The whole tool is $PANEL_DIR/migrate.mjs." ;;
+    esac
+    printf '\n'
+    grep -v '^@' "$TMP/mig-plan" | sed 's/^/  /'
+    printf '\n'
+    note "First the panel and sub page update to the newest version, and the database is backed up."
+    confirm "Move them now?" Y || {
+        say "Nothing was changed."
+        exit 0
+    }
+
+    # Old links: the sub page needs the settings, and their domain has to reach it.
+    origin=$(sed -n 's/^@domain //p' "$TMP/mig-plan")
+    scheme=${origin%%://*}
+    MIG_SCHEME=$scheme
+    MIG_HOST=${origin#*://}
+    port=${MIG_HOST##*:}
+    [[ $port == "$MIG_HOST" ]] && port=''
+    MIG_HOST=${MIG_HOST%:*}
+    if ((HAVE[1])) && [[ -n $origin ]] && ! [[ $MIG_HOST =~ ^[0-9.]+$ || $MIG_HOST == *:* ]] &&
+        [[ $MIG_HOST != "$(get_env "$PANEL_DIR/.env" PANEL_DOMAIN)" && $MIG_HOST != "$(get_env "$SUB_DIR/.env" SUB_DOMAIN)" ]] &&
+        { [[ $scheme == https && ${port:-443} == 443 ]] || [[ $scheme == http && ${port:-80} == 80 ]]; } && sub_caddy >/dev/null; then
+        MIG_SITE=$MIG_HOST
+        [[ $scheme == http ]] && MIG_SITE=http://$MIG_HOST
+        printf '\n'
+        note "Old links point at $origin. This server can answer there, once that name's DNS points here."
+        confirm "Set that up?" Y && legacy=1
+    fi
+
+    printf '\n'
+    plan "Backing up the database" "Database backed up" s_panel_backup
+    plan "Getting the newest panel" "Newest panel ready" s_panel_pull
+    plan "Starting the panel" "Panel started" s_panel_start
+    plan "Waiting for the panel" "Panel is running" s_panel_wait
+    plan "Moving the users" "Users moved" s_mig_run
+    ((HAVE[1])) && grep -q '^@env ' "$TMP/mig-plan" && plan "Giving the sub page the old links' settings" "Sub page knows the old links" s_mig_sub
+    ((legacy)) && plan "Serving $MIG_HOST from this server" "$MIG_HOST goes to the sub page" s_mig_caddy
+    ((FANCY)) && printf '\e[?25l'
+    run_plan
+    ((FANCY)) && printf '\e[?25h'
+
+    title "Done"
+    grep -v '^@' "$TMP/mig-run" | sed 's/^/  /'
+    say "Backup     ${D}$(cat "$TMP/backup-file" 2>/dev/null), the database before the move${R}"
+    printf '\n'
+    if ((legacy)); then
+        note "Point $MIG_HOST's DNS at this server when you switch, and the old links work from here."
+    elif [[ -n $origin ]]; then
+        warn "Old links point at ${B}$origin${R}: that address has to reach the sub page."
+        if [[ $MIG_HOST =~ ^[0-9.]+$ || $MIG_HOST == *:* ]]; then
+            note "    It's an IP address, so only the sub page on that same server can answer it."
+        else
+            note "    Point $MIG_HOST's DNS at the sub page's server, then add this site to its Caddyfile"
+            note "    (and open port ${port:-443} in the firewall and in Caddy's ports in docker-compose.yml):"
+            if [[ $scheme == http ]]; then
+                say "    ${B}$origin { reverse_proxy umiji-subscription-page:3010 { header_up X-Forwarded-Proto https } }${R}"
+            else
+                say "    ${B}$origin { reverse_proxy umiji-subscription-page:3010 }${R}"
+            fi
+        fi
+    fi
+    if ((!HAVE[1])) && grep -q '^@env ' "$TMP/mig-plan"; then
+        warn "The sub page isn't on this server. Add these to its .env, then: docker compose up -d"
+        note "    (add to a list that's already there, separated by commas)"
+        sed -n 's/^@env /    /p' "$TMP/mig-plan"
+    fi
+    note "Then move the old panel's servers over, one at a time: $WIKI/migrate/#servers"
+    note "The whole guide: $WIKI/migrate/"
+    printf '\n'
+}
+
 do_uninstall() {
     local names=(Panel 'Sub page' Node) dirs=("$PANEL_DIR" "$SUB_DIR" "$NODE_DIR") opts=() parts=() i pick
     title "Uninstall"
@@ -1929,6 +2191,16 @@ main() {
         panel) PICK=(1 0 0) ;;
         sub) PICK=(0 1 0) ;;
         node) PICK=(0 0 1) ;;
+        migrate)
+            ((HAVE[0])) || die "There's no panel on this server to move users into." "Install it first: bash <(curl -fsSL $SCRIPT_URL) panel"
+            ((NEED_DOCKER)) && die "Docker isn't running." "Start it: systemctl enable --now docker
+Then type umiji again."
+            # Run from the published line, this is newer than an umiji command installed before the move
+            # existed: refresh it, so the menu has the item too.
+            [[ $(readlink -f "$0") != "$CMD" ]] && s_command >>"$LOG" 2>&1
+            do_migrate
+            return
+            ;;
         *)
             if ((!HAVE[0] && !HAVE[1] && !HAVE[2])); then
                 PICK=(1 1 0)
@@ -1949,6 +2221,7 @@ Then type umiji again."
             case $ACTION in
                 install) PICK=(0 0 0) ;;
                 update) WANT_PANEL=${HAVE[0]} WANT_SUB=${HAVE[1]} WANT_NODE=${HAVE[2]} ;;
+                migrate) do_migrate ;;
                 bots) do_bots ;;
                 password) do_password ;;
                 backup) do_backup ;;

@@ -1,0 +1,20 @@
+{
+  "log": { "loglevel": "warning" },
+  "routing": { "rules": [ { "ip": ["geoip:private"], "outboundTag": "BLOCK", "type": "field" } ] },
+  "inbounds": [
+    { "tag": "VLESS TCP REALITY", "listen": "0.0.0.0", "port": 18443, "protocol": "vless",
+      "settings": { "clients": [], "decryption": "none" },
+      "streamSettings": { "network": "tcp", "security": "reality",
+        "realitySettings": { "show": false, "dest": "www.microsoft.com:443", "xver": 0,
+          "serverNames": ["www.microsoft.com"], "privateKey": "MNRsL8Lx8PW3cKGDQMeC9rCZRqbQzzyTuQWSEm_Fz0A",
+          "shortIds": ["", "6ba85179e30d4fc2"] } },
+      "sniffing": { "enabled": true, "destOverride": ["http", "tls", "quic"] } },
+    { "tag": "VMess WS", "listen": "0.0.0.0", "port": 18081, "protocol": "vmess",
+      "settings": { "clients": [] }, "streamSettings": { "network": "ws", "wsSettings": { "path": "/vm" } } },
+    { "tag": "Trojan WS", "listen": "0.0.0.0", "port": 18082, "protocol": "trojan",
+      "settings": { "clients": [] }, "streamSettings": { "network": "ws", "wsSettings": { "path": "/tr" } } },
+    { "tag": "Shadowsocks TCP", "listen": "0.0.0.0", "port": 18083, "protocol": "shadowsocks",
+      "settings": { "clients": [], "network": "tcp,udp" } }
+  ],
+  "outbounds": [ { "protocol": "freedom", "tag": "DIRECT" }, { "protocol": "blackhole", "tag": "BLOCK" } ]
+}

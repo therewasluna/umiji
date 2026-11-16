@@ -46,6 +46,17 @@ It also adds the `umiji` command. Type `umiji` on the server later for a menu: i
 store bots between polling and webhook, change the owner's password, back up or restore the panel's database, and
 uninstall.
 
+### Coming from another panel
+
+```sh
+bash <(curl -fsSL https://raw.githubusercontent.com/therewasluna/umiji/main/install.sh) migrate
+```
+
+On a server with Umiji's panel, this moves your users from Marzban, PasarGuard, Marzneshin, 3x-ui, Remnawave or
+Hiddify, through the old panel's API. They keep their keys, traffic, limits and expiry dates, and their apps keep updating from the old
+subscription links. The old panel isn't changed. After that, `umiji migrate` does the same. See
+[Move from another panel](https://umiji.wiki/migrate/).
+
 ## A fork of Remnawave
 
 Umiji is a fork of [Remnawave](https://github.com/remnawave/panel), the open-source proxy panel by the Remnawave team.

@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <title>Move from another panel · Umiji</title>
+        <meta
+            name="description"
+            content="Move your users from Marzban, PasarGuard, Marzneshin, 3x-ui, Remnawave or Hiddify to Umiji, with their traffic, limits and expiry dates. Their old subscription links keep working."
+        />
+        <meta name="theme-color" content="#130C11" />
+        <link rel="alternate" hreflang="en" href="https://umiji.wiki/migrate/" />
+        <link rel="alternate" hreflang="fa" href="https://umiji.wiki/fa/migrate/" />
+        <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="../assets/favicon-32.png" sizes="32x32" type="image/png" />
+        <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700&family=Unbounded:wght@500;600&display=swap"
+        />
+        <!-- only the letters of the language switch and of 海路 -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@600&family=Noto+Sans+JP:wght@400;600&text=%D9%81%D8%A7%D8%B1%D8%B3%DB%8C%E6%B5%B7%E8%B7%AF&display=swap" />
+        <link rel="stylesheet" href="../assets/site.css" />
+    </head>
+    <body>
+        <a class="skip" href="#main">Skip to content</a>
+
+        <header class="topbar">
+            <div class="wrap">
+                <a class="brand" href="../" aria-label="Umiji wiki home">
+                    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
+                            <path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" />
+                            <path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" />
+                        </g>
+                    </svg>
+                    <span class="word"><span class="umi">Umi</span><span class="ji">ji</span></span>
+                </a>
+                <nav class="nav" aria-label="Main">
+                    <a href="../guide/">Setup guide</a>
+                    <a href="./" aria-current="page">Migrate</a>
+                    <a href="../concepts/">Concepts</a>
+                    <a href="../troubleshooting/">Common issues</a>
+                    <a href="../api/">API</a>
+                </nav>
+                <div class="tools">
+                    <a class="icon-btn gh" href="https://github.com/therewasluna/umiji" aria-label="Umiji on GitHub">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" /></svg>
+                    </a>
+                    <div class="lang" role="group" aria-label="Language">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" /></svg>
+                        <a href="./" lang="en" aria-current="page">English</a>
+                        <a href="../fa/migrate/" lang="fa" hreflang="fa">فارسی</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main id="main">
+            <div class="page-head">
+                <div class="wrap">
+                    <h1>Bring your users over from another panel.</h1>
+                    <p>
+                        One menu option moves every user from Marzban, PasarGuard, Marzneshin, 3x-ui, Remnawave or
+                        Hiddify, with their traffic, limits and expiry dates. Their apps keep updating from the old links.
+                    </p>
+                    <ul class="facts">
+                        <li><b>6</b> panels</li>
+                        <li>About <b>10 minutes</b></li>
+                        <li><b>Nothing changes</b> on the old panel</li>
+                    </ul>
+                </div>
+                <svg class="waves" viewBox="0 0 16 16" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-linecap="round" stroke-width="1.6"><path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /><path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /></g></svg>
+            </div>
+
+            <div class="wrap docs">
+                <aside class="toc collapsible" aria-label="Steps">
+                    <button class="toc-toggle" type="button" aria-expanded="false">
+                        All steps
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+                    </button>
+                    <h2>Steps</h2>
+                    <ol>
+                        <li><a href="#before"><span class="num">01</span>Before you start</a></li>
+                        <li><a href="#secret"><span class="num">02</span>Marzban or PasarGuard: the secret</a></li>
+                        <li><a href="#run"><span class="num">03</span>Run the move</a></li>
+                        <li><a href="#old-links"><span class="num">04</span>Keep the old links working</a></li>
+                        <li><a href="#servers"><span class="num">05</span>Move the servers</a></li>
+                        <li><a href="#per-panel"><span class="num">✓</span>Good to know, per panel</a></li>
+                    </ol>
+                </aside>
+
+                <article>
+                    <!-- 01 -->
+                    <section class="step" id="before">
+                        <div class="step-head">
+                            <span class="step-num">01</span>
+                            <div><span class="meta">Five minutes</span><h2>Before you start</h2></div>
+                        </div>
+                        <p>
+                            The move reads the old panel through its API, the same way its own web page does. No database
+                            exports, nothing to copy by hand, and the old panel keeps running while you check everything.
+                        </p>
+                        <h3>What you need</h3>
+                        <ul class="checks">
+                            <li><strong>Umiji's panel and sub page</strong>, installed with the <a href="../guide/#install">setup guide</a>. You don't need to set up anything else in it.</li>
+                            <li><strong>The old panel's address and admin login.</strong> For Remnawave, an API token instead. For Hiddify, the admin link it gave you.</li>
+                            <li><strong>The Umiji server can open that address.</strong> If the old panel only lets in certain IPs, add the Umiji server's.</li>
+                        </ul>
+
+                        <h3 id="what-moves">What comes over</h3>
+                        <p>
+                            Every user, with their passwords and UUIDs, traffic used and limit, reset period, expiry date,
+                            status, note, Telegram ID and email. Users keep the same keys, so their connections don't change.
+                        </p>
+                        <div class="table-wrap">
+                            <table class="data moves">
+                                <thead><tr><th>From</th><th>Inbounds</th><th>Groups</th><th>Hosts</th><th>Old links</th></tr></thead>
+                                <tbody>
+                                    <tr><td><b>Marzban</b></td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">With the <a href="#secret">secret</a></td></tr>
+                                    <tr><td><b>PasarGuard</b></td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">With the <a href="#secret">secret</a></td></tr>
+                                    <tr><td><b>Marzneshin</b></td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td></tr>
+                                    <tr><td><b>3x-ui</b></td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td></tr>
+                                    <tr><td><b>Remnawave</b></td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td><td class="y">Yes</td></tr>
+                                    <tr><td><b>Hiddify</b></td><td class="n">No, <a href="#hiddify">see why</a></td><td class="n">No</td><td class="n">No</td><td class="y">Yes</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>
+                            Inbounds land in a <a href="../concepts/#config-profile">config profile</a> named after the old
+                            panel. Groups (Marzban's inbound sets, PasarGuard's groups, Marzneshin's services) become
+                            <a href="../concepts/#internal-squad">internal squads</a>, so each user can use what they could before.
+                        </p>
+                        <p>
+                            <strong>What doesn't come over:</strong> the old panel's admins and resellers, and its servers.
+                            Users made by another admin keep <code>Owner: name</code> in their note, so you can find them.
+                            VMess and SOCKS inbounds stay behind, since Umiji doesn't run them; their users keep their other protocols.
+                        </p>
+                    </section>
+
+                    <!-- 02 -->
+                    <section class="step" id="secret">
+                        <div class="step-head">
+                            <span class="step-num">02</span>
+                            <div><span class="meta">On the old server · Marzban and PasarGuard only</span><h2>Copy the secret</h2></div>
+                        </div>
+                        <p>
+                            Marzban and PasarGuard sign every subscription link with a secret they keep in their database. Their
+                            API doesn't show it, so this is the one thing you copy by hand. With it, apps keep updating from the
+                            old links. Without it, everything else still moves, but you send each user their new link.
+                        </p>
+                        <p>Log in to the <strong>old</strong> server and print it:</p>
+                        <div class="tabs">
+                            <div role="tablist" aria-label="Panel">
+                                <button role="tab" type="button">Marzban</button>
+                                <button role="tab" type="button">PasarGuard</button>
+                            </div>
+                            <div role="tabpanel">
+                                <pre data-copy class="cmd"><code>cd /opt/marzban && docker compose exec -T marzban python3 -c "import sqlite3;print(sqlite3.connect('/var/lib/marzban/db.sqlite3').execute('select secret_key from jwt').fetchone()[0])"</code></pre>
+                            </div>
+                            <div role="tabpanel">
+                                <pre data-copy class="cmd"><code>cd /opt/pasarguard && docker compose exec -T pasarguard python3 -c "import sqlite3;print(sqlite3.connect('/var/lib/pasarguard/db.sqlite3').execute('select secret_key from jwt').fetchone()[0])"</code></pre>
+                            </div>
+                        </div>
+                        <p>
+                            That's for the default database, SQLite. With MySQL, MariaDB or PostgreSQL, run
+                            <code>SELECT secret_key FROM jwt;</code> in it. The answer is a long line of letters and digits.
+                        </p>
+                        <div class="note warn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" /></svg>
+                            <p><strong>Keep the secret private.</strong> Anyone with it can make a working link for any user.</p>
+                        </div>
+                    </section>
+
+                    <!-- 03 -->
+                    <section class="step" id="run">
+                        <div class="step-head">
+                            <span class="step-num">03</span>
+                            <div><span class="meta">On the Umiji server</span><h2>Run the move</h2></div>
+                        </div>
+                        <ol class="do">
+                            <li>
+                                Log in to the Umiji server as root and run:
+                                <pre data-copy class="cmd"><code>bash &lt;(curl -fsSL https://raw.githubusercontent.com/therewasluna/umiji/main/install.sh) migrate</code></pre>
+                                It always runs the newest version, and adds <b>Migrate</b> to the
+                                <code>umiji</code> menu for next time.
+                            </li>
+                            <li>Pick the old panel, then paste its address, like <code>https://old.example.com:8000</code>. For 3x-ui, include its secret path.</li>
+                            <li>Type its admin username and password. The password doesn't show while you type, and neither is saved anywhere.</li>
+                            <li>
+                                It reads the old panel and shows what it will make. Nothing is changed yet. Read the
+                                <b>Worth knowing</b> lines: they say what's different in Umiji, and for how many users.
+                            </li>
+                            <li>
+                                Press <kbd>Enter</kbd> to move them. It backs up the database first, updates the panel and
+                                sub page, then moves the users, six at a time.
+                            </li>
+                        </ol>
+                        <div class="term">
+                            <div class="term-bar" aria-hidden="true"><i></i><i></i><i></i><span>root@umiji: ~</span></div>
+<pre aria-label="The move on screen: it shows what it read from the old panel, asks, then moves the users."><code>  <b>Which panel are the users on?</b>
+    <span class="r">1</span>  Marzban
+    <span class="r">4</span>  3x-ui            <span class="d">2.x or 3.x</span>
+  <span class="d">…</span>
+  3x-ui at old.example.com
+    Users        412 to move
+                 398 active, 9 limited, 5 expired
+    Profiles     3x-ui (3 inbounds)
+    Squads       3x-ui, 3x-ui 2
+    Hosts        3
+
+  <b>Move them now?</b> <span class="d">[Y/n]</span>
+  <span class="d">[1/7]</span> <span class="ok">✓</span> Database backed up <span class="d">2s</span>
+  <span class="d">[5/7]</span> <span class="ok">✓</span> Users moved <span class="d">41s</span>
+  <span class="d">[6/7]</span> <span class="ok">✓</span> Sub page knows the old links <span class="d">9s</span></code></pre>
+                        </div>
+                        <div class="note tip">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" /></svg>
+                            <p>
+                                <strong>Safe to run again.</strong> Users who are already here are skipped, so after a failure,
+                                fix what it says and run it again. Users added to the old panel since then come over too. To
+                                undo everything, restore the backup it made: <code>umiji</code>, then <b>Restore</b>.
+                            </p>
+                        </div>
+                        <div class="note warn">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" /></svg>
+                            <p>
+                                <strong>After the move, make changes in Umiji only.</strong> A second run skips users who are
+                                already here, so renewals, top-ups or disables made on the old panel afterwards don't come over.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- 04 -->
+                    <section class="step" id="old-links">
+                        <div class="step-head">
+                            <span class="step-num">04</span>
+                            <div><span class="meta">DNS</span><h2>Keep the old links working</h2></div>
+                        </div>
+                        <p>
+                            Each user keeps their old link's ID, and the sub page learns the old panel's link formats, so the
+                            old links open the same user here. Every format and app type works: plain, sing-box, Clash and the rest.
+                            The old links' domain just has to reach Umiji's sub page:
+                        </p>
+                        <ul class="checks">
+                            <li>
+                                <strong>The links use a domain on port 443 or 80.</strong> The move offers to serve it from this
+                                server. Say yes, then, when you switch, point that domain's A record at this server.
+                            </li>
+                            <li>
+                                <strong>Another port, like <code>:8000</code> or <code>:2096</code>.</strong> The move prints the
+                                one line to add to Caddy. Open that port in the firewall too.
+                            </li>
+                            <li>
+                                <strong>The links use the old server's IP.</strong> Only that server can answer them, so install
+                                Umiji's sub page there, or send users their new link.
+                            </li>
+                        </ul>
+                        <p>
+                            New links are on the user's page in the panel as always. Once a user's app has updated from the
+                            old link, it keeps working whichever one they use.
+                        </p>
+                    </section>
+
+                    <!-- 05 -->
+                    <section class="step" id="servers">
+                        <div class="step-head">
+                            <span class="step-num">05</span>
+                            <div><span class="meta">Each old server</span><h2>Move the servers</h2></div>
+                        </div>
+                        <p>
+                            The users' keys came over, but their traffic still runs through the old panel's servers. Move each
+                            server when you're ready. Its users notice a short break, then they're on Umiji.
+                        </p>
+                        <ol class="do">
+                            <li>Stop the old panel's node on that server, so its ports are free. With 3x-ui or Hiddify, that's the old panel itself.</li>
+                            <li>
+                                In Umiji, open <b>Nodes</b> and add it with <b>Automatic install</b> (the server's IP and SSH
+                                password), as in <a href="../guide/#node">the setup guide</a>. Pick the profile the move made.
+                            </li>
+                            <li>Check that the node shows online, then that one user can connect.</li>
+                        </ol>
+                        <p>
+                            When every server is moved and the old domain points here, you can switch off the old panel. Keep
+                            its server for a few days in case you need to read something from it.
+                        </p>
+                    </section>
+
+                    <section class="step" id="per-panel">
+                        <div class="step-head">
+                            <span class="step-num">✓</span>
+                            <div><h2>Good to know, per panel</h2></div>
+                        </div>
+                        <dl class="per-panel">
+                            <dt>Marzban, PasarGuard</dt>
+                            <dd>
+                                Users waiting for first use (<i>on hold</i>) start counting their days on the day of the move:
+                                Umiji has no such state. A yearly traffic reset becomes none. Reseller admins aren't made as
+                                <a href="../concepts/#broker">brokers</a>.
+                            </dd>
+                            <dt>Marzneshin</dt>
+                            <dd>
+                                Inbounds come from each node's Xray config, and services become squads. A user waiting for first
+                                use starts counting on the day of the move.
+                            </dd>
+                            <dt>3x-ui</dt>
+                            <dd>
+                                A client in several inbounds under one subscription ID becomes one user with all of them. Auto-renew
+                                and hourly traffic resets have no match in Umiji, so they're dropped, and the plan says for how
+                                many users. Version 2.x and 3.x both work.
+                            </dd>
+                            <dt>Remnawave</dt>
+                            <dd>
+                                Make the token in Remnawave under <b>Remnawave Settings</b>, <b>API Tokens</b>. Profiles, squads
+                                and hosts copy one to one. External squads don't, so users in one get the default subscription settings.
+                            </dd>
+                            <dt id="hiddify">Hiddify</dt>
+                            <dd>
+                                Hiddify's API doesn't give its inbounds, so first make a config profile and an internal squad in
+                                Umiji that match them. The move asks for the squad's name and puts every user in it. VLESS keeps the
+                                old UUID. Trojan and Shadowsocks get new passwords, since Hiddify's are longer than Umiji allows;
+                                the user's link brings the new ones.
+                            </dd>
+                        </dl>
+                        <p>
+                            Tested with Marzban, PasarGuard, Marzneshin and Remnawave as of November 2026, 3x-ui 2.6 and 3.11, and
+                            Hiddify 14.2. Something didn't come over right? See <a href="../troubleshooting/">Common issues</a>,
+                            or open an issue on <a href="https://github.com/therewasluna/umiji/issues">GitHub</a> with the plan it printed.
+                        </p>
+                    </section>
+                </article>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="wrap">
+                <span><span class="jp" lang="ja">海路</span> · Umiji is free software under AGPL-3.0.</span>
+                <nav aria-label="Footer">
+                    <a href="../">Home</a>
+                    <a href="../guide/">Setup guide</a>
+                    <a href="./">Migrate</a>
+                    <a href="../concepts/">Concepts</a>
+                    <a href="../api/">API</a>
+                    <a href="../troubleshooting/">Common issues</a>
+                    <a href="https://github.com/therewasluna/umiji">GitHub</a>
+                </nav>
+            </div>
+        </footer>
+        <script src="../assets/site.js" defer></script>
+    </body>
+</html>
