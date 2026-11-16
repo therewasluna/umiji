@@ -1266,6 +1266,8 @@ code {
 
 .do li {
     position: relative;
+    /* grid items grow to fit a <pre>'s longest line; this lets the pre scroll instead */
+    min-width: 0;
     padding-block: 10px;
     padding-inline: 44px 0;
     color: var(--text-2);
