@@ -2,20 +2,20 @@
 
 ### Changing or Resetting Password
 
-Use `Rescue CLI` to reset or change the password.
+On the panel's server, as root, type:
 
 ```bash
-docker exec -it umiji cli
+umiji
 ```
 
-After entering `Rescue CLI`, select the `Reset superadmin` option.
+Pick `Owner password`. It shows the owner's username and asks for a new password, or makes a strong one if you press Enter.
+
+The installer adds the `umiji` command. If the server doesn't have it, run the installer again:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/therewasluna/umiji/main/install.sh)
+```
 
 ### Emergency Password Authentication Enable
 
-If you have disabled the "Password" authentication method but later lost access to one of the other authentication methods – you can enable the "Password" authentication method using `Rescue CLI`
-
-```bash
-docker exec -it umiji cli
-```
-
-After entering `Rescue CLI`, select the `Enable password authentication` option.
+If you turned off the "Password" method and then lost access to the other methods, `Owner password` also turns password login back on. Set a new password with it, then sign in.

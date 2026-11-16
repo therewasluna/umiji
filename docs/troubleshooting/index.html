@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <title>Common issues · Umiji</title>
+        <meta
+            name="description"
+            content="Fixes for the problems people hit most with Umiji: the installer, HTTPS certificates, offline nodes, apps that won't connect, passwords and updates."
+        />
+        <meta name="theme-color" content="#130C11" />
+        <link rel="alternate" hreflang="en" href="https://umiji.wiki/troubleshooting/" />
+        <link rel="alternate" hreflang="fa" href="https://umiji.wiki/fa/troubleshooting/" />
+        <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="../assets/favicon-32.png" sizes="32x32" type="image/png" />
+        <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Montserrat:wght@400;500;600;700&family=Unbounded:wght@500;600&display=swap"
+        />
+        <!-- only the letters of the language switch and of 海路 -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@600&family=Noto+Sans+JP:wght@400;600&text=%D9%81%D8%A7%D8%B1%D8%B3%DB%8C%E6%B5%B7%E8%B7%AF&display=swap" />
+        <link rel="stylesheet" href="../assets/site.css" />
+    </head>
+    <body>
+        <a class="skip" href="#main">Skip to content</a>
+
+        <header class="topbar">
+            <div class="wrap">
+                <a class="brand" href="../" aria-label="Umiji wiki home">
+                    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
+                            <path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" />
+                            <path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" />
+                        </g>
+                    </svg>
+                    <span class="word"><span class="umi">Umi</span><span class="ji">ji</span></span>
+                </a>
+                <nav class="nav" aria-label="Main">
+                    <a href="../guide/">Setup guide</a>
+                    <a href="../concepts/">Concepts</a>
+                    <a href="./" aria-current="page">Common issues</a>
+                    <a href="../api/">API</a>
+                </nav>
+                <div class="tools">
+                    <a class="icon-btn gh" href="https://github.com/therewasluna/umiji" aria-label="Umiji on GitHub">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" /></svg>
+                    </a>
+                    <div class="lang" role="group" aria-label="Language">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" /></svg>
+                        <a href="./" lang="en" aria-current="page">English</a>
+                        <a href="../fa/troubleshooting/" lang="fa" hreflang="fa">فارسی</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main id="main">
+            <div class="page-head">
+                <div class="wrap">
+                    <h1>Something's not working? Start here.</h1>
+                    <p>
+                        The problems people run into most, with what causes each one and how to fix it. Commands run on
+                        the server, as root, unless it says otherwise.
+                    </p>
+                    <label class="search">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+                        <input id="concept-search" type="search" placeholder="Search, like “certificate” or “offline”" aria-label="Search common issues" autocomplete="off" />
+                        <kbd aria-hidden="true">/</kbd>
+                    </label>
+                </div>
+                <svg class="waves" viewBox="0 0 16 16" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-linecap="round" stroke-width="1.6"><path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /><path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /></g></svg>
+            </div>
+
+            <div class="wrap docs">
+                <aside class="toc collapsible" aria-label="Common issues">
+                    <button class="toc-toggle" type="button" aria-expanded="false">
+                        All issues
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+                    </button>
+                    <div class="group"><span>Installing</span><ul>
+                        <li><a href="#installer-error">The installer stopped</a></li>
+                        <li><a href="#needs-root">It needs root</a></li>
+                        <li><a href="#no-internet">Can't reach GitHub or ghcr.io</a></li>
+                        <li><a href="#ports-busy">Ports 80 and 443 are in use</a></li>
+                        <li><a href="#disk-full">The disk is full</a></li>
+                    </ul></div>
+                    <div class="group"><span>Domain and HTTPS</span><ul>
+                        <li><a href="#no-certificate">The panel doesn't open</a></li>
+                        <li><a href="#bad-gateway">502 Bad Gateway</a></li>
+                        <li><a href="#sub-blank">The sub page shows nothing</a></li>
+                        <li><a href="#wrong-sub-domain">Links show the wrong domain</a></li>
+                        <li><a href="#same-ip">Everyone has the same IP</a></li>
+                    </ul></div>
+                    <div class="group"><span>Signing in</span><ul>
+                        <li><a href="#forgot-password">Forgot the admin password</a></li>
+                        <li><a href="#too-many-attempts">Too many sign-in attempts</a></li>
+                    </ul></div>
+                    <div class="group"><span>Nodes</span><ul>
+                        <li><a href="#node-offline">A node stays offline</a></li>
+                        <li><a href="#panel-server-offline">The node next to the panel is offline</a></li>
+                        <li><a href="#auto-install-fails">Automatic install fails</a></li>
+                    </ul></div>
+                    <div class="group"><span>Users and apps</span><ul>
+                        <li><a href="#app-cant-connect">The app can't connect</a></li>
+                        <li><a href="#no-servers">The app shows no servers</a></li>
+                        <li><a href="#link-leaked">A link leaked</a></li>
+                    </ul></div>
+                    <div class="group"><span>Keeping it running</span><ul>
+                        <li><a href="#update">Updating</a></li>
+                        <li><a href="#move-server">Moving to a new server</a></li>
+                        <li><a href="#bots-silent">Telegram bots don't answer</a></li>
+                    </ul></div>
+                </aside>
+
+                <div>
+                    <!-- INSTALLING -->
+                    <section class="group-block" id="installing">
+                        <div class="group-title">
+                            <h2>Installing</h2>
+                        </div>
+                        <div class="concepts">
+                            <article class="concept" id="installer-error">
+                                <h3>The installer stopped with an error <a class="anchor" href="#installer-error" aria-label="Link to this issue">#</a></h3>
+                                <p>Read the box it shows: <strong>What happened</strong> has the last lines of the failed step, and <strong>How to fix it</strong> says what to do. The whole log is in <code>/var/log/umiji-install.log</code>.</p>
+                                <p>Fix it, then type <code>umiji</code>, or run the installer again. It keeps what it has already done.</p>
+                            </article>
+                            <article class="concept" id="needs-root">
+                                <h3>It says it needs root <a class="anchor" href="#needs-root" aria-label="Link to this issue">#</a></h3>
+                                <p>Become root, then run the same command again:</p>
+                                <pre data-copy class="cmd"><code>sudo -i</code></pre>
+                            </article>
+                            <article class="concept" id="no-internet">
+                                <h3>It can't reach GitHub or ghcr.io <a class="anchor" href="#no-internet" aria-label="Link to this issue">#</a></h3>
+                                <p>The install files come from GitHub and the images from ghcr.io. Check that the server can open them:</p>
+                                <pre data-copy class="cmd"><code>curl -I https://ghcr.io</code></pre>
+                                <p>No answer usually means the server's DNS or firewall is blocking it. If its network blocks GitHub, the <a href="https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md#troubleshooting">DEPLOY.md troubleshooting</a> shows how to bring the images over from another machine.</p>
+                            </article>
+                            <article class="concept" id="ports-busy">
+                                <h3>Ports 80 and 443 are in use <a class="anchor" href="#ports-busy" aria-label="Link to this issue">#</a></h3>
+                                <p>Another web server, usually nginx or Apache, already has them. See what it is:</p>
+                                <pre data-copy class="cmd"><code>ss -ltnp</code></pre>
+                                <p>Stop it if you don't need it, then run the installer again. For nginx:</p>
+                                <pre data-copy class="cmd"><code>systemctl disable --now nginx</code></pre>
+                                <p>If the server hosts other sites, keep it and pick <b class="ui">My own nginx</b> in the installer instead: see <a href="../guide/#https">Use your own nginx</a>.</p>
+                            </article>
+                            <article class="concept" id="disk-full">
+                                <h3>The disk is full <a class="anchor" href="#disk-full" aria-label="Link to this issue">#</a></h3>
+                                <p>Umiji's images need about 2 GB. See what takes the space, and remove old images:</p>
+                                <pre data-copy class="cmd"><code>df -h</code></pre>
+                                <pre data-copy class="cmd"><code>docker image prune -a</code></pre>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- HTTPS -->
+                    <section class="group-block" id="domain-https">
+                        <div class="group-title">
+                            <h2>Domain and HTTPS</h2>
+                        </div>
+                        <div class="concepts">
+                            <article class="concept" id="no-certificate">
+                                <h3>The panel doesn't open, or the browser warns about the certificate <a class="anchor" href="#no-certificate" aria-label="Link to this issue">#</a></h3>
+                                <p>The HTTPS certificate isn't there yet. Check these, in order:</p>
+                                <ol class="do">
+                                    <li>The domain points at the server. On your computer, <code>nslookup panel.example.com</code> should show the server's IP. If not, fix its <a href="../guide/#dns">A record</a>.</li>
+                                    <li>Ports 80 and 443 are open in your provider's firewall, if it has one.</li>
+                                    <li>On Cloudflare, the cloud is grey, or <code>Always Use HTTPS</code> is off.</li>
+                                </ol>
+                                <p>Caddy keeps trying on its own. Watch it get the certificate:</p>
+                                <pre data-copy class="cmd"><code>cd /opt/umiji &amp;&amp; docker compose logs -f umiji-caddy</code></pre>
+                            </article>
+                            <article class="concept" id="bad-gateway">
+                                <h3>The panel shows 502 Bad Gateway <a class="anchor" href="#bad-gateway" aria-label="Link to this issue">#</a></h3>
+                                <p>The panel is still starting, which takes about 30 seconds, or it stopped. See its state and its log:</p>
+                                <pre data-copy class="cmd"><code>cd /opt/umiji &amp;&amp; docker compose ps</code></pre>
+                                <pre data-copy class="cmd"><code>docker compose logs --tail 50 umiji</code></pre>
+                            </article>
+                            <article class="concept" id="sub-blank">
+                                <h3>The sub page's domain shows nothing <a class="anchor" href="#sub-blank" aria-label="Link to this issue">#</a></h3>
+                                <p>That's normal. The sub page only answers a user's subscription link, never its bare address. Open a real link from a user's card to test it.</p>
+                                <p>A <code>502</code> there means the sub page isn't running on this server. Type <code>umiji</code>, pick <b class="ui">Install / update</b> and tick <b class="ui">Sub page</b>.</p>
+                            </article>
+                            <article class="concept" id="wrong-sub-domain">
+                                <h3>Subscription links show the wrong domain <a class="anchor" href="#wrong-sub-domain" aria-label="Link to this issue">#</a></h3>
+                                <p>Fix <code>SUB_DOMAIN</code> in <code>/opt/umiji/.env</code>, then restart the panel:</p>
+                                <pre data-copy class="cmd"><code>cd /opt/umiji &amp;&amp; docker compose up -d</code></pre>
+                            </article>
+                            <article class="concept" id="same-ip">
+                                <h3>Every login and IP record shows the same IP <a class="anchor" href="#same-ip" aria-label="Link to this issue">#</a></h3>
+                                <p>A CDN, like Cloudflare's orange cloud, is in front and the panel doesn't know it. List the CDN's IP ranges, as in <a href="../guide/#https">Use your own nginx, or a CDN</a>. For nodes, see <a href="../concepts/#ip-limit-cdn">IP limit behind a CDN</a>.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- SIGNING IN -->
+                    <section class="group-block" id="signing-in">
+                        <div class="group-title">
+                            <h2>Signing in</h2>
+                        </div>
+                        <div class="concepts">
+                            <article class="concept" id="forgot-password">
+                                <h3>I forgot the admin password <a class="anchor" href="#forgot-password" aria-label="Link to this issue">#</a></h3>
+                                <p>On the panel's server, type <code>umiji</code> and pick <b class="ui">Owner password</b>. It sets a new password and turns password login back on, in case it was off.</p>
+                                <pre data-copy class="cmd"><code>umiji</code></pre>
+                            </article>
+                            <article class="concept" id="too-many-attempts">
+                                <h3>“Too many sign-in attempts” <a class="anchor" href="#too-many-attempts" aria-label="Link to this issue">#</a></h3>
+                                <p>After 10 wrong tries for one username, or 20 from one IP, the panel waits. Try again in 5 minutes.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- NODES -->
+                    <section class="group-block" id="nodes">
+                        <div class="group-title">
+                            <h2>Nodes</h2>
+                        </div>
+                        <div class="concepts">
+                            <article class="concept" id="node-offline">
+                                <h3>A node stays offline <a class="anchor" href="#node-offline" aria-label="Link to this issue">#</a></h3>
+                                <p>The panel can't reach the node's port, 2222 unless you changed it. On the node's server, let the panel's IP in, and open the port in your provider's firewall too:</p>
+                                <pre data-copy class="cmd"><code>ufw allow from 203.0.113.10 to any port 2222 proto tcp</code></pre>
+                                <p>Still red? Check that the node runs, and read its log:</p>
+                                <pre data-copy class="cmd"><code>docker logs --tail 50 umiji-node</code></pre>
+                                <p>If the log talks about <code>SECRET_KEY</code>, the key was cut off when you copied it. Copy it again from <b class="ui">Manual setup</b> and run the installer with <code>node</code> at the end.</p>
+                            </article>
+                            <article class="concept" id="panel-server-offline">
+                                <h3>The node next to the panel is offline <a class="anchor" href="#panel-server-offline" aria-label="Link to this issue">#</a></h3>
+                                <p>The node the installer added as <b class="ui">Panel server</b> is reached through Docker's network on the same server. If you turned on the firewall after installing, let Docker's addresses in:</p>
+                                <pre data-copy class="cmd"><code>ufw allow from 172.16.0.0/12 to any port 2222 proto tcp</code></pre>
+                            </article>
+                            <article class="concept" id="auto-install-fails">
+                                <h3>Automatic install fails <a class="anchor" href="#auto-install-fails" aria-label="Link to this issue">#</a></h3>
+                                <p>If it stops at SSH, check the IP, the SSH port and the root password. Some providers turn off password logins for root: then use <a href="../guide/#node">Manual setup</a> instead.</p>
+                                <p>If it stops at the handshake, the node is running but the panel can't reach it: see <a href="#node-offline">A node stays offline</a>.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- USERS -->
+                    <section class="group-block" id="users-apps">
+                        <div class="group-title">
+                            <h2>Users and apps</h2>
+                        </div>
+                        <div class="concepts">
+                            <article class="concept" id="app-cant-connect">
+                                <h3>The app can't connect <a class="anchor" href="#app-cant-connect" aria-label="Link to this issue">#</a></h3>
+                                <p>Walk the route from the server to the phone:</p>
+                                <ol class="do">
+                                    <li>The node has a green dot on the <b class="ui">Nodes</b> page.</li>
+                                    <li>The node runs the inbound: under the node's <b class="ui">Core configuration</b>, it's ticked.</li>
+                                    <li>The inbound's port, like 2083, is open in the node's firewall and your provider's.</li>
+                                    <li>The host's <b class="ui">Address</b> is the node server's public IP (for <b class="ui">Panel server</b>, the panel server's IP, never <code>172.x</code>) or a domain pointing to it, and its <b class="ui">Port</b> is the inbound's.</li>
+                                    <li>For REALITY, the <b class="ui">Target</b> is a real HTTPS site that the node can reach.</li>
+                                    <li>The user is <b class="ui">Active</b>, not limited or expired.</li>
+                                </ol>
+                                <p>After changing something, update the subscription in the app.</p>
+                            </article>
+                            <article class="concept" id="no-servers">
+                                <h3>The app shows no servers <a class="anchor" href="#no-servers" aria-label="Link to this issue">#</a></h3>
+                                <p>A user gets a host only if the host's <b class="ui">Host visibility</b> is on and its inbound is in one of the user's <a href="../concepts/#internal-squad">internal squads</a>. Check both, then update the subscription in the app.</p>
+                            </article>
+                            <article class="concept" id="link-leaked">
+                                <h3>Someone else has a user's link <a class="anchor" href="#link-leaked" aria-label="Link to this issue">#</a></h3>
+                                <p>Open the user, then <b class="ui">More actions</b>, and revoke the subscription. The old link stops working, and the user gets a new one to share.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- RUNNING -->
+                    <section class="group-block" id="running">
+                        <div class="group-title">
+                            <h2>Keeping it running</h2>
+                        </div>
+                        <div class="concepts">
+                            <article class="concept" id="update">
+                                <h3>How do I update? <a class="anchor" href="#update" aria-label="Link to this issue">#</a></h3>
+                                <p>On each server, type <code>umiji</code> and pick <b class="ui">Update all</b>. It backs up the panel's database first.</p>
+                            </article>
+                            <article class="concept" id="move-server">
+                                <h3>Moving the panel to a new server <a class="anchor" href="#move-server" aria-label="Link to this issue">#</a></h3>
+                                <ol class="do">
+                                    <li>On the old server, type <code>umiji</code> and pick <b class="ui">Back up</b>.</li>
+                                    <li>Install Umiji on the new server and point the domains at it.</li>
+                                    <li>Copy the backup into <code>/opt/umiji/backups/</code> there, type <code>umiji</code> and pick <b class="ui">Restore</b>.</li>
+                                </ol>
+                            </article>
+                            <article class="concept" id="bots-silent">
+                                <h3>Telegram bots don't answer <a class="anchor" href="#bots-silent" aria-label="Link to this issue">#</a></h3>
+                                <p>Telegram may be blocked where the panel runs. Add a proxy as <code>TELEGRAM_BOT_PROXY</code> in <code>/opt/umiji/.env</code>, like <code>socks5://172.17.0.1:1080</code>, then restart the panel:</p>
+                                <pre data-copy class="cmd"><code>cd /opt/umiji &amp;&amp; docker compose up -d</code></pre>
+                            </article>
+                        </div>
+                    </section>
+
+                    <p class="empty">Nothing matches. Try a shorter word, or <a href="https://github.com/therewasluna/umiji/issues">ask on GitHub</a>.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="wrap">
+                <span><span class="jp" lang="ja">海路</span> · Umiji is free software under AGPL-3.0.</span>
+                <nav aria-label="Footer">
+                    <a href="../">Home</a>
+                    <a href="../guide/">Setup guide</a>
+                    <a href="../concepts/">Concepts</a>
+                    <a href="../api/">API</a>
+                    <a href="https://github.com/therewasluna/umiji">GitHub</a>
+                </nav>
+            </div>
+        </footer>
+        <script src="../assets/site.js" defer></script>
+    </body>
+</html>

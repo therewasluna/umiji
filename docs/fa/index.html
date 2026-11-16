@@ -45,13 +45,18 @@
                 <nav class="nav" aria-label="اصلی">
                     <a href="guide/">راهنمای راه‌اندازی</a>
                     <a href="concepts/">مفاهیم</a>
+                    <a href="troubleshooting/">مشکلات رایج</a>
                     <a href="api/">API</a>
                 </nav>
                 <div class="tools">
                     <a class="icon-btn gh" href="https://github.com/therewasluna/umiji" aria-label="Umiji در GitHub">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" /></svg>
                     </a>
-                    <a class="icon-btn lang-btn" href="../" lang="en" hreflang="en">English</a>
+                    <div class="lang" role="group" aria-label="زبان">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" /></svg>
+                        <a href="../" lang="en" hreflang="en">English</a>
+                        <a href="./" lang="fa" aria-current="page">فارسی</a>
+                    </div>
                 </div>
             </div>
         </header>
@@ -73,6 +78,10 @@
                                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                             </a>
                             <a class="btn btn-ghost" href="concepts/">یادگیری مفاهیم</a>
+                        </div>
+                        <div class="hero-install">
+                            <p>یا همین حالا نصبش کنید: روی سرورتان، با کاربر root، این را اجرا کنید</p>
+                            <pre data-copy class="cmd"><code>bash &lt;(curl -fsSL https://raw.githubusercontent.com/therewasluna/umiji/main/install.sh)</code></pre>
                         </div>
                         <ul class="hero-meta">
                             <li>روی سرور خودتان</li>
@@ -240,6 +249,7 @@
                     <a href="guide/">راهنمای راه‌اندازی</a>
                     <a href="concepts/">مفاهیم</a>
                     <a href="api/">API</a>
+                    <a href="troubleshooting/">مشکلات رایج</a>
                     <a href="https://github.com/therewasluna/umiji">GitHub</a>
                     <a href="https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md">DEPLOY.md <span>(انگلیسی)</span></a>
                 </nav>

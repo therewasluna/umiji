@@ -42,13 +42,18 @@
                 <nav class="nav" aria-label="اصلی">
                     <a href="./" aria-current="page">راهنمای راه‌اندازی</a>
                     <a href="../concepts/">مفاهیم</a>
+                    <a href="../troubleshooting/">مشکلات رایج</a>
                     <a href="../api/">API</a>
                 </nav>
                 <div class="tools">
                     <a class="icon-btn gh" href="https://github.com/therewasluna/umiji" aria-label="Umiji در GitHub">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" /></svg>
                     </a>
-                    <a class="icon-btn lang-btn" href="../../guide/" lang="en" hreflang="en">English</a>
+                    <div class="lang" role="group" aria-label="زبان">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" /></svg>
+                        <a href="../../guide/" lang="en" hreflang="en">English</a>
+                        <a href="./" lang="fa" aria-current="page">فارسی</a>
+                    </div>
                 </div>
             </div>
         </header>
@@ -58,13 +63,12 @@
                 <div class="wrap">
                     <h1>از یک سرور خالی تا یک اتصال واقعی.</h1>
                     <p>
-                        این ده قدم را به ترتیب دنبال کنید. در پایان، یک کاربر لینک اشتراک دارد و یک گوشی از طریق
-                        سرور خودتان وصل شده است.
+                        ده قدم کوتاه. در پایان، یک کاربر لینک اشتراک دارد و گوشی‌اش از طریق سرور خودتان وصل شده است.
                     </p>
                     <ul class="facts">
                         <li><b>10</b> قدم</li>
-                        <li>حدود <b>45 دقیقه</b>، که بیشترش نصب است</li>
-                        <li>به <b>2 سرور</b> و <b>2 دامنه</b> نیاز دارید</li>
+                        <li>حدود <b>30 دقیقه</b></li>
+                        <li>نصب با <b>یک دستور</b></li>
                     </ul>
                 </div>
                 <svg class="waves" viewBox="0 0 16 16" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-linecap="round" stroke-width="1.6"><path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /><path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /></g></svg>
@@ -78,8 +82,8 @@
                     </button>
                     <h2>قدم‌ها</h2>
                     <ol>
-                        <li><a href="#install"><span class="num">01</span>نصب پنل</a></li>
-                        <li><a href="#sign-in"><span class="num">02</span>ورود و نصب صفحه‌ی اشتراک</a></li>
+                        <li><a href="#install"><span class="num">01</span>نصب Umiji</a></li>
+                        <li><a href="#sign-in"><span class="num">02</span>ورود به پنل</a></li>
                         <li><a href="#profile"><span class="num">03</span>ساختن پروفایل کانفیگ</a></li>
                         <li><a href="#inbound"><span class="num">04</span>افزودن اینباند VLESS</a></li>
                         <li><a href="#node"><span class="num">05</span>افزودن نود</a></li>
@@ -97,77 +101,150 @@
                     <section class="step" id="install">
                         <div class="step-head">
                             <span class="step-num">01</span>
-                            <div><span class="meta">روی سرور</span><h2>نصب پنل</h2></div>
+                            <div><span class="meta">روی سرور</span><h2>نصب Umiji</h2></div>
                         </div>
                         <p>
-                            Umiji داخل Docker و از روی ایمیج‌های آماده اجرا می‌شود، پس سرور فقط به Docker نیاز دارد و همه‌ی
-                            دستورهای اینجا روی خود سرور اجرا می‌شوند. پنل، صفحه‌ی اشتراک و نودها هر کدام نصب جداگانه‌ی خودشان
-                            را دارند؛ این قدم نصب پنل است. راهنمای کامل، با همه‌ی تنظیمات، در
-                            <a href="https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md">DEPLOY.md</a>
-                            (به انگلیسی) آمده است. نسخه‌ی کوتاهش این است.
+                            یک دستور همه‌چیز را نصب می‌کند. اگر Docker نباشد نصبش می‌کند، چند سؤال می‌پرسد که هر کدام جواب
+                            آماده دارند، و اگر جایی خطا پیش بیاید، می‌گوید چطور درستش کنید.
                         </p>
 
                         <h3>چه چیزهایی لازم دارید</h3>
                         <ul class="checks">
-                            <li><strong>یک سرور برای پنل</strong> با دسترسی root و پردازنده‌ی x86-64 یا ARM. Ubuntu یا Debian ساده‌ترین انتخاب است.</li>
-                            <li><strong>یک سرور برای اولین نودتان</strong>. ترافیک کاربرانتان از این سرور عبور می‌کند.</li>
-                            <li><strong>دو دامنه</strong>: یکی برای پنل، مثل <code>panel.example.com</code>، و یکی برای صفحه‌ی اشتراک، مثل <code>sub.example.com</code>. اول رکورد A هر دو را روی IP سرور پنل بگذارید، چون گواهی‌های HTTPS به آن‌ها نیاز دارند.</li>
+                            <li><strong>یک سرور لینوکس</strong> با دسترسی root؛ ساده‌ترین انتخاب Ubuntu یا Debian است.</li>
+                            <li><strong>یک دامنه</strong> از خودتان، مثل <code>example.com</code>. پنل و صفحه‌ی اشتراک هر کدام یک نام زیر آن می‌گیرند.</li>
                         </ul>
+                        <p>Umiji سه بخش دارد. حداقل سخت‌افزار هر کدام:</p>
+                        <div class="table-wrap">
+                            <table class="data hw">
+                                <thead><tr><th>بخش</th><th>حافظه</th><th>پردازنده</th><th>دیسک</th></tr></thead>
+                                <tbody>
+                                    <tr><td><b>پنل</b>، جایی که همه‌چیز را مدیریت می‌کنید</td><td>2 گیگابایت</td><td>1 هسته</td><td>10 گیگابایت</td></tr>
+                                    <tr><td><b>نود</b>، که ترافیک کاربرانتان را می‌برد</td><td>1 گیگابایت</td><td>1 هسته</td><td>5 گیگابایت</td></tr>
+                                    <tr><td><b>صفحه‌ی اشتراک</b>، که کاربرانتان باز می‌کنند</td><td>512 مگابایت</td><td>1 هسته</td><td>5 گیگابایت</td></tr>
+                                    <tr><td><b>هر سه با هم</b></td><td>2 گیگابایت</td><td>2 هسته</td><td>20 گیگابایت</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>
+                            می‌توانید هر سه را روی یک سرور اجرا کنید، یا به هر بخش سرور جدایی بدهید. اسکریپت نصب می‌پرسد هر
+                            سرور چه چیزی را اجرا کند، پس بخش‌های دیگر را بعداً هم می‌توانید اضافه کنید، همین‌جا یا جای دیگر.
+                        </p>
 
-                        <h3>نصب</h3>
-                        <pre data-copy><code><span class="c"># <span dir="rtl">نصب Docker</span></span>
-curl -fsSL https://get.docker.com | sh
+                        <h3 id="dns">دامنه را به سرور وصل کنید</h3>
+                        <p>
+                            دو <strong>رکورد A</strong> بسازید، <code>panel</code> و <code>sub</code>، هر دو با IP سرورتان
+                            به‌عنوان مقدار. این کار را پیش از نصب انجام دهید، چون HTTPS به آن‌ها نیاز دارد.
+                        </p>
+                        <div class="tabs">
+                            <div role="tablist" aria-label="ارائه‌دهنده‌ی DNS">
+                                <button role="tab" type="button">شرکت دامنه‌ی شما</button>
+                                <button role="tab" type="button">Cloudflare</button>
+                            </div>
+                            <div role="tabpanel">
+                                <p>اینجا Namecheap را می‌بینید. شرکت‌های دیگر هم همین فیلدها را در بخش DNS دارند.</p>
+                                <ol class="do">
+                                    <li><b>Domain List</b> را باز کنید، کنار دامنه‌تان روی <b>Manage</b> بزنید و بعد <b>Advanced DNS</b> را باز کنید.</li>
+                                    <li>روی <b>Add New Record</b> بزنید و <b>A Record</b> را انتخاب کنید. در Host بنویسید <code>panel</code> و IP سرورتان را به‌عنوان مقدار بگذارید. با تیک سبز ذخیره کنید.</li>
+                                    <li>یکی دیگر هم با <code>sub</code> در Host و همان IP بسازید.</li>
+                                </ol>
+                            </div>
+                            <div role="tabpanel">
+                                <ol class="do">
+                                    <li>در <a href="https://dash.cloudflare.com"><bdi>dash.cloudflare.com</bdi></a> روی <b>Onboard a domain</b> بزنید، دامنه‌تان را بنویسید و پلن <b>Free</b> را انتخاب کنید.</li>
+                                    <li>در شرکتی که دامنه را از آن خریده‌اید، دو نیم‌سروری را که Cloudflare می‌دهد جای نیم‌سرورهای قبلی بگذارید. صبر کنید تا Cloudflare بگوید <b>Active</b>.</li>
+                                    <li><b>DNS</b> و بعد <b>Records</b> را باز کنید و یک رکورد <code>A</code> با نام <code>panel</code> و IP سرورتان بسازید. روی ابر بزنید تا خاکستری شود (<b>DNS only</b>) و بعد ذخیره کنید.</li>
+                                    <li><code>sub</code> را هم به همین شکل اضافه کنید.</li>
+                                </ol>
+                                <div class="note warn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" /></svg>
+                                    <p><strong>فعلاً ابرها را خاکستری نگه دارید.</strong> ابر نارنجی <a href="#https">تنظیمات اضافه</a> لازم دارد.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p>از کامپیوتر خودتان بررسی کنید. جواب باید IP سرورتان را نشان دهد:</p>
+                        <pre data-copy class="cmd"><code>nslookup panel.example.com</code></pre>
 
-<span class="c"># <span dir="rtl">فایل‌ها، در <bdi>/opt/umiji</bdi></span></span>
-mkdir -p /opt/umiji/caddy &amp;&amp; cd /opt/umiji
-base=https://raw.githubusercontent.com/therewasluna/umiji-backend/main/tools/deploy
-curl -fsSL -o docker-compose.yml $base/docker-compose.yml
-curl -fsSL -o caddy/Caddyfile    $base/caddy/Caddyfile
-curl -fsSL -o .env               $base/env.example
-chmod 600 .env
-nano .env</code></pre>
-                        <p>
-                            در <code>.env</code> دو دامنه‌ی خودتان را بنویسید. بقیه‌ی خط‌ها را دست نزنید: طبق آن‌ها صفحه‌ی اشتراک
-                            هم روی همین سرور اجرا می‌شود، با HTTPS داخلی.
-                        </p>
-                        <pre data-copy><code>PANEL_DOMAIN=panel.example.com
-SUB_DOMAIN=sub.example.com</code></pre>
-                        <p>بعد اجرایش کنید. اولین اجرا ایمیج‌ها را دانلود می‌کند:</p>
-                        <pre data-copy><code>docker compose up -d</code></pre>
-                        <p>
-                            لازم نیست چیزی را دستی بسازید. پنل در اولین اجرا کلیدهای مخفی‌اش را خودش در
-                            <code>/opt/umiji/secrets/</code> می‌سازد. یک نسخه از این پوشه را کنار بکاپ‌هایتان نگه دارید، چون
-                            <code>APP_SECRET</code> داخل آن توکن ربات‌های فروشنده‌ها را هم رمز می‌کند.
-                        </p>
-                        <h3 id="https">HTTPS: داخلی، یا nginx خودتان</h3>
-                        <p>
-                            پنل فقط روی خود سرور گوش می‌دهد، روی <code>127.0.0.1:3000</code>، و فقط از راه HTTPS جواب می‌دهد.
-                            یکی از دو راه زیر را برای در دسترس گذاشتن آن انتخاب کنید. در هر دو راه، بازدیدکننده نمی‌تواند به پنل IP دروغین نشان دهد؛ محدودیت
-                            تلاش‌های ورود و سابقه‌های IP پنل به همین وابسته‌اند.
-                        </p>
-                        <p>
-                            <strong>Caddy داخلی</strong> به‌طور پیش‌فرض روشن است و تنظیمی لازم ندارد. Caddy پورت‌های 80 و 443 را
-                            برمی‌دارد، دامنه‌ها را از <code>.env</code> می‌خواند و گواهی‌ها را خودش می‌گیرد و تمدید می‌کند. هر دو
-                            دامنه باید از قبل به همین سرور اشاره کنند، و هیچ وب‌سرور دیگری نباید روی آن اجرا شود. دستور
-                            <code>docker compose logs -f umiji-caddy</code> رسیدن هر گواهی را نشان می‌دهد.
-                        </p>
-                        <p>
-                            <strong>nginx خودتان</strong> برای سروری مناسب است که سایت‌های دیگری هم دارد. در <code>.env</code> آن خط
-                            را به <code>COMPOSE_PROFILES=</code> تغییر دهید و <code>docker compose up -d</code> را اجرا کنید، و بعد روی
-                            سرور:
-                        </p>
+                        <h3 id="installer">اجرای اسکریپت نصب</h3>
                         <ol class="do">
                             <li>
-                                nginx و certbot را نصب کنید. اگر فایروال روشن است، پورت‌های وب را باز کنید. پورت‌های 3000، 3001 و
-                                3010 را بسته نگه دارید: فقط nginx باید به آن‌ها برسد.
-                                <pre data-copy><code>apt install -y nginx certbot python3-certbot-nginx
-<span class="c"># <span dir="rtl">فقط اگر <bdi>ufw status</bdi> بگوید <bdi>active</bdi></span></span>
-ufw allow 'Nginx Full'</code></pre>
+                                به‌عنوان root وارد سرور شوید. در ویندوز از PowerShell استفاده کنید.
+                                <pre data-copy class="cmd"><code>ssh root@203.0.113.10</code></pre>
                             </li>
                             <li>
-                                فایل <code>/etc/nginx/sites-available/umiji</code> را با دامنه‌های خودتان بنویسید. بلوک
-                                <code>server</code> صفحه‌ی اشتراک را فقط وقتی نگه دارید که صفحه‌ی اشتراک روی همین سرور اجرا می‌شود.
-                                <pre data-copy><code>map $http_upgrade $connection_upgrade {
+                                اسکریپت نصب را اجرا کنید:
+                                <pre data-copy class="cmd"><code>bash &lt;(curl -fsSL https://raw.githubusercontent.com/therewasluna/umiji/main/install.sh)</code></pre>
+                            </li>
+                            <li>
+                                انتخاب کنید این سرور چه چیزی را اجرا کند. <b>Panel</b> و <b>Sub page</b> تیک خورده‌اند. اگر
+                                می‌خواهید نود هم همین‌جا باشد، <kbd>3</kbd> را بزنید: اسکریپت آن را خودش به پنل اضافه می‌کند.
+                                بعد <kbd>Enter</kbd> را بزنید.
+                            </li>
+                            <li>دامنه‌ی پنل را بنویسید. برای بقیه‌ی سؤال‌ها، <kbd>Enter</kbd> جواب داخل کروشه را می‌پذیرد، و سر رمز عبور یک رمز قوی می‌سازد.</li>
+                            <li>نام کاربری و رمزی را که در پایان نشان می‌دهد ذخیره کنید.</li>
+                        </ol>
+                        <div class="term">
+                            <div class="term-bar" aria-hidden="true"><i></i><i></i><i></i><span>root@server: ~</span></div>
+<pre aria-label="اسکریپت نصب روی صفحه: پنل، صفحه‌ی اشتراک و نود را تیک می‌زند، دامنه را می‌پرسد و برای هر مرحله یک خط نشان می‌دهد."><code>  <span class="h">What should this server run?</span>
+    [<span class="ok">x</span>] <span class="r">1</span>  Panel     <span class="d">where you manage users, nodes and resellers</span>
+    [<span class="ok">x</span>] <span class="r">2</span>  Sub page  <span class="d">the page your users open from their link</span>
+    [<span class="ok">x</span>] <span class="r">3</span>  Node      <span class="d">carries your users' traffic</span>
+
+  <b>Panel domain, e.g. panel.example.com</b>: panel.example.com
+  <span class="d">…</span>
+  <span class="d">[5/16]</span> <span class="ok">✓</span> Panel is running <span class="d">31s</span>
+  <span class="d">[6/16]</span> <span class="ok">✓</span> Admin account admin created <span class="d">0s</span>
+  <span class="d">[16/16]</span> <span class="ok">✓</span> Node added to the panel as Panel server <span class="d">4s</span></code></pre>
+                        </div>
+                        <p>اسکریپت نصب به انگلیسی است. سؤال‌هایش یعنی:</p>
+                        <div class="table-wrap">
+                            <table class="data">
+                                <thead><tr><th>سؤال</th><th>یعنی</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>What should this server run?</code></td><td>این سرور چه چیزی را اجرا کند. با زدن عدد، تیک هر بخش را بزنید یا بردارید.</td></tr>
+                                    <tr><td><code>Panel domain</code></td><td>دامنه‌ی پنل.</td></tr>
+                                    <tr><td><code>Sub page domain</code></td><td>دامنه‌ی صفحه‌ی اشتراک.</td></tr>
+                                    <tr><td><code>How should the panel get HTTPS?</code></td><td>عدد 1 برای Caddy داخلی، عدد 2 برای nginx خودتان.</td></tr>
+                                    <tr><td><code>Admin username</code></td><td>نام کاربری مدیر.</td></tr>
+                                    <tr><td><code>Admin password</code></td><td>رمز عبور مدیر. موقع نوشتن دیده نمی‌شود؛ <kbd>Enter</kbd> یک رمز قوی می‌سازد.</td></tr>
+                                    <tr><td><code>Node port</code></td><td>پورتی که پنل با آن به نود وصل می‌شود. 2222 را با <kbd>Enter</kbd> بپذیرید.</td></tr>
+                                    <tr><td><code>Start?</code></td><td>شروع شود؟ <kbd>Enter</kbd> یعنی بله.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="note tip">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" /></svg>
+                            <p>اگر مرحله‌ای خطا داد، کاری را که می‌گوید انجام دهید و <code>umiji</code> را بنویسید: از همان‌جا ادامه می‌دهد. گیر کرده‌اید؟ <a href="../troubleshooting/">مشکلات رایج</a> را ببینید.</p>
+                        </div>
+
+                        <h3 id="umiji">بعداً: دستور <code>umiji</code></h3>
+                        <p>
+                            روی سرور <code>umiji</code> را بنویسید تا منویی باز شود: نصب بخش‌های دیگر، به‌روزرسانی، بکاپ،
+                            برگرداندن بکاپ، تازه کردن رمز مدیر یا حذف. بکاپ‌ها در <bdi><code>/opt/umiji/backups/</code></bdi>
+                            ذخیره می‌شوند. همه‌چیز را در خود دارند، پس پیش خودتان نگهشان دارید، و هر چند وقت یک بار از سرور
+                            بیرونشان بیاورید. این را روی کامپیوتر خودتان اجرا کنید:
+                        </p>
+                        <pre data-copy class="cmd"><code>scp root@203.0.113.10:/opt/umiji/backups/umiji-20261116-141537.tar .</code></pre>
+
+                        <details class="manual" id="https">
+                            <summary>nginx خودتان، یا CDN</summary>
+                            <p>
+                                HTTPS داخلی اسکریپت نصب (Caddy) پورت‌های 80 و 443 را برای خودش می‌خواهد. اگر سرور سایت‌های
+                                دیگری هم دارد، در اسکریپت نصب <b class="ui">My own nginx</b> را انتخاب کنید و بعد روی سرور:
+                            </p>
+                            <ol class="do">
+                                <li>
+                                    nginx و certbot را نصب کنید:
+                                    <pre data-copy class="cmd"><code>apt install -y nginx certbot python3-certbot-nginx</code></pre>
+                                    اگر <code>ufw status</code> بگوید <code>active</code>، پورت‌های وب را باز کنید. پورت‌های 3000، 3001
+                                    و 3010 را بسته نگه دارید.
+                                    <pre data-copy class="cmd"><code>ufw allow 'Nginx Full'</code></pre>
+                                </li>
+                                <li>
+                                    یک فایل تنظیمات تازه باز کنید:
+                                    <pre data-copy class="cmd"><code>nano /etc/nginx/sites-available/umiji</code></pre>
+                                    این را با دامنه‌های خودتان داخلش بچسبانید. بلوک <code>server</code> صفحه‌ی اشتراک را فقط وقتی
+                                    نگه دارید که صفحه‌ی اشتراک روی همین سرور اجرا می‌شود.
+                                    <pre data-copy data-file="/etc/nginx/sites-available/umiji"><code>map $http_upgrade $connection_upgrade {
     default upgrade;
     ''      close;
 }
@@ -229,43 +306,43 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 }</code></pre>
-                            </li>
-                            <li>
-                                فایل را فعال کنید و گواهی‌ها را بگیرید. certbot تنظیمات HTTPS و انتقال از http به https را به همین
-                                فایل اضافه می‌کند و گواهی‌ها را خودش تمدید می‌کند.
-                                <pre data-copy><code>ln -s /etc/nginx/sites-available/umiji /etc/nginx/sites-enabled/
-rm -f /etc/nginx/sites-enabled/default
-nginx -t &amp;&amp; systemctl reload nginx
-<span class="c"># <span dir="rtl">فقط دامنه‌های همین سرور</span></span>
-certbot --nginx -d panel.example.com -d sub.example.com
-<span class="c"># <span dir="rtl">بررسی می‌کند که تمدید کار می‌کند</span></span>
-certbot renew --dry-run</code></pre>
-                            </li>
-                            <li>آدرس <code>https://panel.example.com</code> را باز کنید. تا وقتی certbot اجرا نشده، باز نمی‌شود، چون پنل http ساده را رد می‌کند.</li>
-                        </ol>
-                        <p>
-                            کار این تنظیمات: هدر <code>X-Umiji-Real-IP</code> آدرس IP بازدیدکننده را به پنل می‌رساند، و nginx همیشه
-                            خودش آن را می‌نویسد، پس کسی نمی‌تواند مقدار دلخواهش را بفرستد. پنل درخواست‌های بدون
-                            <code>X-Forwarded-For</code> و <code>X-Forwarded-Proto</code> را رد می‌کند. هدرهای <code>Upgrade</code>
-                            ترمینال SSH را می‌رسانند، و <code>client_max_body_size</code> برای عکس‌های پیام همگانی جا باز می‌کند.
-                        </p>
-                        <p>
-                            <strong>پشت CDN</strong>، مثلاً ابر نارنجی Cloudflare، حالت SSL را در Cloudflare روی
-                            <code>Full (strict)</code> بگذارید. بعد رنج‌های IP آن CDN را به پراکسی معرفی کنید، وگرنه همه‌ی
-                            بازدیدکننده‌ها از IPهای CDN می‌رسند و همه در یک محدودیت ورود شریک می‌شوند. با Caddy علامت <code>#</code> را از شش خط بالای
-                            <code>/opt/umiji/caddy/Caddyfile</code> بردارید، رنج‌ها را همان‌جا بنویسید و
-                            <code>docker compose restart umiji-caddy</code> را اجرا کنید. گزینه‌ی <code>Always Use HTTPS</code> را هم در
-                            Cloudflare خاموش کنید تا تمدید گواهی همچنان به Caddy برسد. با nginx این را بالای فایل اضافه کنید، برای هر رنج از
-                            <a href="https://www.cloudflare.com/ips/"><bdi>cloudflare.com/ips</bdi></a> یک خط:
-                        </p>
-                        <pre data-copy><code>set_real_ip_from 173.245.48.0/20;
+                                </li>
+                                <li>
+                                    فایل را فعال کنید:
+                                    <pre data-copy class="cmd"><code>ln -s /etc/nginx/sites-available/umiji /etc/nginx/sites-enabled/</code></pre>
+                                    <pre data-copy class="cmd"><code>rm -f /etc/nginx/sites-enabled/default</code></pre>
+                                    <pre data-copy class="cmd"><code>nginx -t &amp;&amp; systemctl reload nginx</code></pre>
+                                </li>
+                                <li>
+                                    گواهی‌ها را بگیرید. certbot تنظیمات HTTPS را به همین فایل اضافه می‌کند و گواهی‌ها را خودش
+                                    تمدید می‌کند؛ دستور دوم بررسی می‌کند که تمدید کار می‌کند.
+                                    <pre data-copy class="cmd"><code>certbot --nginx -d panel.example.com -d sub.example.com</code></pre>
+                                    <pre data-copy class="cmd"><code>certbot renew --dry-run</code></pre>
+                                </li>
+                            </ol>
+                            <p>
+                                پنل فقط از راه HTTPS جواب می‌دهد، پس تا certbot اجرا نشده باز نمی‌شود. nginx هدر
+                                <code>X-Umiji-Real-IP</code> را همیشه خودش می‌نویسد، پس کسی نمی‌تواند IP دروغین به پنل نشان دهد.
+                            </p>
+                            <p>
+                                <strong>پشت CDN</strong>، مثلاً ابر نارنجی Cloudflare: حالت <b class="ui">SSL/TLS</b> در Cloudflare
+                                را روی <code>Full (strict)</code> بگذارید، بعد رنج‌های IP آن CDN را معرفی کنید، وگرنه همه‌ی
+                                بازدیدکننده‌ها یک IP و یک محدودیت ورود مشترک خواهند داشت. با Caddy علامت <code>#</code> را از شش خط
+                                بالای <code>/opt/umiji/caddy/Caddyfile</code> بردارید، رنج‌ها را همان‌جا بنویسید، در
+                                <code>/opt/umiji</code> دستور <code>docker compose restart umiji-caddy</code> را اجرا کنید، و
+                                <code>Always Use HTTPS</code> را در Cloudflare خاموش کنید. با nginx این را بالای فایل اضافه کنید،
+                                برای هر رنج از <a href="https://www.cloudflare.com/ips/"><bdi>cloudflare.com/ips</bdi></a> یک خط:
+                            </p>
+                            <pre data-copy data-file="/etc/nginx/sites-available/umiji"><code>set_real_ip_from 173.245.48.0/20;
 set_real_ip_from 2400:cb00::/32;
-<span class="c"># <span dir="rtl">…بقیه‌ی رنج‌ها</span></span>
+<span class="c"># ...the other ranges</span>
 real_ip_header X-Forwarded-For;
 real_ip_recursive on;</code></pre>
+                            <p>نودهای پشت CDN تنظیم جداگانه‌ای لازم دارند: <a href="../concepts/#ip-limit-cdn">لیمیت IP پشت CDN</a> را ببینید.</p>
+                        </details>
                         <p>
-                            نودهای پشت CDN برای لیمیت IP تنظیم جداگانه‌ای لازم دارند:
-                            <a href="../concepts/#ip-limit-cdn">لیمیت IP پشت CDN</a> را ببینید.
+                            می‌خواهید بدون اسکریپت نصب کنید؟ همه‌ی قدم‌های دستی در
+                            <a href="https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md">DEPLOY.md</a> (به انگلیسی) آمده‌اند.
                         </p>
                     </section>
 
@@ -273,68 +350,52 @@ real_ip_recursive on;</code></pre>
                     <section class="step" id="sign-in">
                         <div class="step-head">
                             <span class="step-num">02</span>
-                            <div><span class="meta">پنل · اولین بازدید</span><h2>ورود و نصب صفحه‌ی اشتراک</h2></div>
+                            <div><span class="meta">پنل · اولین بازدید</span><h2>ورود به پنل</h2></div>
                         </div>
                         <ol class="do">
-                            <li><code>https://panel.example.com</code> را باز کنید. اولین حسابی که ثبت کنید مالک پنل می‌شود، پس همین حالا این کار را بکنید.</li>
+                            <li><code>https://panel.example.com</code> را باز کنید و با نام کاربری و رمزی که اسکریپت نصب نشان داد وارد شوید.</li>
                             <li>متن سلب مسئولیت را که در اولین بازدید نشان داده می‌شود بخوانید و <b>متوجه شدم و می‌پذیرم</b> را بزنید.</li>
-                            <li>منو را باز کنید، به <b>تنظیمات Umiji</b> بروید، بخش <b>توکن‌های API</b> را پیدا کنید و یک توکن بسازید. همین حالا کپی‌اش کنید: فقط یک بار نشان داده می‌شود.</li>
-                            <li>
-                                روی سرور، صفحه‌ی اشتراک را در پوشه‌ی جداگانه‌ی خودش نصب کنید:
-                                <pre data-copy><code>mkdir -p /opt/umiji-sub/caddy &amp;&amp; cd /opt/umiji-sub
-base=https://raw.githubusercontent.com/therewasluna/umiji-subscription-page/main/deploy
-curl -fsSL -o docker-compose.yml $base/docker-compose.yml
-curl -fsSL -o caddy/Caddyfile    $base/caddy/Caddyfile
-curl -fsSL -o .env               $base/env.example
-chmod 600 .env
-nano .env</code></pre>
-                            </li>
-                            <li>
-                                این چهار خط را در <code>.env</code> آن بنویسید. <code>COMPOSE_PROFILES</code> خالی یعنی HTTPS با Caddy
-                                پنل است، که از قبل <code>sub.example.com</code> را سرو می‌کند.
-                                <pre data-copy><code>SUB_DOMAIN=sub.example.com
-UMIJI_PANEL_URL=http://umiji:3000
-<span class="c"># <span dir="rtl">توکنی که همین حالا کپی کردید</span></span>
-UMIJI_API_TOKEN=
-COMPOSE_PROFILES=</code></pre>
-                            </li>
-                            <li>در <code>/opt/umiji-sub</code> دستور <code>docker compose up -d</code> را اجرا کنید. Docker هشدار می‌دهد که شبکه‌ی <code>umiji-network</code> از قبل وجود دارد. این طبیعی است: صفحه‌ی اشتراک به شبکه‌ی پنل وصل می‌شود.</li>
                         </ol>
-                        <p>
-                            صفحه‌ی اشتراک را روی سرور جداگانه می‌خواهید؟ فایل
-                            <a href="https://github.com/therewasluna/umiji-subscription-page/blob/main/DEPLOY.md">DEPLOY.md</a> آن (به
-                            انگلیسی) این حالت را توضیح می‌دهد: آنجا Caddy خودش را اجرا می‌کند، و در <code>.env</code> پنل
-                            <code>SUB_PAGE_HERE=no</code> و IP آن سرور نوشته می‌شود.
-                        </p>
                         <figure class="shot">
                             <div class="window">
                                 <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>panel.example.com/auth/login</span></div>
                                 <img src="../../assets/shots/fa/login.webp" width="1600" height="1000" loading="lazy" alt="صفحه‌ی ورود Umiji به فارسی: نشان Umiji، فیلدهای «نام کاربر» و «گذرواژه» و دکمه‌ی «ورود»." />
                             </div>
-                            <figcaption>صفحه‌ی ورود. بعد از ساختن اولین حساب، از همین‌جا وارد پنل می‌شوید.</figcaption>
+                            <figcaption>صفحه‌ی ورود. از همین‌جا وارد پنل می‌شوید.</figcaption>
                         </figure>
-                        <div class="note tip">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" /></svg>
-                            <p><code>https://sub.example.com/</code> به‌تنهایی چیزی نشان نمی‌دهد. این طبیعی است: صفحه‌ی اشتراک فقط به لینک‌های اشتراک واقعی جواب می‌دهد، که در قدم 9 به آن‌ها می‌رسید.</p>
-                        </div>
+
+                        <h3 id="sub-page">صفحه‌ی اشتراک</h3>
+                        <p>
+                            تیک <b class="ui">Sub page</b> را نگه داشتید؟ پس صفحه‌ی اشتراک همین حالا روی
+                            <code>https://sub.example.com</code> اجرا می‌شود. به‌تنهایی چیزی نشان نمی‌دهد؛ فقط به لینک‌های
+                            کاربرانتان جواب می‌دهد، که در قدم 9 به آن‌ها می‌رسید.
+                        </p>
+                        <p>برای اجرای آن روی سرور جداگانه، <code>sub</code> را به آن سرور وصل کنید و بعد:</p>
+                        <ol class="do">
+                            <li>در پنل به <b>تنظیمات Umiji</b> و بخش <b>توکن‌های API</b> بروید، روی <b>ساخت توکن API</b> بزنید، حالت آماده‌ی <b>صفحه اشتراک</b> را انتخاب کنید و توکن را کپی کنید.</li>
+                            <li>
+                                روی آن سرور، اسکریپت نصب را با <code>sub</code> در انتهایش اجرا کنید و وقتی پرسید، توکن را بچسبانید:
+                                <pre data-copy class="cmd"><code>bash &lt;(curl -fsSL https://raw.githubusercontent.com/therewasluna/umiji/main/install.sh) sub</code></pre>
+                            </li>
+                            <li>در پایان سه دستور نشان می‌دهد. آن‌ها را روی سرور پنل اجرا کنید.</li>
+                        </ol>
                     </section>
 
                     <!-- 03 -->
                     <section class="step" id="profile">
                         <div class="step-head">
                             <span class="step-num">03</span>
-                            <div><span class="meta">منو ‹ پروفایل‌های کانفیگ</span><h2>ساختن پروفایل کانفیگ</h2></div>
+                            <div><span class="meta">منو › پروفایل‌های کانفیگ</span><h2>ساختن پروفایل کانفیگ</h2></div>
                         </div>
                         <p>
-                            <a href="../concepts/#config-profile">پروفایل کانفیگ</a> همان تنظیمات Xray است که نودهایتان
-                            اجرا می‌کنند. بیشتر راه‌اندازی‌ها فقط یکی لازم دارند. پروفایل،
-                            <a href="../concepts/#inbound">اینباندها</a> را در خود دارد: پورت‌هایی که کاربرانتان به آن‌ها
-                            وصل می‌شوند.
+                            <a href="../concepts/#config-profile">پروفایل کانفیگ</a> همان تنظیمات Xray است که نودهایتان اجرا
+                            می‌کنند. <a href="../concepts/#inbound">اینباندها</a>، یعنی پورت‌هایی که کاربرانتان به آن‌ها وصل
+                            می‌شوند، در آن هستند. بیشتر راه‌اندازی‌ها فقط یکی لازم دارند.
                         </p>
                         <ol class="do">
                             <li>به <b>پروفایل‌های کانفیگ</b> بروید و <b>ایجاد</b> را بزنید.</li>
                             <li>یک نام وارد کنید، مثل <code>Reality</code>، و <b>ایجاد</b> را بزنید.</li>
-                            <li>پروفایل تازه را باز کنید. در <b>ویرایشگر بصری</b> باز می‌شود، با بخش‌هایی برای اینباندها، اوتباندها، مسیریابی و بقیه.</li>
+                            <li>پروفایل تازه را باز کنید. در <b>ویرایشگر بصری</b> باز می‌شود.</li>
                         </ol>
                         <figure class="shot">
                             <div class="window">
@@ -349,15 +410,14 @@ COMPOSE_PROFILES=</code></pre>
                     <section class="step" id="inbound">
                         <div class="step-head">
                             <span class="step-num">04</span>
-                            <div><span class="meta">پروفایل کانفیگ ‹ اینباندها</span><h2>افزودن اینباند VLESS با REALITY</h2></div>
+                            <div><span class="meta">پروفایل کانفیگ › اینباندها</span><h2>افزودن اینباند VLESS با REALITY</h2></div>
                         </div>
                         <p>
-                            VLESS با REALITY انتخاب خوبی برای اولین اینباند است. نه گواهی می‌خواهد و نه دامنه‌ی جداگانه،
-                            و برای هر کسی که ترافیک را زیر نظر دارد، شبیه بازدید از یک وب‌سایت واقعی است.
+                            VLESS با REALITY انتخاب خوبی برای اولین اینباند است. گواهی نمی‌خواهد، و برای هر کسی که ترافیک را
+                            زیر نظر دارد، شبیه بازدید از یک وب‌سایت واقعی است.
                         </p>
                         <ol class="do">
-                            <li>در بخش <b>اینباندها</b>، <b>اینباند جدید</b> را بزنید.</li>
-                            <li><b>VLESS</b> را انتخاب کنید. اینباند با REALITY روی TCP خام و پورت 2083 اضافه می‌شود و یک نقطه‌ی قرمز نشان می‌دهد چه چیزی هنوز باید پر شود.</li>
+                            <li>در بخش <b>اینباندها</b>، <b>اینباند جدید</b> را بزنید و <b>VLESS</b> را انتخاب کنید. روی پورت 2083 اضافه می‌شود و یک نقطه‌ی قرمز نشان می‌دهد چه چیزی مانده است.</li>
                         </ol>
                         <figure class="shot pair">
                             <div class="window">
@@ -368,42 +428,44 @@ COMPOSE_PROFILES=</code></pre>
                                 <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>…/config-profiles/reality</span></div>
                                 <img src="../../assets/shots/fa/inbound-vless.webp" width="1600" height="1000" loading="lazy" alt="اینباند تازه‌ی VLESS_2083 روی زبانه‌ی «عمومی»: فیلدهای Tag، Protocol با مقدار VLESS، Listen با مقدار 0.0.0.0 و Port با مقدار 2083." />
                             </div>
-                            <figcaption>پروتکل را انتخاب کنید، بعد زبانه‌های اینباند تازه را پر کنید. Tag نامی است که هاست‌ها و اسکوادها با آن به اینباند اشاره می‌کنند.</figcaption>
+                            <figcaption>پروتکل را انتخاب کنید، بعد زبانه‌های اینباند تازه را پر کنید.</figcaption>
                         </figure>
-                        <ol class="do" start="3">
-                            <li>زبانه‌ی <b>امنیت</b> را باز کنید. Private key و یک Short ID از قبل برایتان ساخته شده‌اند.</li>
-                            <li>در <b>Target</b>، یک سایت HTTPS واقعی را که مال شما نیست با پورتش وارد کنید، مثل <code>www.example.org:443</code>. REALITY از TLS همان سایت استفاده می‌کند.</li>
-                            <li>در <b>Server names</b>، دامنه‌ی همان سایت را وارد کنید، مثل <code>www.example.org</code>.</li>
-                            <li><b>ذخیره</b> را بزنید. اگر پورت باید چیز دیگری باشد، اول آن را در زبانه‌ی <b>عمومی</b> عوض کنید.</li>
+                        <ol class="do" start="2">
+                            <li>زبانه‌ی <b>امنیت</b> را باز کنید. کلیدها از قبل برایتان ساخته شده‌اند.</li>
+                            <li>در <b>Target</b>، یک سایت HTTPS واقعی را که مال شما نیست با پورتش وارد کنید، مثل <code>www.example.org:443</code>.</li>
+                            <li>در <b>Server names</b>، دامنه‌ی همان سایت را وارد کنید، مثل <code>www.example.org</code>، و <b>ذخیره</b> را بزنید.</li>
                         </ol>
                         <figure class="shot">
                             <div class="window">
                                 <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>…/config-profiles/reality</span></div>
                                 <img src="../../assets/shots/fa/inbound-reality.webp" width="1600" height="1000" loading="lazy" alt="زبانه‌ی «امنیت» روی REALITY: فیلدهای Target و Server names خالی و قرمزند و Private key و Short IDs از قبل پر شده‌اند." />
                             </div>
-                            <figcaption>فقط Target و Server names مانده‌اند. دکمه‌ی ستاره‌ای داخل فیلد، کلید یا Short ID تازه می‌سازد.</figcaption>
+                            <figcaption>فقط Target و Server names مانده‌اند. نام فیلدهای ویرایشگر، مثل خود Xray، انگلیسی است.</figcaption>
                         </figure>
-                        <div class="note">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 8h.01M11 12h1v4h1" /></svg>
-                            <p>نام فیلدهای ویرایشگر، مثل خود Xray، انگلیسی است. یک هسته‌ی واقعی Xray در مرورگرتان هر تغییر را بررسی می‌کند، پس اشتباه‌های تایپی پیش از ذخیره معلوم می‌شوند. اگر JSON خام را ترجیح می‌دهید، به زبانه‌ی <b class="ui">JSON</b> بروید. هر دو نما یک کانفیگ را ویرایش می‌کنند.</p>
-                        </div>
                     </section>
 
                     <!-- 05 -->
                     <section class="step" id="node">
                         <div class="step-head">
                             <span class="step-num">05</span>
-                            <div><span class="meta">منو ‹ نودها</span><h2>افزودن نود</h2></div>
+                            <div><span class="meta">منو › نودها</span><h2>افزودن نود</h2></div>
                         </div>
-                        <p>
-                            <a href="../concepts/#node">نود</a> سروری است که Xray را با پروفایل شما اجرا می‌کند. Umiji
-                            می‌تواند آن را از طریق SSH برایتان نصب کند.
-                        </p>
+                        <p><a href="../concepts/#node">نود</a> سروری است که Xray را با پروفایل شما اجرا می‌کند.</p>
+                        <div class="note tip">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" /></svg>
+                            <p>
+                                <strong>در اسکریپت نصب تیک Node را زدید؟</strong> نود از قبل در صفحه‌ی <b class="ui">نودها</b> با نام
+                                <b class="ui" dir="ltr">Panel server</b> هست. بازش کنید، زیر <b class="ui">پیکربندی هسته</b> روی آیکون
+                                مداد بزنید، پروفایلتان را انتخاب کنید، اینباند قدم 4 را تیک بزنید، انتخاب را با آیکون دیسک ذخیره کنید
+                                و <b class="ui">ذخیره</b> را بزنید. بعد به قدم 6 بروید.
+                            </p>
+                        </div>
+                        <p>برای نود روی سرور دیگر، Umiji آن را از طریق SSH برایتان نصب می‌کند:</p>
                         <ol class="do">
                             <li>به <b>نودها</b> بروید و <b>ایجاد</b> را بزنید. <b>نصب خودکار</b> از قبل انتخاب شده است.</li>
-                            <li><b>نام داخلی</b>، <b>کشور</b> (پرچمش در فهرست نودها دیده می‌شود)، <b>IP سرور</b> و <b>رمز root</b> سرور را وارد کنید. <b>پورت نود</b> را روی 2222 بگذارید، مگر اینکه این پورت روی سرور اشغال باشد.</li>
+                            <li><b>نام داخلی</b>، <b>کشور</b>، <b>IP سرور</b> و <b>رمز root</b> آن را وارد کنید.</li>
                             <li><b>بعدی</b> را بزنید. در <b>پیکربندی هسته</b>، پروفایلتان را انتخاب کنید و اینباند قدم 4 را تیک بزنید.</li>
-                            <li><b>نصب نود</b> را بزنید و مراحل را دنبال کنید: SSH، Docker، کانتینر نود و در آخر ارتباط با پنل.</li>
+                            <li><b>نصب نود</b> را بزنید و صبر کنید تا نقطه‌ی سبز ظاهر شود.</li>
                         </ol>
                         <figure class="shot">
                             <div class="window">
@@ -414,19 +476,19 @@ COMPOSE_PROFILES=</code></pre>
                         </figure>
                         <div class="note warn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" /></svg>
-                            <p><strong>دو پورت را روی فایروال نود باز کنید</strong>: پورت نود (2222) تا پنل به نود برسد، و پورت اینباند (2083) تا کاربرانتان برسند. اگر نصب با پیام «نود اجرا شده ولی پنل به آن دسترسی ندارد» تمام شد، پورت نود بسته است.</p>
+                            <p><strong>پورت‌ها را باز کنید</strong> روی فایروال نود: پورت اینباند (2083) برای کاربرانتان، و روی سرور جداگانه پورت نود (2222) برای پنل.</p>
                         </div>
                         <p>
-                            ترجیح می‌دهید خودتان نصب کنید؟ <b class="ui">راه‌اندازی دستی</b> را انتخاب کنید. پنل یک
-                            <code>docker-compose.yml</code> نشان می‌دهد که آن را روی نود کپی می‌کنید، و بعد صبر می‌کند تا
-                            Xray بالا بیاید.
+                            نمی‌خواهید رمز root را بدهید؟ <b class="ui">راه‌اندازی دستی</b> را انتخاب کنید، <b class="ui">کلید مخفی</b>
+                            را کپی کنید، و روی سرور نود اسکریپت نصب را با <code>node</code> در انتهایش اجرا کنید:
                         </p>
+                        <pre data-copy class="cmd"><code>bash &lt;(curl -fsSL https://raw.githubusercontent.com/therewasluna/umiji/main/install.sh) node</code></pre>
                         <figure class="shot">
                             <div class="window">
                                 <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>panel.example.com/dashboard/management/nodes</span></div>
                                 <img src="../../assets/shots/fa/nodes.webp" width="1600" height="1000" loading="lazy" alt="صفحه‌ی نودها: سرعت کل، کاربران آنلاین و نودهای آنلاین، و بعد هر نود با آدرس، ترافیک و وضعیتش." />
                             </div>
-                            <figcaption>نود وصل‌شده نقطه‌ی سبز، نسخه‌ی Xray و بار لحظه‌ای‌اش را نشان می‌دهد. نودهای آفلاین قرمز علامت می‌خورند.</figcaption>
+                            <figcaption>نود وصل‌شده نقطه‌ی سبز و بار لحظه‌ای‌اش را نشان می‌دهد.</figcaption>
                         </figure>
                     </section>
 
@@ -434,18 +496,17 @@ COMPOSE_PROFILES=</code></pre>
                     <section class="step" id="host">
                         <div class="step-head">
                             <span class="step-num">06</span>
-                            <div><span class="meta">منو ‹ هاست‌ها</span><h2>ساختن هاست</h2></div>
+                            <div><span class="meta">منو › هاست‌ها</span><h2>ساختن هاست</h2></div>
                         </div>
                         <p>
-                            اینباند سمت سرور است. <a href="../concepts/#host">هاست</a> چیزی است که کاربران در برنامه‌شان
-                            می‌بینند: یک نام و آدرسی برای اتصال.
+                            <a href="../concepts/#host">هاست</a> چیزی است که کاربران در برنامه‌شان می‌بینند: یک نام و آدرسی
+                            برای اتصال.
                         </p>
                         <ol class="do">
-                            <li>به <b>هاست‌ها</b> بروید و <b>ایجاد</b> را بزنید.</li>
-                            <li><b>قابلیت دیده شدن هاست</b> را روشن کنید تا هاست در اشتراک‌ها فرستاده شود.</li>
-                            <li>در <b>نام</b>، اسمی را بنویسید که کاربران می‌بینند. اگر آن را با ایموجی پرچم شروع کنید، مثل «🇩🇪 آلمان»، برنامه‌ها پرچم را نشان می‌دهند.</li>
-                            <li>روی <b>هیچ اینباندی انتخاب نشده است</b> بزنید، پروفایلتان را باز کنید و اینباند قدم 4 را انتخاب کنید. انتخاب را با آیکون دیسک ذخیره کنید.</li>
-                            <li>در <b>آدرس</b>، IP نود یا دامنه‌ای را که به آن اشاره می‌کند وارد کنید. <b>پورت</b> را روی پورت اینباند بگذارید و بعد <b>ذخیره</b> را بزنید.</li>
+                            <li>به <b>هاست‌ها</b> بروید، <b>ایجاد</b> را بزنید و <b>قابلیت دیده شدن هاست</b> را روشن کنید.</li>
+                            <li>در <b>نام</b>، اسمی را بنویسید که کاربران می‌بینند. ایموجی پرچم در ابتدای آن، مثل «🇩🇪 آلمان»، به‌شکل پرچم نشان داده می‌شود.</li>
+                            <li>روی <b>هیچ اینباندی انتخاب نشده است</b> بزنید، پروفایلتان را باز کنید، اینباند قدم 4 را انتخاب کنید و انتخاب را با آیکون دیسک ذخیره کنید.</li>
+                            <li>در <b>آدرس</b>، IP عمومی سرور نود، همان که با SSH به آن وصل می‌شوید، یا دامنه‌ای را که به آن اشاره می‌کند وارد کنید. برای <b dir="ltr">Panel server</b> این IP سرور پنل است، نه آدرس <code>172.x</code> صفحه‌ی نودها. <b>پورت</b> را روی پورت اینباند بگذارید و <b>ذخیره</b> را بزنید.</li>
                         </ol>
                         <figure class="shot pair">
                             <div class="window">
@@ -458,26 +519,21 @@ COMPOSE_PROFILES=</code></pre>
                             </div>
                             <figcaption>اینباند را انتخاب کنید، بعد به هاست نام و آدرس بدهید.</figcaption>
                         </figure>
-                        <div class="note">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 8h.01M11 12h1v4h1" /></svg>
-                            <p>بقیه‌ی تنظیمات، مثل بازنویسی SNI یا مخفی کردن هاست، در <b class="ui">گزینه‌ها</b> هستند. هاست تازه بدون هیچ‌کدام از آن‌ها هم کار می‌کند.</p>
-                        </div>
                     </section>
 
                     <!-- 07 -->
                     <section class="step" id="squad">
                         <div class="step-head">
                             <span class="step-num">07</span>
-                            <div><span class="meta">منو ‹ اسکوادهای داخلی</span><h2>ساختن اسکواد داخلی</h2></div>
+                            <div><span class="meta">منو › اسکوادهای داخلی</span><h2>ساختن اسکواد داخلی</h2></div>
                         </div>
                         <p>
                             <a href="../concepts/#internal-squad">اسکواد داخلی</a> تعیین می‌کند کاربرانش از کدام اینباندها
-                            استفاده کنند. هر کاربر فقط هاست‌های اینباندهایی را می‌گیرد که در اسکوادهای خودش هستند.
+                            استفاده کنند.
                         </p>
                         <ol class="do">
                             <li>به <b>اسکوادهای داخلی</b> بروید، <b>ایجاد</b> را بزنید و برایش نام بگذارید، مثل <code>Germany</code>.</li>
-                            <li>اسکواد را باز کنید. پروفایلتان را باز کنید و اینباند قدم 4 را تیک بزنید. دکمه‌های ✓ و ✕ همه‌ی اینباندهای یک پروفایل را یک‌جا انتخاب یا پاک می‌کنند.</li>
-                            <li><b>ذخیره</b> را بزنید.</li>
+                            <li>اسکواد را باز کنید، پروفایلتان را باز کنید، اینباند قدم 4 را تیک بزنید و <b>ذخیره</b> را بزنید.</li>
                         </ol>
                         <figure class="shot">
                             <div class="window">
@@ -492,13 +548,11 @@ COMPOSE_PROFILES=</code></pre>
                     <section class="step" id="user">
                         <div class="step-head">
                             <span class="step-num">08</span>
-                            <div><span class="meta">منو ‹ کاربرها</span><h2>ساختن کاربر</h2></div>
+                            <div><span class="meta">منو › کاربرها</span><h2>ساختن کاربر</h2></div>
                         </div>
                         <ol class="do">
-                            <li>به <b>کاربرها</b> بروید و <b>ایجاد</b> را بزنید.</li>
-                            <li>یک <b>نام کاربر</b> وارد کنید. بعداً قابل تغییر نیست.</li>
-                            <li><b>محدودیت ترافیک</b> را تعیین کنید (0 یعنی نامحدود) و در <b>دوره بازنشانی ترافیک</b> مشخص کنید هر چند وقت یک بار صفر شود.</li>
-                            <li><b>تاریخ انقضا</b> را انتخاب کنید. دکمه‌های سریع یک ماه، سه ماه یا یک سال اضافه می‌کنند.</li>
+                            <li>به <b>کاربرها</b> بروید، <b>ایجاد</b> را بزنید و یک <b>نام کاربر</b> وارد کنید.</li>
+                            <li><b>محدودیت ترافیک</b> (0 یعنی نامحدود) و <b>تاریخ انقضا</b> را تعیین کنید.</li>
                             <li>در <b>اسکوادهای داخلی</b>، اسکواد قدم 7 را تیک بزنید و بعد <b>ایجاد</b> را بزنید.</li>
                         </ol>
                         <figure class="shot pair">
@@ -510,7 +564,7 @@ COMPOSE_PROFILES=</code></pre>
                                 <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>panel.example.com/dashboard/management/users</span></div>
                                 <img src="../../assets/shots/fa/user-squads.webp" width="1600" height="1000" loading="lazy" alt="پایین‌تر در پنجره‌ی «ساخت کاربر»: لیمیت دستگاه بر اساس HWID و برچسب در یک ستون، و تاریخ انقضا و اسکواد داخلی Germany که تیک خورده در ستون دیگر." />
                             </div>
-                            <figcaption>اول هویت و محدودیت‌ها، بعد دسترسی: تاریخ انقضا و اسکوادها.</figcaption>
+                            <figcaption>اول محدودیت‌ها، بعد دسترسی: تاریخ انقضا و اسکوادها.</figcaption>
                         </figure>
                     </section>
 
@@ -518,17 +572,15 @@ COMPOSE_PROFILES=</code></pre>
                     <section class="step" id="share">
                         <div class="step-head">
                             <span class="step-num">09</span>
-                            <div><span class="meta">کاربرها ‹ همان کاربر</span><h2>فرستادن لینک اشتراک</h2></div>
+                            <div><span class="meta">کاربرها › کاربر</span><h2>فرستادن لینک اشتراک</h2></div>
                         </div>
                         <p>
-                            هر کاربر یک <a href="../concepts/#subscription-link">لینک اشتراک</a> شخصی دارد. این لینک همه‌ی
-                            هاست‌هایی را که کاربر اجازه‌ی استفاده از آن‌ها را دارد با خود می‌برد، و وقتی سرورها را اضافه
-                            یا عوض می‌کنید هم همچنان کار می‌کند.
+                            هر کاربر یک <a href="../concepts/#subscription-link">لینک اشتراک</a> شخصی دارد. وقتی سرورها را
+                            اضافه یا عوض می‌کنید، همچنان کار می‌کند.
                         </p>
                         <ol class="do">
-                            <li>کاربر را از فهرست باز کنید.</li>
-                            <li><b>لینک اشتراک</b> را کپی کنید، یا از دکمه‌ی کد QR در ردیف آیکون‌های بالای آن استفاده کنید.</li>
-                            <li>لینک را برای کاربر بفرستید. مثل رمز عبور است: هر کسی که لینک را داشته باشد می‌تواند از این اشتراک استفاده کند.</li>
+                            <li>کاربر را باز کنید و <b>لینک اشتراک</b> را کپی کنید، یا کد QR آن را نشان دهید.</li>
+                            <li>لینک را برای کاربر بفرستید. مثل رمز عبور است: هر کسی که لینک را داشته باشد می‌تواند از آن استفاده کند.</li>
                         </ol>
                         <figure class="shot">
                             <div class="window">
@@ -537,10 +589,6 @@ COMPOSE_PROFILES=</code></pre>
                             </div>
                             <figcaption>کارت کاربر: وضعیت، مصرف، انقضا و لینکی که باید بفرستید.</figcaption>
                         </figure>
-                        <div class="note warn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" /></svg>
-                            <p>اگر لینکی لو رفت، <b class="ui">عملیات بیشتر</b> را روی کاربر باز کنید و <b class="ui">لغو اشتراک</b> را بزنید. لینک قبلی از کار می‌افتد و کاربر لینک تازه‌ای می‌گیرد.</p>
-                        </div>
                     </section>
 
                     <!-- 10 -->
@@ -549,15 +597,10 @@ COMPOSE_PROFILES=</code></pre>
                             <span class="step-num">10</span>
                             <div><span class="meta">روی گوشی کاربر</span><h2>اتصال از گوشی</h2></div>
                         </div>
-                        <p>
-                            اگر لینک در مرورگر باز شود، <a href="../concepts/#subscription-page">صفحه‌ی اشتراک</a> را نشان
-                            می‌دهد: چقدر ترافیک مانده است، و نصب یک برنامه را قدم‌به‌قدم به کاربر نشان می‌دهد.
-                        </p>
                         <ol class="do">
-                            <li>لینک را روی گوشی باز کنید. صفحه خودش پلتفرم را تشخیص می‌دهد. اگر لازم بود، آن را از منوی پلتفرم کنار عنوان «نصب» عوض کنید.</li>
-                            <li>یک برنامه انتخاب کنید، مثل Happ یا v2rayNG، و با دکمه‌های بخش <b>نصب برنامه</b> نصبش کنید.</li>
-                            <li><b>اضافه کردن اشتراک</b> را بزنید. برنامه باز می‌شود و اشتراک به آن اضافه شده است.</li>
-                            <li>هاست «🇩🇪 آلمان» را انتخاب کنید و وصل شوید.</li>
+                            <li>لینک را روی گوشی باز کنید. <a href="../concepts/#subscription-page">صفحه‌ی اشتراک</a> ترافیک باقی‌مانده و برنامه‌های مناسب همان گوشی را نشان می‌دهد.</li>
+                            <li>یک برنامه، مثل Happ یا v2rayNG، را با دکمه‌های بخش <b>نصب برنامه</b> نصب کنید.</li>
+                            <li><b>اضافه کردن اشتراک</b> را بزنید، در برنامه «🇩🇪 آلمان» را انتخاب کنید و وصل شوید.</li>
                         </ol>
                         <figure class="shot phones">
                             <div class="handset"><img src="../../assets/shots/fa/subpage.webp" width="780" height="1688" loading="lazy" alt="صفحه‌ی اشتراک روی گوشی: نام کاربر و وضعیت فعال، ترافیک مصرف‌شده به شکل موج، و تاریخ انقضا." /></div>
@@ -566,7 +609,7 @@ COMPOSE_PROFILES=</code></pre>
                         </figure>
                         <div class="note tip">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" /></svg>
-                            <p>در پنل، ردیف کاربر حالا مصرف ترافیک را نشان می‌دهد و نود یک کاربر آنلاین دارد. اگر برنامه وصل نشد، پورت اینباند را روی فایروال نود بررسی کنید و مطمئن شوید آدرس و پورت هاست با نود یکی است.</p>
+                            <p>وصل نمی‌شود؟ در <a href="../troubleshooting/#app-cant-connect">برنامه وصل نمی‌شود</a> آمده که چه چیزهایی را بررسی کنید.</p>
                         </div>
                     </section>
 
@@ -593,6 +636,7 @@ COMPOSE_PROFILES=</code></pre>
                     <a href="../">خانه</a>
                     <a href="../concepts/">مفاهیم</a>
                     <a href="../api/">API</a>
+                    <a href="../troubleshooting/">مشکلات رایج</a>
                     <a href="https://github.com/therewasluna/umiji">GitHub</a>
                     <a href="https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md">DEPLOY.md <span>(انگلیسی)</span></a>
                 </nav>

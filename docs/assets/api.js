@@ -146,33 +146,6 @@
         })
     }
 
-    // ---------- tabs (static code samples) ----------
-
-    document.querySelectorAll('.tabs').forEach((box, n) => {
-        const tabs = [...box.querySelectorAll('[role="tab"]')]
-        const panels = [...box.querySelectorAll('[role="tabpanel"]')]
-        const show = (i, focus) => {
-            tabs.forEach((t, j) => {
-                t.setAttribute('aria-selected', i === j)
-                t.tabIndex = i === j ? 0 : -1
-            })
-            panels.forEach((p, j) => (p.hidden = i !== j))
-            if (focus) tabs[i].focus()
-        }
-        tabs.forEach((t, i) => {
-            t.id = `tab-${n}-${i}`
-            panels[i].id = `panel-${n}-${i}`
-            t.setAttribute('aria-controls', panels[i].id)
-            panels[i].setAttribute('aria-labelledby', t.id)
-            t.addEventListener('click', () => show(i))
-            t.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight') show((i + 1) % tabs.length, true)
-                if (e.key === 'ArrowLeft') show((i - 1 + tabs.length) % tabs.length, true)
-            })
-        })
-        show(0)
-    })
-
     document.querySelectorAll('pre code.json').forEach((c) => (c.innerHTML = hlJSON(c.textContent)))
     // let long event and stream names break after _ . : instead of mid-word
     document.querySelectorAll('table.data td:first-child code').forEach((c) => (c.innerHTML = c.innerHTML.replace(/(?<=.)([_.:])/g, '$1<wbr>')))

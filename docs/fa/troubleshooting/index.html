@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+        <title>مشکلات رایج · Umiji</title>
+        <meta
+            name="description"
+            content="راه‌حل مشکل‌هایی که بیشتر از همه در Umiji پیش می‌آیند: اسکریپت نصب، گواهی HTTPS، نودهای آفلاین، برنامه‌هایی که وصل نمی‌شوند، رمز عبور و به‌روزرسانی."
+        />
+        <meta name="theme-color" content="#130C11" />
+        <link rel="alternate" hreflang="en" href="https://umiji.wiki/troubleshooting/" />
+        <link rel="alternate" hreflang="fa" href="https://umiji.wiki/fa/troubleshooting/" />
+        <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="../../assets/favicon-32.png" sizes="32x32" type="image/png" />
+        <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link rel="preload" href="../../assets/fonts/umiji-persian-digits.woff2" as="font" type="font/woff2" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Alexandria:wght@500..800&family=Vazirmatn:wght@400..800&display=swap"
+        />
+        <!-- only the two letters of 海路 -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600&text=%E6%B5%B7%E8%B7%AF&display=swap" />
+        <link rel="stylesheet" href="../../assets/site.css" />
+    </head>
+    <body>
+        <a class="skip" href="#main">رفتن به محتوا</a>
+
+        <header class="topbar">
+            <div class="wrap">
+                <a class="brand" href="../" aria-label="خانه‌ی ویکی Umiji">
+                    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                        <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6">
+                            <path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" />
+                            <path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" />
+                        </g>
+                    </svg>
+                    <span class="word" dir="ltr"><span class="umi">Umi</span><span class="ji">ji</span></span>
+                </a>
+                <nav class="nav" aria-label="اصلی">
+                    <a href="../guide/">راهنمای راه‌اندازی</a>
+                    <a href="../concepts/">مفاهیم</a>
+                    <a href="./" aria-current="page">مشکلات رایج</a>
+                    <a href="../api/">API</a>
+                </nav>
+                <div class="tools">
+                    <a class="icon-btn gh" href="https://github.com/therewasluna/umiji" aria-label="Umiji در GitHub">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" /></svg>
+                    </a>
+                    <div class="lang" role="group" aria-label="زبان">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" /></svg>
+                        <a href="../../troubleshooting/" lang="en" hreflang="en">English</a>
+                        <a href="./" lang="fa" aria-current="page">فارسی</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main id="main">
+            <div class="page-head">
+                <div class="wrap">
+                    <h1>چیزی کار نمی‌کند؟ از اینجا شروع کنید.</h1>
+                    <p>
+                        مشکل‌هایی که بیشتر از همه پیش می‌آیند، با علت هر کدام و راه درست کردنش. دستورها روی سرور و با
+                        کاربر root اجرا می‌شوند، مگر اینکه خلافش گفته شده باشد.
+                    </p>
+                    <label class="search">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7" /><path d="M20 20l-3.5-3.5" /></svg>
+                        <input id="concept-search" type="search" placeholder="جستجو، مثلاً «گواهی» یا «آفلاین»" aria-label="جستجو در مشکلات رایج" autocomplete="off" />
+                        <kbd aria-hidden="true">/</kbd>
+                    </label>
+                </div>
+                <svg class="waves" viewBox="0 0 16 16" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-linecap="round" stroke-width="1.6"><path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /><path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /></g></svg>
+            </div>
+
+            <div class="wrap docs">
+                <aside class="toc collapsible" aria-label="مشکلات رایج">
+                    <button class="toc-toggle" type="button" aria-expanded="false">
+                        همه‌ی مشکلات
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6" /></svg>
+                    </button>
+                    <div class="group"><span>نصب</span><ul>
+                        <li><a href="#installer-error">اسکریپت نصب متوقف شد</a></li>
+                        <li><a href="#needs-root">root لازم است</a></li>
+                        <li><a href="#no-internet">به GitHub یا ghcr.io نمی‌رسد</a></li>
+                        <li><a href="#ports-busy">پورت‌های 80 و 443 اشغال‌اند</a></li>
+                        <li><a href="#disk-full">دیسک پر است</a></li>
+                    </ul></div>
+                    <div class="group"><span>دامنه و HTTPS</span><ul>
+                        <li><a href="#no-certificate">پنل باز نمی‌شود</a></li>
+                        <li><a href="#bad-gateway">خطای 502</a></li>
+                        <li><a href="#sub-blank">صفحه‌ی اشتراک چیزی نشان نمی‌دهد</a></li>
+                        <li><a href="#wrong-sub-domain">لینک‌ها دامنه‌ی اشتباه دارند</a></li>
+                        <li><a href="#same-ip">همه یک IP دارند</a></li>
+                    </ul></div>
+                    <div class="group"><span>ورود</span><ul>
+                        <li><a href="#forgot-password">رمز مدیر را فراموش کرده‌ام</a></li>
+                        <li><a href="#too-many-attempts">تلاش‌های زیاد برای ورود</a></li>
+                    </ul></div>
+                    <div class="group"><span>نودها</span><ul>
+                        <li><a href="#node-offline">نود آفلاین می‌ماند</a></li>
+                        <li><a href="#panel-server-offline">نود کنار پنل آفلاین است</a></li>
+                        <li><a href="#auto-install-fails">نصب خودکار شکست می‌خورد</a></li>
+                    </ul></div>
+                    <div class="group"><span>کاربرها و برنامه‌ها</span><ul>
+                        <li><a href="#app-cant-connect">برنامه وصل نمی‌شود</a></li>
+                        <li><a href="#no-servers">برنامه سروری نشان نمی‌دهد</a></li>
+                        <li><a href="#link-leaked">لینکی لو رفته است</a></li>
+                    </ul></div>
+                    <div class="group"><span>نگهداری</span><ul>
+                        <li><a href="#update">به‌روزرسانی</a></li>
+                        <li><a href="#move-server">انتقال به سرور تازه</a></li>
+                        <li><a href="#bots-silent">ربات‌های تلگرام جواب نمی‌دهند</a></li>
+                    </ul></div>
+                </aside>
+
+                <div>
+                    <!-- INSTALLING -->
+                    <section class="group-block" id="installing">
+                        <div class="group-title">
+                            <h2>نصب</h2>
+                        </div>
+                        <div class="concepts">
+                            <article class="concept" id="installer-error">
+                                <h3>اسکریپت نصب با خطا متوقف شد <a class="anchor" href="#installer-error" aria-label="لینک این مشکل">#</a></h3>
+                                <p>کادری را که نشان می‌دهد بخوانید: <strong>What happened</strong> خط‌های آخر مرحله‌ی شکست‌خورده را دارد و <strong>How to fix it</strong> می‌گوید چه کنید. گزارش کامل در <bdi><code>/var/log/umiji-install.log</code></bdi> است.</p>
+                                <p>مشکل را درست کنید و بعد <code>umiji</code> را بنویسید، یا اسکریپت نصب را دوباره اجرا کنید. کارهایی را که انجام داده نگه می‌دارد.</p>
+                            </article>
+                            <article class="concept" id="needs-root">
+                                <h3>می‌گوید root لازم است <a class="anchor" href="#needs-root" aria-label="لینک این مشکل">#</a></h3>
+                                <p>root شوید و همان دستور را دوباره اجرا کنید:</p>
+                                <pre data-copy class="cmd"><code>sudo -i</code></pre>
+                            </article>
+                            <article class="concept" id="no-internet">
+                                <h3>به GitHub یا ghcr.io نمی‌رسد <a class="anchor" href="#no-internet" aria-label="لینک این مشکل">#</a></h3>
+                                <p>فایل‌های نصب از GitHub و ایمیج‌ها از ghcr.io می‌آیند. بررسی کنید سرور می‌تواند بازشان کند:</p>
+                                <pre data-copy class="cmd"><code>curl -I https://ghcr.io</code></pre>
+                                <p>اگر جوابی نیامد، معمولاً DNS یا فایروال سرور جلویش را گرفته است. اگر شبکه‌ی سرور GitHub را مسدود می‌کند، <a href="https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md#troubleshooting">بخش Troubleshooting در DEPLOY.md</a> (به انگلیسی) نشان می‌دهد چطور ایمیج‌ها را از یک دستگاه دیگر بیاورید.</p>
+                            </article>
+                            <article class="concept" id="ports-busy">
+                                <h3>پورت‌های 80 و 443 اشغال‌اند <a class="anchor" href="#ports-busy" aria-label="لینک این مشکل">#</a></h3>
+                                <p>یک وب‌سرور دیگر، معمولاً nginx یا Apache، آن‌ها را گرفته است. ببینید کدام است:</p>
+                                <pre data-copy class="cmd"><code>ss -ltnp</code></pre>
+                                <p>اگر لازمش ندارید متوقفش کنید و اسکریپت نصب را دوباره اجرا کنید. برای nginx:</p>
+                                <pre data-copy class="cmd"><code>systemctl disable --now nginx</code></pre>
+                                <p>اگر سرور سایت‌های دیگری هم دارد، نگهش دارید و در اسکریپت نصب <b class="ui">My own nginx</b> را انتخاب کنید: <a href="../guide/#https">nginx خودتان، یا CDN</a> را ببینید.</p>
+                            </article>
+                            <article class="concept" id="disk-full">
+                                <h3>دیسک پر است <a class="anchor" href="#disk-full" aria-label="لینک این مشکل">#</a></h3>
+                                <p>ایمیج‌های Umiji حدود 2 گیگابایت جا می‌خواهند. ببینید چه چیزی جا را گرفته و ایمیج‌های قدیمی را پاک کنید:</p>
+                                <pre data-copy class="cmd"><code>df -h</code></pre>
+                                <pre data-copy class="cmd"><code>docker image prune -a</code></pre>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- HTTPS -->
+                    <section class="group-block" id="domain-https">
+                        <div class="group-title">
+                            <h2>دامنه و HTTPS</h2>
+                        </div>
+                        <div class="concepts">
+                            <article class="concept" id="no-certificate">
+                                <h3>پنل باز نمی‌شود، یا مرورگر درباره‌ی گواهی هشدار می‌دهد <a class="anchor" href="#no-certificate" aria-label="لینک این مشکل">#</a></h3>
+                                <p>گواهی HTTPS هنوز گرفته نشده است. این‌ها را به ترتیب بررسی کنید:</p>
+                                <ol class="do">
+                                    <li>دامنه به سرور اشاره می‌کند. روی کامپیوتر خودتان، <code>nslookup panel.example.com</code> باید IP سرور را نشان دهد. اگر نه، <a href="../guide/#dns">رکورد A</a> آن را درست کنید.</li>
+                                    <li>پورت‌های 80 و 443 در فایروال ارائه‌دهنده‌ی سرورتان، اگر دارد، باز هستند.</li>
+                                    <li>در Cloudflare ابر خاکستری است، یا <code>Always Use HTTPS</code> خاموش است.</li>
+                                </ol>
+                                <p>Caddy خودش دوباره تلاش می‌کند. گرفتن گواهی را این‌طور دنبال کنید:</p>
+                                <pre data-copy class="cmd"><code>cd /opt/umiji &amp;&amp; docker compose logs -f umiji-caddy</code></pre>
+                            </article>
+                            <article class="concept" id="bad-gateway">
+                                <h3>پنل خطای 502 Bad Gateway می‌دهد <a class="anchor" href="#bad-gateway" aria-label="لینک این مشکل">#</a></h3>
+                                <p>پنل هنوز در حال بالا آمدن است، که حدود 30 ثانیه طول می‌کشد، یا متوقف شده است. وضعیت و گزارشش را ببینید:</p>
+                                <pre data-copy class="cmd"><code>cd /opt/umiji &amp;&amp; docker compose ps</code></pre>
+                                <pre data-copy class="cmd"><code>docker compose logs --tail 50 umiji</code></pre>
+                            </article>
+                            <article class="concept" id="sub-blank">
+                                <h3>دامنه‌ی صفحه‌ی اشتراک چیزی نشان نمی‌دهد <a class="anchor" href="#sub-blank" aria-label="لینک این مشکل">#</a></h3>
+                                <p>این طبیعی است. صفحه‌ی اشتراک فقط به لینک اشتراک یک کاربر جواب می‌دهد، نه به آدرس خالی‌اش. برای امتحان، یک لینک واقعی را از کارت یک کاربر باز کنید.</p>
+                                <p>اگر آنجا خطای <code>502</code> می‌بینید، صفحه‌ی اشتراک روی این سرور اجرا نمی‌شود. <code>umiji</code> را بنویسید، <code>Install / update</code> را انتخاب کنید و تیک <code>Sub page</code> را بزنید.</p>
+                            </article>
+                            <article class="concept" id="wrong-sub-domain">
+                                <h3>لینک‌های اشتراک دامنه‌ی اشتباه دارند <a class="anchor" href="#wrong-sub-domain" aria-label="لینک این مشکل">#</a></h3>
+                                <p><code>SUB_DOMAIN</code> را در <bdi><code>/opt/umiji/.env</code></bdi> درست کنید و بعد پنل را دوباره راه بیندازید:</p>
+                                <pre data-copy class="cmd"><code>cd /opt/umiji &amp;&amp; docker compose up -d</code></pre>
+                            </article>
+                            <article class="concept" id="same-ip">
+                                <h3>همه‌ی ورودها و سابقه‌های IP یک IP را نشان می‌دهند <a class="anchor" href="#same-ip" aria-label="لینک این مشکل">#</a></h3>
+                                <p>یک CDN، مثلاً ابر نارنجی Cloudflare، جلوی پنل است و پنل از آن خبر ندارد. رنج‌های IP آن CDN را معرفی کنید، مثل بخش <a href="../guide/#https">nginx خودتان، یا CDN</a>. برای نودها <a href="../concepts/#ip-limit-cdn">لیمیت IP پشت CDN</a> را ببینید.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- SIGNING IN -->
+                    <section class="group-block" id="signing-in">
+                        <div class="group-title">
+                            <h2>ورود</h2>
+                        </div>
+                        <div class="concepts">
+                            <article class="concept" id="forgot-password">
+                                <h3>رمز مدیر را فراموش کرده‌ام <a class="anchor" href="#forgot-password" aria-label="لینک این مشکل">#</a></h3>
+                                <p>روی سرور پنل <code>umiji</code> را بنویسید و <code>Owner password</code> را انتخاب کنید. یک رمز تازه می‌گذارد و ورود با رمز عبور را هم، اگر خاموش بوده، دوباره روشن می‌کند.</p>
+                                <pre data-copy class="cmd"><code>umiji</code></pre>
+                            </article>
+                            <article class="concept" id="too-many-attempts">
+                                <h3>پیام <bdi lang="en">Too many sign-in attempts</bdi> <a class="anchor" href="#too-many-attempts" aria-label="لینک این مشکل">#</a></h3>
+                                <p>بعد از 10 تلاش اشتباه برای یک نام کاربری، یا 20 تلاش از یک IP، پنل صبر می‌کند. 5 دقیقه بعد دوباره امتحان کنید.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- NODES -->
+                    <section class="group-block" id="nodes">
+                        <div class="group-title">
+                            <h2>نودها</h2>
+                        </div>
+                        <div class="concepts">
+                            <article class="concept" id="node-offline">
+                                <h3>نود آفلاین می‌ماند <a class="anchor" href="#node-offline" aria-label="لینک این مشکل">#</a></h3>
+                                <p>پنل به پورت نود نمی‌رسد، که 2222 است مگر اینکه عوضش کرده باشید. روی سرور نود، به IP پنل اجازه‌ی ورود بدهید، و پورت را در فایروال ارائه‌دهنده‌ی سرورتان هم باز کنید:</p>
+                                <pre data-copy class="cmd"><code>ufw allow from 203.0.113.10 to any port 2222 proto tcp</code></pre>
+                                <p>هنوز قرمز است؟ بررسی کنید نود اجرا می‌شود و گزارشش را بخوانید:</p>
+                                <pre data-copy class="cmd"><code>docker logs --tail 50 umiji-node</code></pre>
+                                <p>اگر گزارش درباره‌ی <code>SECRET_KEY</code> حرف می‌زند، کلید موقع کپی ناقص شده است. آن را دوباره از <b class="ui">راه‌اندازی دستی</b> کپی کنید و اسکریپت نصب را با <code>node</code> در انتهایش اجرا کنید.</p>
+                            </article>
+                            <article class="concept" id="panel-server-offline">
+                                <h3>نود کنار پنل آفلاین است <a class="anchor" href="#panel-server-offline" aria-label="لینک این مشکل">#</a></h3>
+                                <p>نودی که اسکریپت نصب با نام <b class="ui" dir="ltr">Panel server</b> اضافه کرده، از راه شبکه‌ی Docker روی همان سرور در دسترس است. اگر بعد از نصب فایروال را روشن کرده‌اید، به آدرس‌های Docker اجازه‌ی ورود بدهید:</p>
+                                <pre data-copy class="cmd"><code>ufw allow from 172.16.0.0/12 to any port 2222 proto tcp</code></pre>
+                            </article>
+                            <article class="concept" id="auto-install-fails">
+                                <h3>نصب خودکار شکست می‌خورد <a class="anchor" href="#auto-install-fails" aria-label="لینک این مشکل">#</a></h3>
+                                <p>اگر سر SSH متوقف می‌شود، IP، پورت SSH و رمز root را بررسی کنید. بعضی ارائه‌دهنده‌ها ورود root با رمز را خاموش می‌کنند؛ در این صورت از <a href="../guide/#node">راه‌اندازی دستی</a> استفاده کنید.</p>
+                                <p>اگر سر ارتباط با پنل متوقف می‌شود، نود اجرا شده ولی پنل به آن نمی‌رسد: <a href="#node-offline">نود آفلاین می‌ماند</a> را ببینید.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- USERS -->
+                    <section class="group-block" id="users-apps">
+                        <div class="group-title">
+                            <h2>کاربرها و برنامه‌ها</h2>
+                        </div>
+                        <div class="concepts">
+                            <article class="concept" id="app-cant-connect">
+                                <h3>برنامه وصل نمی‌شود <a class="anchor" href="#app-cant-connect" aria-label="لینک این مشکل">#</a></h3>
+                                <p>مسیر را از سرور تا گوشی دنبال کنید:</p>
+                                <ol class="do">
+                                    <li>نود در صفحه‌ی <b class="ui">نودها</b> نقطه‌ی سبز دارد.</li>
+                                    <li>نود اینباند را اجرا می‌کند: در <b class="ui">پیکربندی هسته</b> نود تیک خورده است.</li>
+                                    <li>پورت اینباند، مثلاً 2083، در فایروال نود و فایروال ارائه‌دهنده‌ی سرورتان باز است.</li>
+                                    <li><b class="ui">آدرس</b> هاست IP عمومی سرور نود (برای <b class="ui" dir="ltr">Panel server</b> همان IP سرور پنل، نه <code>172.x</code>) یا دامنه‌ای است که به آن اشاره می‌کند، و <b class="ui">پورت</b> آن همان پورت اینباند است.</li>
+                                    <li>برای REALITY، فیلد <b class="ui">Target</b> یک سایت HTTPS واقعی است که نود به آن دسترسی دارد.</li>
+                                    <li>کاربر <b class="ui">فعال</b> است، نه محدود یا منقضی.</li>
+                                </ol>
+                                <p>بعد از هر تغییر، اشتراک را در برنامه به‌روز کنید.</p>
+                            </article>
+                            <article class="concept" id="no-servers">
+                                <h3>برنامه سروری نشان نمی‌دهد <a class="anchor" href="#no-servers" aria-label="لینک این مشکل">#</a></h3>
+                                <p>کاربر فقط وقتی یک هاست را می‌گیرد که <b class="ui">قابلیت دیده شدن هاست</b> روشن باشد و اینباند آن در یکی از <a href="../concepts/#internal-squad">اسکوادهای داخلی</a> کاربر باشد. هر دو را بررسی کنید و بعد اشتراک را در برنامه به‌روز کنید.</p>
+                            </article>
+                            <article class="concept" id="link-leaked">
+                                <h3>لینک یک کاربر دست کس دیگری افتاده است <a class="anchor" href="#link-leaked" aria-label="لینک این مشکل">#</a></h3>
+                                <p>کاربر را باز کنید، بعد <b class="ui">عملیات بیشتر</b> و <b class="ui">لغو اشتراک</b> را بزنید. لینک قبلی از کار می‌افتد و کاربر لینک تازه‌ای می‌گیرد که می‌توانید برایش بفرستید.</p>
+                            </article>
+                        </div>
+                    </section>
+
+                    <!-- RUNNING -->
+                    <section class="group-block" id="running">
+                        <div class="group-title">
+                            <h2>نگهداری</h2>
+                        </div>
+                        <div class="concepts">
+                            <article class="concept" id="update">
+                                <h3>چطور به‌روزرسانی کنم؟ <a class="anchor" href="#update" aria-label="لینک این مشکل">#</a></h3>
+                                <p>روی هر سرور <code>umiji</code> را بنویسید و <code>Update all</code> را انتخاب کنید. اول از دیتابیس پنل بکاپ می‌گیرد.</p>
+                            </article>
+                            <article class="concept" id="move-server">
+                                <h3>بردن پنل به یک سرور تازه <a class="anchor" href="#move-server" aria-label="لینک این مشکل">#</a></h3>
+                                <ol class="do">
+                                    <li>روی سرور قبلی <code>umiji</code> را بنویسید و <code>Back up</code> را انتخاب کنید.</li>
+                                    <li>Umiji را روی سرور تازه نصب کنید و دامنه‌ها را به آن وصل کنید.</li>
+                                    <li>فایل بکاپ را آنجا در <bdi><code>/opt/umiji/backups/</code></bdi> بگذارید، <code>umiji</code> را بنویسید و <code>Restore</code> را انتخاب کنید.</li>
+                                </ol>
+                            </article>
+                            <article class="concept" id="bots-silent">
+                                <h3>ربات‌های تلگرام جواب نمی‌دهند <a class="anchor" href="#bots-silent" aria-label="لینک این مشکل">#</a></h3>
+                                <p>ممکن است تلگرام روی سرور پنل مسدود باشد. یک پراکسی را به‌عنوان <code>TELEGRAM_BOT_PROXY</code> در <bdi><code>/opt/umiji/.env</code></bdi> بگذارید، مثل <code>socks5://172.17.0.1:1080</code>، و بعد پنل را دوباره راه بیندازید:</p>
+                                <pre data-copy class="cmd"><code>cd /opt/umiji &amp;&amp; docker compose up -d</code></pre>
+                            </article>
+                        </div>
+                    </section>
+
+                    <p class="empty">چیزی پیدا نشد. یک کلمه‌ی کوتاه‌تر امتحان کنید، یا <a href="https://github.com/therewasluna/umiji/issues">در GitHub بپرسید</a>.</p>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="wrap">
+                <span><bdi class="jp" lang="ja">海路</bdi> · Umiji نرم‌افزاری آزاد با مجوز AGPL-3.0 است.</span>
+                <nav aria-label="پانویس">
+                    <a href="../">خانه</a>
+                    <a href="../guide/">راهنمای راه‌اندازی</a>
+                    <a href="../concepts/">مفاهیم</a>
+                    <a href="../api/">API</a>
+                    <a href="https://github.com/therewasluna/umiji">GitHub</a>
+                </nav>
+            </div>
+        </footer>
+        <script src="../../assets/site.js" defer></script>
+    </body>
+</html>

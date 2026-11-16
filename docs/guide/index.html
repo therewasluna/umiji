@@ -6,7 +6,7 @@
         <title>Setup guide · Umiji</title>
         <meta
             name="description"
-            content="Set up Umiji from an empty server to a working connection: install, config profile, node, host, squad, user and the client app."
+            content="Set up Umiji from an empty server to a working connection in ten short steps: install, config profile, node, host, squad, user and the client app."
         />
         <meta name="theme-color" content="#130C11" />
         <link rel="alternate" hreflang="en" href="https://umiji.wiki/guide/" />
@@ -41,13 +41,18 @@
                 <nav class="nav" aria-label="Main">
                     <a href="./" aria-current="page">Setup guide</a>
                     <a href="../concepts/">Concepts</a>
+                    <a href="../troubleshooting/">Common issues</a>
                     <a href="../api/">API</a>
                 </nav>
                 <div class="tools">
                     <a class="icon-btn gh" href="https://github.com/therewasluna/umiji" aria-label="Umiji on GitHub">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3 0 0 0-6.2 0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21" /></svg>
                     </a>
-                    <a class="icon-btn lang-btn" href="../fa/guide/" lang="fa" hreflang="fa" aria-label="فارسی، نسخه‌ی فارسی همین صفحه">فارسی</a>
+                    <div class="lang" role="group" aria-label="Language">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18" /></svg>
+                        <a href="./" lang="en" aria-current="page">English</a>
+                        <a href="../fa/guide/" lang="fa" hreflang="fa">فارسی</a>
+                    </div>
                 </div>
             </div>
         </header>
@@ -57,13 +62,13 @@
                 <div class="wrap">
                     <h1>From an empty server to a working connection.</h1>
                     <p>
-                        Follow these ten steps in order. At the end, one user will have a subscription link, and a phone
-                        will be connected through your own server.
+                        Ten short steps. At the end, one user has a subscription link and their phone is connected
+                        through your own server.
                     </p>
                     <ul class="facts">
                         <li><b>10</b> steps</li>
-                        <li>About <b>45 minutes</b>, most of it the install</li>
-                        <li>You need <b>2 servers</b> and <b>2 domains</b></li>
+                        <li>About <b>30 minutes</b></li>
+                        <li><b>One command</b> installs it</li>
                     </ul>
                 </div>
                 <svg class="waves" viewBox="0 0 16 16" fill="none" aria-hidden="true"><g stroke="currentColor" stroke-linecap="round" stroke-width="1.6"><path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /><path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /></g></svg>
@@ -77,8 +82,8 @@
                     </button>
                     <h2>Steps</h2>
                     <ol>
-                        <li><a href="#install"><span class="num">01</span>Install the panel</a></li>
-                        <li><a href="#sign-in"><span class="num">02</span>Sign in and install the sub page</a></li>
+                        <li><a href="#install"><span class="num">01</span>Install Umiji</a></li>
+                        <li><a href="#sign-in"><span class="num">02</span>Sign in</a></li>
                         <li><a href="#profile"><span class="num">03</span>Create a config profile</a></li>
                         <li><a href="#inbound"><span class="num">04</span>Add a VLESS inbound</a></li>
                         <li><a href="#node"><span class="num">05</span>Add a node</a></li>
@@ -96,76 +101,131 @@
                     <section class="step" id="install">
                         <div class="step-head">
                             <span class="step-num">01</span>
-                            <div><span class="meta">On the server</span><h2>Install the panel</h2></div>
+                            <div><span class="meta">On the server</span><h2>Install Umiji</h2></div>
                         </div>
                         <p>
-                            Umiji runs in Docker from ready-made images, so the server only needs Docker, and every command
-                            here runs on the server. The panel, the sub page and the nodes each have their own install;
-                            this step is the panel's. The full walkthrough, with every setting, is in
-                            <a href="https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md">DEPLOY.md</a>.
-                            Here is the short version.
+                            One command installs everything. It adds Docker if needed, asks a few questions that each have
+                            a ready answer, and if something goes wrong, it tells you how to fix it.
                         </p>
 
                         <h3>What you need</h3>
                         <ul class="checks">
-                            <li><strong>A server for the panel</strong> with root access, x86-64 or ARM. Ubuntu or Debian is easiest.</li>
-                            <li><strong>A server for your first node</strong>. This is where your users' traffic goes.</li>
-                            <li><strong>Two domains</strong>: one for the panel, like <code>panel.example.com</code>, and one for the subscription page, like <code>sub.example.com</code>. Point both A records at the panel server first, because the HTTPS certificates need them.</li>
+                            <li><strong>A Linux server</strong> with root access. Ubuntu or Debian is easiest.</li>
+                            <li><strong>A domain</strong> you own, like <code>example.com</code>. The panel and the subscription page each get a name under it.</li>
                         </ul>
+                        <p>Umiji has three parts. Each needs at least:</p>
+                        <div class="table-wrap">
+                            <table class="data hw">
+                                <thead><tr><th>Part</th><th>Memory</th><th>CPU</th><th>Disk</th></tr></thead>
+                                <tbody>
+                                    <tr><td><b>Panel</b>, where you manage everything</td><td>2 GB</td><td>1 core</td><td>10 GB</td></tr>
+                                    <tr><td><b>Node</b>, which carries your users' traffic</td><td>1 GB</td><td>1 core</td><td>5 GB</td></tr>
+                                    <tr><td><b>Sub page</b>, which your users open</td><td>512 MB</td><td>1 core</td><td>5 GB</td></tr>
+                                    <tr><td><b>All three together</b></td><td>2 GB</td><td>2 cores</td><td>20 GB</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p>
+                            Run all three on one server, or give each part a server of its own. The installer asks what
+                            each server should run, so you can add parts later, here or elsewhere.
+                        </p>
 
-                        <h3>Install</h3>
-                        <pre data-copy><code><span class="c"># Docker</span>
-curl -fsSL https://get.docker.com | sh
+                        <h3 id="dns">Point your domain at the server</h3>
+                        <p>
+                            Add two <strong>A records</strong>, <code>panel</code> and <code>sub</code>, each with your
+                            server's IP as the value. Do it before you install: HTTPS needs them.
+                        </p>
+                        <div class="tabs">
+                            <div role="tablist" aria-label="DNS provider">
+                                <button role="tab" type="button">Your domain company</button>
+                                <button role="tab" type="button">Cloudflare</button>
+                            </div>
+                            <div role="tabpanel">
+                                <p>Namecheap is shown here. Other companies have the same fields under DNS.</p>
+                                <ol class="do">
+                                    <li>Open <b>Domain List</b>, press <b>Manage</b> next to your domain, then open <b>Advanced DNS</b>.</li>
+                                    <li>Press <b>Add New Record</b> and pick <b>A Record</b>. Host <code>panel</code>, value your server's IP. Save it with the green check.</li>
+                                    <li>Add another one with host <code>sub</code> and the same IP.</li>
+                                </ol>
+                            </div>
+                            <div role="tabpanel">
+                                <ol class="do">
+                                    <li>At <a href="https://dash.cloudflare.com">dash.cloudflare.com</a>, press <b>Onboard a domain</b>, type your domain and pick the <b>Free</b> plan.</li>
+                                    <li>Where you bought the domain, replace its nameservers with the two Cloudflare gives you. Wait until Cloudflare says <b>Active</b>.</li>
+                                    <li>Open <b>DNS</b>, <b>Records</b>, and add an <code>A</code> record named <code>panel</code> with your server's IP. Click the cloud until it's grey (<b>DNS only</b>), then save.</li>
+                                    <li>Add <code>sub</code> the same way.</li>
+                                </ol>
+                                <div class="note warn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" /></svg>
+                                    <p><strong>Keep the clouds grey for now.</strong> The orange cloud needs <a href="#https">extra settings</a>.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <p>Check it from your computer. The answer should show your server's IP:</p>
+                        <pre data-copy class="cmd"><code>nslookup panel.example.com</code></pre>
 
-<span class="c"># the files, in /opt/umiji</span>
-mkdir -p /opt/umiji/caddy &amp;&amp; cd /opt/umiji
-base=https://raw.githubusercontent.com/therewasluna/umiji-backend/main/tools/deploy
-curl -fsSL -o docker-compose.yml $base/docker-compose.yml
-curl -fsSL -o caddy/Caddyfile    $base/caddy/Caddyfile
-curl -fsSL -o .env               $base/env.example
-chmod 600 .env
-nano .env</code></pre>
-                        <p>
-                            In <code>.env</code>, fill in your two domains. Leave the other lines as they are: they say the sub page
-                            will run on this server too, with built-in HTTPS.
-                        </p>
-                        <pre data-copy><code>PANEL_DOMAIN=panel.example.com
-SUB_DOMAIN=sub.example.com</code></pre>
-                        <p>Then start it. The first start pulls the images:</p>
-                        <pre data-copy><code>docker compose up -d</code></pre>
-                        <p>
-                            There's nothing to generate by hand. On the first start the panel makes its own secrets in
-                            <code>/opt/umiji/secrets/</code>; keep a copy of that folder with your backups, because its
-                            <code>APP_SECRET</code> also encrypts the brokers' bot tokens.
-                        </p>
-                        <h3 id="https">HTTPS: built-in, or your own nginx</h3>
-                        <p>
-                            The panel listens only on the server itself, on <code>127.0.0.1:3000</code>, and answers only over
-                            HTTPS. Pick one way to put it online. Either way, a visitor can't choose the IP the panel sees, which
-                            its login limit and IP records rely on.
-                        </p>
-                        <p>
-                            <strong>Built-in Caddy</strong> is on by default, so there's nothing to set up. Caddy takes ports 80 and
-                            443, reads the domains from <code>.env</code>, and gets and renews the certificates itself. Both domains
-                            must already point at the server, and no other web server may run on it.
-                            <code>docker compose logs -f umiji-caddy</code> shows each certificate arriving.
-                        </p>
-                        <p>
-                            <strong>Your own nginx</strong> suits a server that hosts other sites too. In <code>.env</code>, make the
-                            line say <code>COMPOSE_PROFILES=</code> and run <code>docker compose up -d</code>, then on the server:
-                        </p>
+                        <h3 id="installer">Run the installer</h3>
                         <ol class="do">
                             <li>
-                                Install nginx and certbot. If the firewall is on, open the web ports. Keep 3000, 3001 and 3010 closed:
-                                only nginx should reach them.
-                                <pre data-copy><code>apt install -y nginx certbot python3-certbot-nginx
-<span class="c"># only if "ufw status" says active</span>
-ufw allow 'Nginx Full'</code></pre>
+                                Log in to the server as root. On Windows, use PowerShell.
+                                <pre data-copy class="cmd"><code>ssh root@203.0.113.10</code></pre>
                             </li>
                             <li>
-                                Write <code>/etc/nginx/sites-available/umiji</code> with your domains. Keep the sub page's
-                                <code>server</code> block only if the sub page runs on this server.
-                                <pre data-copy><code>map $http_upgrade $connection_upgrade {
+                                Run the installer:
+                                <pre data-copy class="cmd"><code>bash &lt;(curl -fsSL https://raw.githubusercontent.com/therewasluna/umiji/main/install.sh)</code></pre>
+                            </li>
+                            <li>
+                                Pick what this server runs. <b>Panel</b> and <b>Sub page</b> are ticked. To run a node here
+                                too, type <kbd>3</kbd>: the installer then adds it to the panel for you. Press <kbd>Enter</kbd>.
+                            </li>
+                            <li>Type your panel's domain. For every other question, <kbd>Enter</kbd> takes the answer in brackets, and at the password it makes a strong one.</li>
+                            <li>Save the username and password it shows at the end.</li>
+                        </ol>
+                        <div class="term">
+                            <div class="term-bar" aria-hidden="true"><i></i><i></i><i></i><span>root@server: ~</span></div>
+<pre aria-label="The installer on screen: it ticks the panel, the sub page and the node, asks for the domain and shows one line per step."><code>  <span class="h">What should this server run?</span>
+    [<span class="ok">x</span>] <span class="r">1</span>  Panel     <span class="d">where you manage users, nodes and resellers</span>
+    [<span class="ok">x</span>] <span class="r">2</span>  Sub page  <span class="d">the page your users open from their link</span>
+    [<span class="ok">x</span>] <span class="r">3</span>  Node      <span class="d">carries your users' traffic</span>
+
+  <b>Panel domain, e.g. panel.example.com</b>: panel.example.com
+  <span class="d">…</span>
+  <span class="d">[5/16]</span> <span class="ok">✓</span> Panel is running <span class="d">31s</span>
+  <span class="d">[6/16]</span> <span class="ok">✓</span> Admin account admin created <span class="d">0s</span>
+  <span class="d">[16/16]</span> <span class="ok">✓</span> Node added to the panel as Panel server <span class="d">4s</span></code></pre>
+                        </div>
+                        <div class="note tip">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" /></svg>
+                            <p>If a step fails, fix what it says and type <code>umiji</code>: it carries on from there. Stuck? See <a href="../troubleshooting/">Common issues</a>.</p>
+                        </div>
+
+                        <h3 id="umiji">Later: the <code>umiji</code> command</h3>
+                        <p>
+                            Type <code>umiji</code> on the server for a menu: install more parts, update, back up, restore,
+                            reset the admin password, or uninstall. Backups go to <code>/opt/umiji/backups/</code>. They hold
+                            everything, so keep them private, and copy them off the server now and then, from your computer:
+                        </p>
+                        <pre data-copy class="cmd"><code>scp root@203.0.113.10:/opt/umiji/backups/umiji-20261116-141537.tar .</code></pre>
+
+                        <details class="manual" id="https">
+                            <summary>Use your own nginx, or a CDN</summary>
+                            <p>
+                                The installer's built-in HTTPS (Caddy) needs ports 80 and 443 to itself. If the server already
+                                runs other websites, pick <b class="ui">My own nginx</b> in the installer, then on the server:
+                            </p>
+                            <ol class="do">
+                                <li>
+                                    Install nginx and certbot:
+                                    <pre data-copy class="cmd"><code>apt install -y nginx certbot python3-certbot-nginx</code></pre>
+                                    If <code>ufw status</code> says active, open the web ports. Keep 3000, 3001 and 3010 closed.
+                                    <pre data-copy class="cmd"><code>ufw allow 'Nginx Full'</code></pre>
+                                </li>
+                                <li>
+                                    Open a new config file:
+                                    <pre data-copy class="cmd"><code>nano /etc/nginx/sites-available/umiji</code></pre>
+                                    Paste this, with your domains. Keep the sub page's <code>server</code> block only if the sub
+                                    page runs on this server.
+                                    <pre data-copy data-file="/etc/nginx/sites-available/umiji"><code>map $http_upgrade $connection_upgrade {
     default upgrade;
     ''      close;
 }
@@ -227,43 +287,43 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 }</code></pre>
-                            </li>
-                            <li>
-                                Turn it on and get the certificates. Certbot adds HTTPS and the http→https redirect to the file, and
-                                renews the certificates on its own.
-                                <pre data-copy><code>ln -s /etc/nginx/sites-available/umiji /etc/nginx/sites-enabled/
-rm -f /etc/nginx/sites-enabled/default
-nginx -t &amp;&amp; systemctl reload nginx
-<span class="c"># only the domains this server serves</span>
-certbot --nginx -d panel.example.com -d sub.example.com
-<span class="c"># checks that renewal will work</span>
-certbot renew --dry-run</code></pre>
-                            </li>
-                            <li>Open <code>https://panel.example.com</code>. Until certbot has run it won't load, because the panel refuses plain http.</li>
-                        </ol>
-                        <p>
-                            What the config does: <code>X-Umiji-Real-IP</code> carries the visitor's IP, and nginx always writes it
-                            itself, so nobody can send their own. The panel refuses requests without <code>X-Forwarded-For</code> and
-                            <code>X-Forwarded-Proto</code>. The <code>Upgrade</code> headers carry the SSH terminal, and
-                            <code>client_max_body_size</code> leaves room for broadcast photos.
-                        </p>
-                        <p>
-                            <strong>Behind a CDN</strong>, like Cloudflare's orange cloud, set Cloudflare's SSL mode to
-                            <code>Full (strict)</code>. Then tell the proxy the CDN's IP ranges, or every visitor arrives from the
-                            CDN's IPs and they all share one login limit. With Caddy, remove the <code>#</code> from the six lines at the top of
-                            <code>/opt/umiji/caddy/Caddyfile</code>, list them there and run <code>docker compose restart umiji-caddy</code>.
-                            Also turn off Cloudflare's <code>Always Use HTTPS</code> so certificate renewals still reach Caddy. With
-                            nginx, add this at the top of the file, one line per range from
-                            <a href="https://www.cloudflare.com/ips/">cloudflare.com/ips</a>:
-                        </p>
-                        <pre data-copy><code>set_real_ip_from 173.245.48.0/20;
+                                </li>
+                                <li>
+                                    Turn it on:
+                                    <pre data-copy class="cmd"><code>ln -s /etc/nginx/sites-available/umiji /etc/nginx/sites-enabled/</code></pre>
+                                    <pre data-copy class="cmd"><code>rm -f /etc/nginx/sites-enabled/default</code></pre>
+                                    <pre data-copy class="cmd"><code>nginx -t &amp;&amp; systemctl reload nginx</code></pre>
+                                </li>
+                                <li>
+                                    Get the certificates. Certbot adds HTTPS to the file and renews them on its own; the second
+                                    command checks that renewal works.
+                                    <pre data-copy class="cmd"><code>certbot --nginx -d panel.example.com -d sub.example.com</code></pre>
+                                    <pre data-copy class="cmd"><code>certbot renew --dry-run</code></pre>
+                                </li>
+                            </ol>
+                            <p>
+                                The panel only answers over HTTPS, so it won't load until certbot has run. nginx always writes
+                                <code>X-Umiji-Real-IP</code> itself, so nobody can fake the IP the panel sees.
+                            </p>
+                            <p>
+                                <strong>Behind a CDN</strong>, like Cloudflare's orange cloud: set Cloudflare's
+                                <b class="ui">SSL/TLS</b> mode to <code>Full (strict)</code>, then list the CDN's IP ranges, or
+                                every visitor shares one IP and one login limit. With Caddy, remove the <code>#</code> from the
+                                six lines at the top of <code>/opt/umiji/caddy/Caddyfile</code>, list them there, run
+                                <code>docker compose restart umiji-caddy</code> in <code>/opt/umiji</code>, and turn off
+                                Cloudflare's <code>Always Use HTTPS</code>. With nginx, add this at the top of the file, one line
+                                per range from <a href="https://www.cloudflare.com/ips/">cloudflare.com/ips</a>:
+                            </p>
+                            <pre data-copy data-file="/etc/nginx/sites-available/umiji"><code>set_real_ip_from 173.245.48.0/20;
 set_real_ip_from 2400:cb00::/32;
 <span class="c"># ...the other ranges</span>
 real_ip_header X-Forwarded-For;
 real_ip_recursive on;</code></pre>
+                            <p>Nodes behind a CDN need their own setup: see <a href="../concepts/#ip-limit-cdn">IP limit behind a CDN</a>.</p>
+                        </details>
                         <p>
-                            Nodes behind a CDN need their own setup for the IP limit: see
-                            <a href="../concepts/#ip-limit-cdn">IP limit behind a CDN</a>.
+                            Prefer to install without the installer? <a href="https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md">DEPLOY.md</a>
+                            has every step by hand.
                         </p>
                     </section>
 
@@ -271,50 +331,34 @@ real_ip_recursive on;</code></pre>
                     <section class="step" id="sign-in">
                         <div class="step-head">
                             <span class="step-num">02</span>
-                            <div><span class="meta">Panel · first visit</span><h2>Sign in and install the sub page</h2></div>
+                            <div><span class="meta">Panel · first visit</span><h2>Sign in</h2></div>
                         </div>
                         <ol class="do">
-                            <li>Open <code>https://panel.example.com</code>. The first account you register owns the panel, so do this right away.</li>
+                            <li>Open <code>https://panel.example.com</code> and sign in with the username and password the installer showed.</li>
                             <li>Read and accept the disclaimer that appears on your first visit.</li>
-                            <li>Open the menu, go to <b>Umiji Settings</b>, find <b>API Tokens</b> and create a token. Copy it now: it's shown only once.</li>
-                            <li>
-                                Back on the server, install the sub page in its own folder:
-                                <pre data-copy><code>mkdir -p /opt/umiji-sub/caddy &amp;&amp; cd /opt/umiji-sub
-base=https://raw.githubusercontent.com/therewasluna/umiji-subscription-page/main/deploy
-curl -fsSL -o docker-compose.yml $base/docker-compose.yml
-curl -fsSL -o caddy/Caddyfile    $base/caddy/Caddyfile
-curl -fsSL -o .env               $base/env.example
-chmod 600 .env
-nano .env</code></pre>
-                            </li>
-                            <li>
-                                Set these four lines in its <code>.env</code>. The empty <code>COMPOSE_PROFILES</code> leaves HTTPS to
-                                the panel's Caddy, which already serves <code>sub.example.com</code>.
-                                <pre data-copy><code>SUB_DOMAIN=sub.example.com
-UMIJI_PANEL_URL=http://umiji:3000
-<span class="c"># the token you just copied</span>
-UMIJI_API_TOKEN=
-COMPOSE_PROFILES=</code></pre>
-                            </li>
-                            <li>Run <code>docker compose up -d</code> in <code>/opt/umiji-sub</code>. Docker warns that the <code>umiji-network</code> network already exists. That's expected: the sub page joins the panel's network.</li>
                         </ol>
-                        <p>
-                            Want the sub page on a server of its own? Its
-                            <a href="https://github.com/therewasluna/umiji-subscription-page/blob/main/DEPLOY.md">DEPLOY.md</a> covers
-                            it: there it runs its own Caddy, and the panel's <code>.env</code> gets <code>SUB_PAGE_HERE=no</code> and
-                            that server's IP.
-                        </p>
                         <figure class="shot">
                             <div class="window">
                                 <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>panel.example.com/auth/login</span></div>
                                 <img src="../assets/shots/login.webp" width="1600" height="1000" loading="lazy" alt="The Umiji sign-in page: the Umiji wordmark, a username and password field and a Sign in button." />
                             </div>
-                            <figcaption>The sign-in page. After your first account, this is how you get back in.</figcaption>
+                            <figcaption>The sign-in page. This is how you get back in.</figcaption>
                         </figure>
-                        <div class="note tip">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" /></svg>
-                            <p><code>https://sub.example.com/</code> on its own shows nothing. That's normal: the sub page only answers real subscription links, which you'll have in step 9.</p>
-                        </div>
+
+                        <h3 id="sub-page">The sub page</h3>
+                        <p>
+                            Left <b class="ui">Sub page</b> ticked? Then it's already running at <code>https://sub.example.com</code>.
+                            Opened on its own it shows nothing; it only answers your users' links, which you'll have in step 9.
+                        </p>
+                        <p>To run it on a server of its own instead, point <code>sub</code> at that server, then:</p>
+                        <ol class="do">
+                            <li>In the panel, go to <b>Umiji Settings</b>, <b>API Tokens</b>, press <b>Create API token</b>, pick the <b>Subpage</b> preset and copy the token.</li>
+                            <li>
+                                On that server, run the installer with <code>sub</code> at the end and paste the token when asked:
+                                <pre data-copy class="cmd"><code>bash &lt;(curl -fsSL https://raw.githubusercontent.com/therewasluna/umiji/main/install.sh) sub</code></pre>
+                            </li>
+                            <li>At the end it shows three commands. Run them on the panel's server.</li>
+                        </ol>
                     </section>
 
                     <!-- 03 -->
@@ -324,14 +368,14 @@ COMPOSE_PROFILES=</code></pre>
                             <div><span class="meta">Menu › Config Profiles</span><h2>Create a config profile</h2></div>
                         </div>
                         <p>
-                            A <a href="../concepts/#config-profile">config profile</a> is the Xray setup your nodes run.
-                            Most setups need just one. It holds the <a href="../concepts/#inbound">inbounds</a>, the ports
-                            your users connect to.
+                            A <a href="../concepts/#config-profile">config profile</a> is the Xray setup your nodes run. It
+                            holds the <a href="../concepts/#inbound">inbounds</a>, the ports your users connect to. Most setups
+                            need just one.
                         </p>
                         <ol class="do">
                             <li>Go to <b>Config Profiles</b> and press <b>Create</b>.</li>
-                            <li>Give it a name, like <code>Reality</code>, and press <b>Create</b>.</li>
-                            <li>Open the new profile. It opens in the <b>Visual</b> editor, with sections for inbounds, outbounds, routing and the rest.</li>
+                            <li>Name it, like <code>Reality</code>, and press <b>Create</b>.</li>
+                            <li>Open the new profile. It opens in the <b>Visual</b> editor.</li>
                         </ol>
                         <figure class="shot">
                             <div class="window">
@@ -349,12 +393,11 @@ COMPOSE_PROFILES=</code></pre>
                             <div><span class="meta">Config profile › Inbounds</span><h2>Add a VLESS inbound with REALITY</h2></div>
                         </div>
                         <p>
-                            VLESS with REALITY is a good first inbound. It needs no certificate and no domain of its own,
-                            and to anyone watching the traffic it looks like a visit to a real website.
+                            VLESS with REALITY is a good first inbound. It needs no certificate, and to anyone watching it
+                            looks like a visit to a real website.
                         </p>
                         <ol class="do">
-                            <li>In the <b>Inbounds</b> section, press <b>New inbound</b>.</li>
-                            <li>Pick <b>VLESS</b>. It's added with REALITY over raw TCP on port 2083, and a red dot shows what still needs filling in.</li>
+                            <li>In the <b>Inbounds</b> section, press <b>New inbound</b> and pick <b>VLESS</b>. It's added on port 2083, and a red dot shows what's left to fill in.</li>
                         </ol>
                         <figure class="shot pair">
                             <div class="window">
@@ -365,25 +408,20 @@ COMPOSE_PROFILES=</code></pre>
                                 <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>…/config-profiles/reality</span></div>
                                 <img src="../assets/shots/inbound-vless.webp" width="1600" height="1000" loading="lazy" alt="The new inbound VLESS_2083 open on its General tab: tag, protocol VLESS, listen 0.0.0.0 and port 2083." />
                             </div>
-                            <figcaption>Pick a protocol, then fill in the new inbound's tabs. The tag is the name hosts and squads will use.</figcaption>
+                            <figcaption>Pick a protocol, then fill in the new inbound's tabs.</figcaption>
                         </figure>
-                        <ol class="do" start="3">
-                            <li>Open the <b>Security</b> tab. The private key and a short ID are already generated for you.</li>
-                            <li>In <b>Target</b>, enter a real HTTPS site that isn't yours, with its port, like <code>www.example.org:443</code>. REALITY borrows its TLS from that site.</li>
-                            <li>In <b>Server names</b>, enter that site's domain, like <code>www.example.org</code>.</li>
-                            <li>Press <b>Save</b>. If the port should differ, change it on the <b>General</b> tab first.</li>
+                        <ol class="do" start="2">
+                            <li>Open the <b>Security</b> tab. The keys are already made for you.</li>
+                            <li>In <b>Target</b>, enter a real HTTPS site that isn't yours, with its port, like <code>www.example.org:443</code>.</li>
+                            <li>In <b>Server names</b>, enter that site's domain, like <code>www.example.org</code>, and press <b>Save</b>.</li>
                         </ol>
                         <figure class="shot">
                             <div class="window">
                                 <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>…/config-profiles/reality</span></div>
                                 <img src="../assets/shots/inbound-reality.webp" width="1600" height="1000" loading="lazy" alt="The Security tab set to REALITY: Target and Server names are empty and marked red, Private key and Short IDs are already filled in." />
                             </div>
-                            <figcaption>Only Target and Server names are left. The sparkle buttons make a new key or short ID.</figcaption>
+                            <figcaption>Only Target and Server names are left.</figcaption>
                         </figure>
-                        <div class="note">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 8h.01M11 12h1v4h1" /></svg>
-                            <p>Every change is checked by a real Xray core in your browser, so typos show up before you save. If you prefer raw JSON, switch to the <b class="ui">JSON</b> tab. Both views edit the same config.</p>
-                        </div>
                     </section>
 
                     <!-- 05 -->
@@ -392,15 +430,22 @@ COMPOSE_PROFILES=</code></pre>
                             <span class="step-num">05</span>
                             <div><span class="meta">Menu › Nodes</span><h2>Add a node</h2></div>
                         </div>
-                        <p>
-                            A <a href="../concepts/#node">node</a> is a server that runs Xray with your profile. Umiji can
-                            install it for you over SSH.
-                        </p>
+                        <p>A <a href="../concepts/#node">node</a> is a server that runs Xray with your profile.</p>
+                        <div class="note tip">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" /></svg>
+                            <p>
+                                <strong>Ticked Node in the installer?</strong> It's already on the <b class="ui">Nodes</b> page as
+                                <b class="ui">Panel server</b>. Open it, press the pencil under <b class="ui">Core configuration</b>,
+                                pick your profile, tick the inbound from step 4, save the choice with the disk icon and press
+                                <b class="ui">Save</b>. Then skip to step 6.
+                            </p>
+                        </div>
+                        <p>For a node on another server, Umiji installs it for you over SSH:</p>
                         <ol class="do">
                             <li>Go to <b>Nodes</b> and press <b>Create</b>. <b>Automatic install</b> is selected.</li>
-                            <li>Fill in an <b>Internal name</b>, the <b>Country</b> (its flag shows in the list), the <b>Server IP</b> and the server's <b>Root password</b>. Keep <b>Node Port</b> at 2222 unless it's taken.</li>
+                            <li>Fill in an <b>Internal name</b>, the <b>Country</b>, the <b>Server IP</b> and its <b>Root password</b>.</li>
                             <li>Press <b>Next</b>. Under <b>Core configuration</b>, pick your profile and tick the inbound from step 4.</li>
-                            <li>Press <b>Install node</b> and watch the steps: SSH, Docker, the node container, then the handshake with the panel.</li>
+                            <li>Press <b>Install node</b> and wait for the green dot.</li>
                         </ol>
                         <figure class="shot">
                             <div class="window">
@@ -411,18 +456,19 @@ COMPOSE_PROFILES=</code></pre>
                         </figure>
                         <div class="note warn">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" /></svg>
-                            <p><strong>Open two ports on the node's firewall</strong>: the node port (2222), so the panel can reach it, and the inbound's port (2083), so your users can. If the install ends with “the panel can't reach it”, the node port is the one that's closed.</p>
+                            <p><strong>Open the ports</strong> in the node's firewall: the inbound's port (2083) for your users, and on a separate server the node port (2222) for the panel.</p>
                         </div>
                         <p>
-                            Prefer to do it yourself? Pick <b class="ui">Manual setup</b>. The panel shows a
-                            <code>docker-compose.yml</code> to copy onto the node, then waits until Xray is up.
+                            Rather not give the root password? Pick <b class="ui">Manual setup</b>, copy the
+                            <b class="ui">Secret Key</b>, and run the installer with <code>node</code> at the end on the node's server:
                         </p>
+                        <pre data-copy class="cmd"><code>bash &lt;(curl -fsSL https://raw.githubusercontent.com/therewasluna/umiji/main/install.sh) node</code></pre>
                         <figure class="shot">
                             <div class="window">
                                 <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>panel.example.com/dashboard/management/nodes</span></div>
                                 <img src="../assets/shots/nodes.webp" width="1600" height="1000" loading="lazy" alt="The Nodes page: totals for speed, users online and online nodes, then each node with its address, traffic and status." />
                             </div>
-                            <figcaption>A connected node shows a green dot, its Xray version and live load. Offline nodes are marked red.</figcaption>
+                            <figcaption>A connected node shows a green dot and live load.</figcaption>
                         </figure>
                     </section>
 
@@ -433,15 +479,14 @@ COMPOSE_PROFILES=</code></pre>
                             <div><span class="meta">Menu › Hosts</span><h2>Create a host</h2></div>
                         </div>
                         <p>
-                            The inbound is the server side. A <a href="../concepts/#host">host</a> is what users see in
-                            their app: a name and the address to connect to.
+                            A <a href="../concepts/#host">host</a> is what users see in their app: a name and the address to
+                            connect to.
                         </p>
                         <ol class="do">
-                            <li>Go to <b>Hosts</b> and press <b>Create</b>.</li>
-                            <li>Turn on <b>Host visibility</b>, so the host goes out in subscriptions.</li>
-                            <li>In <b>Remark</b>, write the name users will see. Start it with a flag emoji, like <code>🇩🇪 Germany</code>, and apps show the flag.</li>
-                            <li>Press <b>No inbound selected</b>, open your profile and pick the inbound from step 4. Save the choice with the disk icon.</li>
-                            <li>In <b>Address</b>, enter the node's IP or a domain that points to it. Set <b>Port</b> to the inbound's port, then <b>Save</b>.</li>
+                            <li>Go to <b>Hosts</b>, press <b>Create</b> and turn on <b>Host visibility</b>.</li>
+                            <li>In <b>Remark</b>, write the name users will see. A flag emoji at the start, like <code>🇩🇪 Germany</code>, shows as a flag.</li>
+                            <li>Press <b>No inbound selected</b>, open your profile, pick the inbound from step 4 and save the choice with the disk icon.</li>
+                            <li>In <b>Address</b>, enter the node server's public IP, the one you SSH into, or a domain pointing to it. For <b>Panel server</b> that's your panel server's IP, not the <code>172.x</code> address on the Nodes page. Set <b>Port</b> to the inbound's port, then <b>Save</b>.</li>
                         </ol>
                         <figure class="shot pair">
                             <div class="window">
@@ -454,10 +499,6 @@ COMPOSE_PROFILES=</code></pre>
                             </div>
                             <figcaption>Pick the inbound, then give the host a name and an address.</figcaption>
                         </figure>
-                        <div class="note">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 8h.01M11 12h1v4h1" /></svg>
-                            <p>Everything else, like SNI overrides or hiding a host, lives under <b class="ui">Options</b>. A new host runs fine without any of it.</p>
-                        </div>
                     </section>
 
                     <!-- 07 -->
@@ -468,12 +509,11 @@ COMPOSE_PROFILES=</code></pre>
                         </div>
                         <p>
                             An <a href="../concepts/#internal-squad">internal squad</a> decides which inbounds its users may
-                            use. A user only gets hosts for inbounds in their squads.
+                            use.
                         </p>
                         <ol class="do">
                             <li>Go to <b>Internal Squads</b>, press <b>Create</b> and name it, like <code>Germany</code>.</li>
-                            <li>Open the squad. Expand your profile and tick the inbound from step 4. The ✓ and ✕ buttons tick or clear a whole profile at once.</li>
-                            <li>Press <b>Save</b>.</li>
+                            <li>Open the squad, expand your profile, tick the inbound from step 4 and press <b>Save</b>.</li>
                         </ol>
                         <figure class="shot">
                             <div class="window">
@@ -491,10 +531,8 @@ COMPOSE_PROFILES=</code></pre>
                             <div><span class="meta">Menu › Users</span><h2>Create a user</h2></div>
                         </div>
                         <ol class="do">
-                            <li>Go to <b>Users</b> and press <b>Create</b>.</li>
-                            <li>Enter a <b>Username</b>. It can't be changed later.</li>
-                            <li>Set a <b>Traffic limit</b> (0 means unlimited) and how often it resets under <b>Traffic reset strategy</b>.</li>
-                            <li>Pick the <b>Expiry date</b>. The quick buttons add a month, three months or a year.</li>
+                            <li>Go to <b>Users</b>, press <b>Create</b> and enter a <b>Username</b>.</li>
+                            <li>Set a <b>Traffic limit</b> (0 means unlimited) and the <b>Expiry date</b>.</li>
                             <li>Under <b>Internal squads</b>, tick the squad from step 7, then press <b>Create</b>.</li>
                         </ol>
                         <figure class="shot pair">
@@ -506,7 +544,7 @@ COMPOSE_PROFILES=</code></pre>
                                 <div class="window-bar" aria-hidden="true"><i></i><i></i><i></i><span>panel.example.com/dashboard/management/users</span></div>
                                 <img src="../assets/shots/user-squads.webp" width="1600" height="1000" loading="lazy" alt="Further down the Create user dialog: HWID device limit and tag on the left, expiry date and the Germany internal squad ticked on the right." />
                             </div>
-                            <figcaption>Identity and limits first, then access: the expiry date and the squads.</figcaption>
+                            <figcaption>Limits first, then access: the expiry date and the squads.</figcaption>
                         </figure>
                     </section>
 
@@ -518,12 +556,11 @@ COMPOSE_PROFILES=</code></pre>
                         </div>
                         <p>
                             Every user has one personal <a href="../concepts/#subscription-link">subscription link</a>. It
-                            carries all the hosts they may use, and it keeps working as you add or change servers.
+                            keeps working as you add or change servers.
                         </p>
                         <ol class="do">
-                            <li>Open the user from the list.</li>
-                            <li>Copy the <b>Subscription URL</b>, or use the QR code button in the row of icons above it.</li>
-                            <li>Send it to the user. It's like a password: anyone with the link can use this subscription.</li>
+                            <li>Open the user and copy the <b>Subscription URL</b>, or show its QR code.</li>
+                            <li>Send it to the user. Treat it like a password: anyone with the link can use it.</li>
                         </ol>
                         <figure class="shot">
                             <div class="window">
@@ -532,10 +569,6 @@ COMPOSE_PROFILES=</code></pre>
                             </div>
                             <figcaption>The user's card: status, usage, expiry and the link to share.</figcaption>
                         </figure>
-                        <div class="note warn">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" /></svg>
-                            <p>If a link leaks, open <b class="ui">More actions</b> on the user and revoke the subscription. The old link stops working and the user gets a new one.</p>
-                        </div>
                     </section>
 
                     <!-- 10 -->
@@ -544,15 +577,10 @@ COMPOSE_PROFILES=</code></pre>
                             <span class="step-num">10</span>
                             <div><span class="meta">On the user's phone</span><h2>Connect from a phone</h2></div>
                         </div>
-                        <p>
-                            Opened in a browser, the link shows the <a href="../concepts/#subscription-page">subscription
-                            page</a>. It shows how much traffic is left and walks the user through installing an app.
-                        </p>
                         <ol class="do">
-                            <li>Open the link on the phone. The page picks the platform by itself. Change it in the top-right menu if needed.</li>
-                            <li>Pick an app, like Happ or v2rayNG, and install it with the buttons under <b>App Installation</b>.</li>
-                            <li>Press <b>Add Subscription</b>. The app opens with the subscription added.</li>
-                            <li>Pick the host, <code>🇩🇪 Germany</code>, and connect.</li>
+                            <li>Open the link on the phone. The <a href="../concepts/#subscription-page">subscription page</a> shows the traffic left and the apps for that phone.</li>
+                            <li>Install an app, like Happ or v2rayNG, with the buttons under <b>App Installation</b>.</li>
+                            <li>Press <b>Add Subscription</b>, pick <code>🇩🇪 Germany</code> in the app and connect.</li>
                         </ol>
                         <figure class="shot phones">
                             <div class="handset"><img src="../assets/shots/subpage.webp" width="780" height="1688" loading="lazy" alt="The subscription page on a phone: the user's name and Active status, traffic used drawn as a tide, and the expiry date." /></div>
@@ -561,7 +589,7 @@ COMPOSE_PROFILES=</code></pre>
                         </figure>
                         <div class="note tip">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z" /></svg>
-                            <p>Back in the panel, the user's row now shows traffic moving, and the node shows one user online. If the app can't connect, check the inbound port on the node's firewall and that the host's address and port match the node.</p>
+                            <p>Can't connect? <a href="../troubleshooting/#app-cant-connect">The app can't connect</a> lists what to check.</p>
                         </div>
                     </section>
 
@@ -588,6 +616,7 @@ COMPOSE_PROFILES=</code></pre>
                     <a href="../">Home</a>
                     <a href="../concepts/">Concepts</a>
                     <a href="../api/">API</a>
+                    <a href="../troubleshooting/">Common issues</a>
                     <a href="https://github.com/therewasluna/umiji">GitHub</a>
                     <a href="https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md">DEPLOY.md</a>
                 </nav>

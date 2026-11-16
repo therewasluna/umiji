@@ -1,10 +1,22 @@
-// Umiji wiki: language switch, screenshot zoom, copy buttons, table-of-contents highlight, concept search.
+// Umiji wiki: language switch, screenshot zoom, copy buttons, tabs, table-of-contents highlight, concept search.
 // Pages that render content later (the API guide) fire `wiki:render` to get copy buttons and the highlight.
 ;(() => {
     // Both languages use the same ids, so switching keeps your place.
-    document.querySelector('.lang-btn')?.addEventListener('click', (e) => {
+    document.querySelector('.lang a:not([aria-current])')?.addEventListener('click', (e) => {
         e.currentTarget.href = e.currentTarget.href.split('#')[0] + location.hash
     })
+
+    // A link to something inside a folded section opens it.
+    const reveal = () => {
+        const el = location.hash ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null
+        const box = el?.closest('details')
+        if (box && !box.open) {
+            box.open = true
+            el.scrollIntoView()
+        }
+    }
+    reveal()
+    addEventListener('hashchange', reveal)
 
     // Click a screenshot to see it full size.
     document.addEventListener('click', (e) => {
@@ -50,6 +62,34 @@
     })
 
     addCopyButtons()
+
+    // Tabs: the API guide's code samples and the setup guide's DNS providers. The tab row reads left to right
+    // on both languages, and so do the arrow keys.
+    document.querySelectorAll('.tabs').forEach((box, n) => {
+        const tabs = [...box.querySelectorAll('[role="tab"]')]
+        const panels = [...box.querySelectorAll('[role="tabpanel"]')]
+        const show = (i, focus) => {
+            tabs.forEach((t, j) => {
+                t.setAttribute('aria-selected', i === j)
+                t.tabIndex = i === j ? 0 : -1
+            })
+            panels.forEach((p, j) => (p.hidden = i !== j))
+            if (focus) tabs[i].focus()
+        }
+        tabs.forEach((t, i) => {
+            t.id = `tab-${n}-${i}`
+            panels[i].id = `panel-${n}-${i}`
+            t.setAttribute('aria-controls', panels[i].id)
+            panels[i].setAttribute('aria-labelledby', t.id)
+            t.addEventListener('click', () => show(i))
+            t.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') show((i + 1) % tabs.length, true)
+                if (e.key === 'ArrowLeft') show((i - 1 + tabs.length) % tabs.length, true)
+            })
+        })
+        show(0)
+    })
+
 
     const toc = document.querySelector('.toc')
     if (toc) {

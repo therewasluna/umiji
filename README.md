@@ -30,8 +30,20 @@
 
 ## Get started
 
-Follow [DEPLOY.md](https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md). It takes you from an empty
-server to a working panel and subscription page.
+On a fresh server, as root:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/therewasluna/umiji/main/install.sh)
+```
+
+The installer ([`install.sh`](install.sh)) asks what the server should run (panel, sub page or node), offers a ready
+answer for every question it can, and sets everything up in Docker, one line per step. All three parts can share one
+server: a node installed next to the panel is added to the panel's Nodes for you. The
+[setup guide](https://umiji.wiki/guide/) walks through it, and
+[DEPLOY.md](https://github.com/therewasluna/umiji-backend/blob/main/DEPLOY.md) does the same install by hand.
+
+It also adds the `umiji` command. Type `umiji` on the server later for a menu: install more parts, update, change the
+owner's password, back up or restore the panel's database, and uninstall.
 
 ## A fork of Remnawave
 

@@ -243,48 +243,94 @@ code {
     gap: 8px;
 }
 
-@media (max-width: 720px) {
+/* the language switch: both languages, the current one lit */
+.lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    height: 40px;
+    padding: 3px;
+    border-radius: 12px;
+    border: 1px solid var(--line-2);
+    background: var(--surface);
+}
+
+.lang svg {
+    width: 16px;
+    height: 16px;
+    margin-inline: 7px 3px;
+    color: var(--text-3);
+}
+
+.lang a {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    padding: 0 11px;
+    border-radius: 9px;
+    color: var(--text-2);
+    font: 600 13.5px/1 var(--font);
+    white-space: nowrap;
+}
+
+.lang a:lang(fa) {
+    font-family: Vazirmatn, system-ui, sans-serif;
+    font-size: 14px;
+}
+
+.lang a:hover {
+    color: var(--text);
+    background: var(--surface-2);
+    text-decoration: none;
+}
+
+.lang a[aria-current] {
+    color: var(--rose);
+    background: var(--rose-soft);
+}
+
+@media (max-width: 860px) {
+    /* the nav gets a row of its own */
     .topbar .wrap {
-        gap: 12px;
+        flex-wrap: wrap;
+        height: auto;
+        padding-top: 8px;
+        gap: 4px 12px;
     }
+    .brand {
+        margin-inline-end: auto;
+    }
+    .nav {
+        order: 3;
+        width: calc(100% + 16px);
+        margin: 0 -8px;
+        padding-bottom: 6px;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+    html {
+        scroll-padding-top: 116px;
+    }
+}
+
+@media (max-width: 720px) {
     .nav a {
         padding: 8px 9px;
         font-size: 14px;
+        white-space: nowrap;
     }
     .tools .gh {
         display: none;
     }
 }
 
-@media (max-width: 420px) {
-    .brand .word {
+@media (max-width: 360px) {
+    .nav a {
+        padding: 8px 5px;
+        font-size: 13px;
+    }
+    .lang svg {
         display: none;
-    }
-    /* three links, a brand and the language button share 328px on a small phone */
-    .topbar .wrap {
-        gap: 8px;
-    }
-    .nav {
-        gap: 0;
-    }
-    .nav a {
-        padding: 8px 7px;
-        font-size: 13.5px;
-        white-space: nowrap;
-    }
-    .lang-btn {
-        width: auto;
-        padding: 0 10px;
-    }
-}
-
-@media (max-width: 350px) {
-    .nav a {
-        padding: 8px 4px;
-        font-size: 12.5px;
-    }
-    .lang-btn {
-        padding: 0 8px;
     }
 }
 
@@ -403,6 +449,23 @@ code {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
+}
+
+/* the one-line install under the hero's buttons */
+.hero-install {
+    margin-top: 28px;
+    max-width: 34em;
+}
+
+.hero-install p {
+    margin: 0 0 8px;
+    color: var(--text-3);
+    font-size: 14px;
+}
+
+.hero-install pre.cmd {
+    margin: 0;
+    font-size: 13px;
 }
 
 .hero-meta {
@@ -787,6 +850,15 @@ code {
     list-style: none;
     display: grid;
     gap: 10px;
+}
+
+.checks + p {
+    margin-top: 20px;
+}
+
+/* the hardware table: keep "1 core" and "10 GB" on one line */
+html[lang="en"] .data.hw td + td {
+    white-space: nowrap;
 }
 
 .checks li {
@@ -1840,16 +1912,6 @@ mark {
         var(--surface);
 }
 
-/* the language switch in the top bar */
-.lang-btn {
-    width: auto;
-    padding: 0 12px;
-    font: 600 14px/1 var(--font);
-}
-
-.lang-btn:lang(fa) {
-    font-family: Vazirmatn, system-ui, sans-serif;
-}
 
 
 /* ---------- API guide ---------- */
@@ -2173,6 +2235,11 @@ table.data td {
 
 table.data tr:last-child td {
     border-bottom: 0;
+}
+
+/* a label in the first column breaks between words, never inside one */
+table.data td:first-child > code {
+    word-break: normal;
 }
 
 table.data th {
@@ -2745,4 +2812,207 @@ table.data tbody tr:hover td {
 /* English from the API (descriptions, error messages) keeps Latin digits: "Max 16", not "Max ۱۶" */
 :root[lang='fa'] :is(#reference, #error-table) [lang='en'] {
     font-family: Montserrat, Vazirmatn, system-ui, sans-serif;
+}
+
+/* ---------- installer and one-command boxes (setup guide) ---------- */
+
+/* one command per box, so each can be copied and run on its own */
+pre.cmd {
+    margin: 10px 0;
+    padding: 12px 84px 12px 16px;
+    /* long commands wrap on screen; the copy button still copies one line */
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+pre.cmd .copy-btn {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* the contents of a file, not a command: its path sits on top */
+pre[data-file] {
+    padding-top: 42px;
+}
+
+pre[data-file]::before {
+    content: attr(data-file);
+    position: absolute;
+    top: 13px;
+    left: 20px;
+    color: #8b7581;
+    font: 500 12px/1 var(--mono);
+}
+
+.step kbd {
+    display: inline-block;
+    min-width: 1.6em;
+    padding: 0.05em 0.45em;
+    border-radius: 6px;
+    border: 1px solid var(--line-2);
+    border-bottom-width: 2px;
+    background: var(--surface-2);
+    color: var(--text);
+    font: 500 0.82em/1.5 var(--mono);
+    text-align: center;
+}
+
+.tabs [role='tabpanel'] {
+    padding-top: 6px;
+}
+
+.tabs [role='tabpanel'] > p {
+    max-width: 44em;
+    margin-top: 12px;
+    color: var(--text-2);
+}
+
+/* what the installer looks like on screen */
+.term {
+    direction: ltr;
+    max-width: 46em;
+    margin: 22px 0;
+    overflow: hidden;
+    border-radius: 14px;
+    border: 1px solid var(--line-2);
+    background: #0f0a0d;
+    box-shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.7);
+}
+
+.term-bar {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--line);
+    background: #160f14;
+}
+
+.term-bar i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.14);
+}
+
+.term-bar span {
+    margin-left: 8px;
+    color: #8b7581;
+    font: 500 12px/1 var(--mono);
+}
+
+.term pre {
+    margin: 0;
+    max-width: none;
+    border: 0;
+    border-radius: 0;
+    font-size: 13px;
+    line-height: 1.65;
+}
+
+.term b {
+    color: #f6eff3;
+    font-weight: 500;
+}
+
+.term .r {
+    color: var(--rose);
+}
+
+.term .ok {
+    color: var(--teal);
+}
+
+.term .h {
+    color: var(--rose);
+    font-weight: 500;
+}
+
+.term .d {
+    color: #8b7581;
+}
+
+/* the by-hand install, folded away under the installer */
+details.manual {
+    max-width: 46em;
+    margin: 26px 0;
+    border-radius: 14px;
+    border: 1px solid var(--line-2);
+    background: var(--surface);
+}
+
+details.manual > summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 18px;
+    border-radius: 14px;
+    color: var(--text);
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+}
+
+details.manual > summary::-webkit-details-marker {
+    display: none;
+}
+
+details.manual > summary::before {
+    content: '';
+    flex: none;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--rose);
+    border-bottom: 2px solid var(--rose);
+    transform: rotate(-45deg);
+    transition: transform 0.15s;
+}
+
+:root[lang='fa'] details.manual:not([open]) > summary::before {
+    transform: rotate(135deg);
+}
+
+details.manual[open] > summary::before {
+    transform: rotate(45deg);
+}
+
+details.manual > summary:hover {
+    color: var(--rose);
+}
+
+details.manual > summary:focus-visible {
+    outline: 2px solid var(--rose);
+    outline-offset: 2px;
+}
+
+details.manual > :not(summary) {
+    margin-inline: 18px;
+}
+
+details.manual > :last-child {
+    margin-bottom: 18px;
+}
+
+details.manual > p {
+    color: var(--text-2);
+}
+
+.step .table-wrap {
+    max-width: 46em;
+}
+
+@media (max-width: 520px) {
+    details.manual > :not(summary) {
+        margin-inline: 12px;
+    }
+
+    /* on a phone the copy button sits above the command, so the command gets the whole width */
+    pre.cmd {
+        padding: 42px 14px 12px;
+    }
+
+    pre.cmd .copy-btn {
+        top: 8px;
+        transform: none;
+    }
 }

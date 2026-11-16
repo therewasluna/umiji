@@ -1,21 +1,21 @@
-## Authentication Method: Password
+## روش ورود: گذرواژه
 
-### Changing or Resetting Password
+### تغییر یا بازنشانی گذرواژه
 
-Use `Rescue CLI` to reset or change the password.
-
-```bash
-docker exec -it umiji cli
-```
-
-After entering `Rescue CLI`, select the `Reset superadmin` option.
-
-### Emergency Password Authentication Enable
-
-If you have disabled the "Password" authentication method but later lost access to one of the other authentication methods – you can enable the "Password" authentication method using `Rescue CLI`
+روی سرور پنل، با کاربر root، بنویسید:
 
 ```bash
-docker exec -it umiji cli
+umiji
 ```
 
-After entering `Rescue CLI`, select the `Enable password authentication` option.
+گزینهٔ `Owner password` را انتخاب کنید. نام کاربری مالک را نشان می‌دهد و گذرواژهٔ تازه را می‌پرسد. اگر Enter بزنید، خودش یک گذرواژهٔ قوی می‌سازد.
+
+دستور `umiji` را نصب‌کننده اضافه می‌کند. اگر روی سرور نیست، نصب‌کننده را دوباره اجرا کنید:
+
+```bash
+bash <(curl -fsSL https://raw.githubusercontent.com/therewasluna/umiji/main/install.sh)
+```
+
+### روشن کردن اضطراری ورود با گذرواژه
+
+اگر روش «گذرواژه» را خاموش کرده‌اید و بعد دسترسی به روش‌های دیگر را از دست داده‌اید، `Owner password` ورود با گذرواژه را هم دوباره روشن می‌کند. با آن گذرواژهٔ تازه بگذارید و وارد شوید.
