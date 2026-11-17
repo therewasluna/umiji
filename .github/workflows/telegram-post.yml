@@ -1,4 +1,5 @@
-# Posts each push to main to the Telegram channel @umijidev: the repo, the commit titles and a link.
+# Posts each push to main to the Telegram channel @umijidev as a rich message: the repo, the commit
+# titles and a button to the changes.
 # Every Umiji repo calls this from its own .github/workflows/telegram.yml and keeps the bot token in
 # its TELEGRAM_BOT_TOKEN secret. A commit with "[skip tg]" in its message is left out of the post.
 name: Telegram post
@@ -33,28 +34,27 @@ jobs:
               print('Nothing to post.')
               sys.exit(0)
 
-          MAX_LINES = 15  # keeps a big push well under Telegram's 4096-character limit
+          # A rich message (Bot API 10.1): a heading, the commit titles as a real list, and a button.
+          MAX_LINES = 15  # a big push stays short in the channel
           titles = [html.escape(c['message'].splitlines()[0]) for c in commits]
           count = f"{len(commits)} change{'s' if len(commits) != 1 else ''}"
-          text = f'🔧 <b>{html.escape(repo)}</b> · {count}\n\n'
-          text += '\n'.join(f'• {t}' for t in titles[:MAX_LINES])
+          items = ''.join(f'<li>{t}</li>' for t in titles[:MAX_LINES])
           if len(titles) > MAX_LINES:
-              text += f'\n…and {len(titles) - MAX_LINES} more'
+              items += f'<li><i>…and {len(titles) - MAX_LINES} more</i></li>'
+          page = f'<h2>🔧 {html.escape(repo)}</h2><p>{count}</p><ul>{items}</ul>'
           link = event['compare'] if len(commits) > 1 else commits[0]['url']
-          text += f'\n\n<a href="{html.escape(link)}">See it on GitHub</a>'
 
           if os.environ.get('DRY_RUN'):
-              print(text)
+              print(page, link, sep='\n')
               sys.exit(0)
 
           body = json.dumps({
               'chat_id': os.environ['CHAT'],
-              'text': text,
-              'parse_mode': 'HTML',
-              'link_preview_options': {'is_disabled': True},
+              'rich_message': {'html': page},
+              'reply_markup': {'inline_keyboard': [[{'text': 'See it on GitHub', 'url': link}]]},
           }).encode()
           request = urllib.request.Request(
-              f"https://api.telegram.org/bot{os.environ['TOKEN']}/sendMessage",
+              f"https://api.telegram.org/bot{os.environ['TOKEN']}/sendRichMessage",
               body,
               {'Content-Type': 'application/json'},
           )
