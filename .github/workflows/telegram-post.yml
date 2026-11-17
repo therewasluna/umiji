@@ -1,0 +1,66 @@
+# Posts each push to main to the Telegram channel @umijidev: the repo, the commit titles and a link.
+# Every Umiji repo calls this from its own .github/workflows/telegram.yml and keeps the bot token in
+# its TELEGRAM_BOT_TOKEN secret. A commit with "[skip tg]" in its message is left out of the post.
+name: Telegram post
+
+on:
+  workflow_call:
+    secrets:
+      TELEGRAM_BOT_TOKEN:
+        required: true
+
+permissions: {}
+
+jobs:
+  post:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Post to @umijidev
+        env:
+          TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT: '@umijidev'
+        run: |
+          python3 - <<'EOF'
+          import html, json, os, sys, urllib.error, urllib.request
+
+          if not os.environ.get('TOKEN'):
+              sys.exit('TELEGRAM_BOT_TOKEN is missing in this repo')
+
+          event = json.load(open(os.environ['GITHUB_EVENT_PATH']))
+          repo = event['repository']['name']
+          commits = [c for c in event.get('commits') or [] if '[skip tg]' not in c['message']]
+          if not commits:
+              print('Nothing to post.')
+              sys.exit(0)
+
+          MAX_LINES = 15  # keeps a big push well under Telegram's 4096-character limit
+          titles = [html.escape(c['message'].splitlines()[0]) for c in commits]
+          count = f"{len(commits)} change{'s' if len(commits) != 1 else ''}"
+          text = f'🔧 <b>{html.escape(repo)}</b> · {count}\n\n'
+          text += '\n'.join(f'• {t}' for t in titles[:MAX_LINES])
+          if len(titles) > MAX_LINES:
+              text += f'\n…and {len(titles) - MAX_LINES} more'
+          link = event['compare'] if len(commits) > 1 else commits[0]['url']
+          text += f'\n\n<a href="{html.escape(link)}">See it on GitHub</a>'
+
+          if os.environ.get('DRY_RUN'):
+              print(text)
+              sys.exit(0)
+
+          body = json.dumps({
+              'chat_id': os.environ['CHAT'],
+              'text': text,
+              'parse_mode': 'HTML',
+              'link_preview_options': {'is_disabled': True},
+          }).encode()
+          request = urllib.request.Request(
+              f"https://api.telegram.org/bot{os.environ['TOKEN']}/sendMessage",
+              body,
+              {'Content-Type': 'application/json'},
+          )
+          try:
+              urllib.request.urlopen(request, timeout=30)
+          except urllib.error.HTTPError as error:
+              sys.exit(f'Telegram refused the post: {error.read().decode()}')
+          print('Posted.')
+          EOF
