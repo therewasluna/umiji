@@ -1,9 +1,5 @@
 <div align="center">
-  <img src="assets/logo.svg" alt="Umiji" width="96" height="96">
-
-  <h1>Umiji</h1>
-
-  <p><b>海路</b> · <i>umiji</i>, "sea route"</p>
+  <img src="assets/banner.png" alt="Umiji (海路, &quot;sea route&quot;): run your Xray servers, users and resellers from one panel" width="100%">
 
   <p>A proxy management panel built on Xray-core, made for running a VPN business with resellers.</p>
 

@@ -1,0 +1,267 @@
+<!doctype html>
+<!-- Source of assets/social-preview.png (1280×640) and assets/banner.png (README, ?readme).
+     Render: node tools/banner/render.cjs (Playwright, needs Google Fonts reachable). -->
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Unbounded:wght@500&display=block" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&text=%E6%B5%B7%E8%B7%AF&display=block" rel="stylesheet" />
+        <style>
+            :root {
+                --bg: #130c11;
+                --text: #f6eff3;
+                --text-2: #c9b6c1;
+                --rose: #ff7db5;
+                --rose-btn: #c42f72;
+                --rose-soft: rgba(255, 125, 181, 0.1);
+                --rose-line: rgba(255, 125, 181, 0.32);
+                --line-2: rgba(255, 255, 255, 0.12);
+                --w: 1280px;
+                --h: 640px;
+            }
+            .readme {
+                --h: 420px;
+            }
+            * {
+                box-sizing: border-box;
+                margin: 0;
+            }
+            html,
+            body {
+                width: var(--w);
+                height: var(--h);
+                overflow: hidden;
+                background: var(--bg);
+            }
+            .stage {
+                position: relative;
+                width: var(--w);
+                height: var(--h);
+                overflow: hidden;
+                font-family: Montserrat, sans-serif;
+                color: var(--text);
+                background:
+                    radial-gradient(55% 75% at 80% 25%, rgba(210, 58, 124, 0.34), transparent 70%),
+                    radial-gradient(45% 70% at 0% 100%, rgba(124, 77, 235, 0.22), transparent 70%),
+                    radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1.4px) 0 0 / 26px 26px,
+                    var(--bg);
+            }
+
+            /* left: who we are */
+            .copy {
+                position: absolute;
+                left: 84px;
+                top: 78px;
+                width: 560px;
+                z-index: 3;
+            }
+            .brand {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                font: 700 60px/1 Montserrat;
+                letter-spacing: -0.02em;
+            }
+            .brand svg {
+                width: 64px;
+                height: 64px;
+                color: var(--rose);
+            }
+            .brand .umi {
+                color: var(--rose);
+            }
+            .eyebrow {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                margin-top: 26px;
+                padding: 6px 16px 6px 8px;
+                border-radius: 999px;
+                border: 1px solid var(--rose-line);
+                background: var(--rose-soft);
+                color: var(--text-2);
+                font: 500 17px/1 Montserrat;
+            }
+            .eyebrow b {
+                padding: 4px 10px;
+                border-radius: 999px;
+                background: var(--rose-btn);
+                color: #fff;
+                font: 700 15px/1 'Noto Sans JP', sans-serif;
+            }
+            h1 {
+                max-width: 540px;
+                margin-top: 26px;
+                font: 500 38px/1.16 Unbounded;
+                letter-spacing: -0.045em;
+            }
+            h1 em {
+                font-style: normal;
+                color: var(--rose);
+            }
+            .tags {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-top: 30px;
+            }
+            .tags .fa {
+                padding: 0;
+                border: 0;
+                background: none;
+                font: 600 15px/1 Vazirmatn, sans-serif;
+            }
+            .tags span {
+                padding: 8px 14px;
+                border-radius: 999px;
+                border: 1px solid var(--line-2);
+                background: rgba(255, 255, 255, 0.03);
+                color: var(--text-2);
+                font: 600 15px/1 Montserrat;
+            }
+
+            /* right: the panel, the phone in front, both standing in the tide */
+            .window {
+                position: absolute;
+                left: 740px;
+                top: 92px;
+                width: 760px;
+                border-radius: 14px;
+                overflow: hidden;
+                background: #1b1218;
+                box-shadow:
+                    0 40px 90px -20px rgba(0, 0, 0, 0.75),
+                    0 0 0 1px rgba(255, 255, 255, 0.08);
+                transform: perspective(1800px) rotateY(-16deg) rotateX(5deg);
+                transform-origin: 0 50%;
+            }
+            .window .bar {
+                display: flex;
+                align-items: center;
+                gap: 7px;
+                padding: 9px 14px;
+                background: #160f14;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            }
+            .window .bar i {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: #372a32;
+            }
+            .window img,
+            .phone img {
+                display: block;
+                width: 100%;
+            }
+            .phone {
+                position: absolute;
+                left: 668px;
+                top: 196px;
+                width: 196px;
+                padding: 7px;
+                border-radius: 32px;
+                background: #0d080b;
+                box-shadow:
+                    0 30px 60px -18px rgba(0, 0, 0, 0.85),
+                    0 0 0 1px rgba(255, 255, 255, 0.1);
+            }
+            .phone img {
+                border-radius: 25px;
+                aspect-ratio: 390 / 760;
+                object-fit: cover;
+                object-position: top;
+            }
+            .tide {
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 150px;
+                z-index: 2;
+            }
+            .tide::after {
+                content: '';
+                position: absolute;
+                inset: 45% 0 0;
+                background: linear-gradient(transparent, var(--bg));
+            }
+            .tide svg {
+                position: absolute;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            /* README banner: wider and shorter */
+            .readme .copy {
+                top: 58px;
+                left: 72px;
+            }
+            .readme .brand {
+                font-size: 52px;
+            }
+            .readme .brand svg {
+                width: 56px;
+                height: 56px;
+            }
+            .readme .eyebrow {
+                margin-top: 20px;
+            }
+            .readme h1 {
+                max-width: 560px;
+                margin-top: 20px;
+                font-size: 32px;
+            }
+            .readme .tags {
+                display: none;
+            }
+            .readme .window {
+                top: 52px;
+                left: 760px;
+                width: 680px;
+            }
+            .readme .phone {
+                top: 120px;
+                left: 694px;
+                width: 168px;
+            }
+            .readme .tide {
+                height: 120px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="stage">
+            <div class="copy">
+                <div class="brand">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /><path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0" /></svg>
+                    <span><span class="umi">Umi</span>ji</span>
+                </div>
+                <div class="eyebrow"><b lang="ja">海路</b> umiji means “sea route”</div>
+                <h1>Run your Xray servers, users and resellers from <em>one panel</em>.</h1>
+                <div class="tags">
+                    <span>Self-hosted</span>
+                    <span>Reseller panels</span>
+                    <span>Telegram store bots</span>
+                    <span>English + <span lang="fa" class="fa">فارسی</span></span>
+                </div>
+            </div>
+
+            <div class="window">
+                <div class="bar"><i></i><i></i><i></i></div>
+                <img src="../../docs/assets/shots/users.webp" alt="" />
+            </div>
+            <div class="phone"><img src="../../docs/assets/shots/subpage.webp" alt="" /></div>
+
+            <div class="tide">
+                <svg viewBox="0 0 1280 160" preserveAspectRatio="none"><path fill="#2a1a41" d="M0 60 Q40 42 80 60 T160 60 T240 60 T320 60 T400 60 T480 60 T560 60 T640 60 T720 60 T800 60 T880 60 T960 60 T1040 60 T1120 60 T1200 60 T1280 60 V160 H0Z" /></svg>
+                <svg viewBox="0 0 1280 160" preserveAspectRatio="none"><path fill="rgba(180, 47, 105, 0.38)" d="M-30 78 Q10 64 50 78 T130 78 T210 78 T290 78 T370 78 T450 78 T530 78 T610 78 T690 78 T770 78 T850 78 T930 78 T1010 78 T1090 78 T1170 78 T1250 78 T1330 78 V160 H-30Z" /></svg>
+                <svg viewBox="0 0 1280 160" preserveAspectRatio="none"><path fill="rgba(210, 58, 124, 0.55)" d="M-55 96 Q-15 86 25 96 T105 96 T185 96 T265 96 T345 96 T425 96 T505 96 T585 96 T665 96 T745 96 T825 96 T905 96 T985 96 T1065 96 T1145 96 T1225 96 T1305 96 V160 H-55Z" /></svg>
+            </div>
+        </div>
+        <script>
+            if (location.search.includes('readme')) document.documentElement.classList.add('readme')
+        </script>
+    </body>
+</html>
