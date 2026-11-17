@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="42%" r="55%">
+      <stop offset="0" stop-color="#d23a7c" stop-opacity="0.42"/>
+      <stop offset="1" stop-color="#d23a7c" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="violet" cx="18%" cy="92%" r="60%">
+      <stop offset="0" stop-color="#7c4deb" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#7c4deb" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="wave" x1="0" y1="0" x2="1" y2="0.35">
+      <stop offset="0.15" stop-color="#ff7db5"/>
+      <stop offset="1" stop-color="#a07bfa"/>
+    </linearGradient>
+    <filter id="soft" x="-30%" y="-60%" width="160%" height="220%">
+      <feGaussianBlur stdDeviation="0.6"/>
+    </filter>
+  </defs>
+
+  <rect width="1024" height="1024" fill="#160e14"/>
+  <rect width="1024" height="1024" fill="url(#glow)"/>
+  <rect width="1024" height="1024" fill="url(#violet)"/>
+
+  <!-- the logo's two waves (16-unit grid, 44px per unit), centred; the round crop keeps everything inside r≈360 -->
+  <g transform="translate(160 160) scale(44)" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+    <g stroke="#ff4f9a" opacity="0.55" filter="url(#soft)">
+      <path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0"/>
+      <path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0"/>
+    </g>
+    <g stroke="url(#wave)">
+      <path d="M1.75 6.25q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0"/>
+      <path d="M1.75 10.75q1.56-2 3.13 0t3.12 0t3.13 0t3.12 0"/>
+    </g>
+  </g>
+</svg>

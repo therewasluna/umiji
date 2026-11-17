@@ -23,7 +23,7 @@
             menuBtn.focus()
         })
         addEventListener('pageshow', () => setMenu(false))
-        matchMedia('(min-width: 861px)').addEventListener('change', () => setMenu(false))
+        matchMedia('(min-width: 960px)').addEventListener('change', () => setMenu(false))
     }
 
     // A link to something inside a folded section opens it.

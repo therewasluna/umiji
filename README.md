@@ -6,6 +6,8 @@
   <p><b>海路</b> · <i>umiji</i>, "sea route"</p>
 
   <p>A proxy management panel built on Xray-core, made for running a VPN business with resellers.</p>
+
+  <p><a href="https://umiji.wiki">Wiki</a> · <a href="https://t.me/umijidev">Telegram channel</a></p>
 </div>
 
 ## What it does

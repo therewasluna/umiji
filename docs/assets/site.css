@@ -213,6 +213,11 @@ code {
     background: var(--rose-soft);
 }
 
+/* the Telegram row only shows in the phone menu; wide screens have the header button */
+.nav .tg-row {
+    display: none;
+}
+
 .icon-btn {
     display: inline-grid;
     place-items: center;
@@ -330,8 +335,8 @@ html.menu-open body {
     overflow: hidden;
 }
 
-/* on a phone the nav ran off both edges, so it drops down from the bar as a sheet instead */
-@media (max-width: 860px) {
+/* on a phone the nav ran off both edges (and under 960px its links wrap), so it drops down from the bar as a sheet */
+@media (max-width: 959px) {
     .topbar .wrap {
         gap: 10px;
         height: 60px;
@@ -486,10 +491,27 @@ html.menu-open body {
     [dir='rtl'] .nav a::after {
         transform: scaleX(-1);
     }
+    .nav .tg-row {
+        --c: #4cb3f0;
+        --icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%234cb3f0' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M15 10l-4 4l6 6l4-16l-18 7l4 2l2 6l3-4'/></svg>");
+        display: flex;
+        position: relative;
+        margin-top: 10px;
+        transition-delay: 0s;
+    }
+    .topbar.open .nav .tg-row {
+        transition-delay: 215ms;
+    }
+    .nav .tg-row::after {
+        mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 17 17 7M8 7h9v9'/%3E%3C/svg%3E");
+    }
+    [dir='rtl'] .nav .tg-row::after {
+        transform: none;
+    }
 }
 
 @media (max-width: 720px) {
-    .tools .gh {
+    .tools :is(.gh, .tg) {
         display: none;
     }
 }
