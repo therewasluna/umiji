@@ -25,7 +25,8 @@
     --glow: rgba(210, 58, 124, 0.3);
     --tide-1: rgba(210, 58, 124, 0.55);
     --tide-2: rgba(180, 47, 105, 0.38);
-    --tide-3: rgba(124, 77, 235, 0.22);
+    /* the back wave is opaque (22% violet already mixed into --bg) so the phone can't show through the water */
+    --tide-3: #2a1a41;
     --font: Montserrat, system-ui, -apple-system, 'Segoe UI', sans-serif;
     --display: Unbounded, Montserrat, system-ui, sans-serif;
     --mono: 'Fira Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
@@ -289,48 +290,217 @@ code {
     background: var(--rose-soft);
 }
 
+/* the menu button: two lines that cross into an X */
+.menu-btn {
+    display: none;
+}
+
+.menu-btn i {
+    grid-area: 1 / 1;
+    width: 18px;
+    height: 2px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.menu-btn i:first-child {
+    transform: translateY(-4px);
+}
+
+.menu-btn i:last-child {
+    transform: translateY(4px);
+}
+
+.topbar.open .menu-btn {
+    color: var(--rose);
+    border-color: var(--rose-line);
+}
+
+.topbar.open .menu-btn i:first-child {
+    transform: rotate(45deg);
+}
+
+.topbar.open .menu-btn i:last-child {
+    transform: rotate(-45deg);
+}
+
+/* on body, not html: body's overflow-x would otherwise make it the scroller and unstick the bar */
+html.menu-open body {
+    overflow: hidden;
+}
+
+/* on a phone the nav ran off both edges, so it drops down from the bar as a sheet instead */
 @media (max-width: 860px) {
-    /* the nav gets a row of its own */
     .topbar .wrap {
-        flex-wrap: wrap;
-        height: auto;
-        padding-top: 8px;
-        gap: 4px 12px;
+        gap: 10px;
+        height: 60px;
     }
     .brand {
         margin-inline-end: auto;
     }
-    .nav {
-        order: 3;
-        width: calc(100% + 16px);
-        margin: 0 -8px;
-        padding-bottom: 6px;
-        overflow-x: auto;
-        scrollbar-width: none;
+    .menu-btn {
+        display: inline-grid;
     }
-    html {
-        scroll-padding-top: 116px;
+    /* the bar's backdrop-filter makes it the containing block, and a blur here would only see the bar */
+    .nav {
+        position: absolute;
+        top: 100%;
+        inset-inline: 0;
+        display: grid;
+        gap: 6px;
+        margin: 0;
+        padding: 14px var(--gutter) 22px;
+        max-height: calc(100dvh - 60px);
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        border-bottom: 1px solid var(--line-2);
+        background:
+            radial-gradient(60% 140% at 100% 0%, rgba(210, 58, 124, 0.16), transparent 70%),
+            radial-gradient(50% 120% at 0% 100%, rgba(124, 77, 235, 0.12), transparent 70%),
+            rgb(22, 14, 20);
+        box-shadow: 0 40px 60px -30px rgba(0, 0, 0, 0.8);
+        visibility: hidden;
+        opacity: 0;
+        transform: translateY(-12px);
+        transition:
+            opacity 0.22s,
+            transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1),
+            visibility 0s 0.35s;
+    }
+    .topbar.open .nav {
+        visibility: visible;
+        opacity: 1;
+        transform: none;
+        transition-delay: 0s;
+    }
+    /* dims the page under the sheet; a tap on it closes the menu */
+    .topbar::after {
+        content: '';
+        position: absolute;
+        top: 100%;
+        inset-inline: 0;
+        z-index: -1;
+        height: 100dvh;
+        background: rgba(8, 4, 7, 0.62);
+        visibility: hidden;
+        opacity: 0;
+        transition:
+            opacity 0.25s,
+            visibility 0s 0.25s;
+    }
+    .topbar.open::after {
+        visibility: visible;
+        opacity: 1;
+        transition-delay: 0s;
+    }
+    .nav a {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 9px 12px 9px 9px;
+        border-radius: 16px;
+        border: 1px solid transparent;
+        color: var(--text);
+        font-size: 16.5px;
+        font-weight: 600;
+        opacity: 0;
+        transform: translateY(-8px);
+        transition:
+            opacity 0.25s,
+            transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+            background-color 0.15s,
+            border-color 0.15s;
+    }
+    [dir='rtl'] .nav a {
+        padding: 9px 9px 9px 12px;
+    }
+    .topbar.open .nav a {
+        opacity: 1;
+        transform: none;
+    }
+    .topbar.open .nav a:nth-child(2) {
+        transition-delay: 75ms;
+    }
+    .topbar.open .nav a:nth-child(3) {
+        transition-delay: 110ms;
+    }
+    .topbar.open .nav a:nth-child(4) {
+        transition-delay: 145ms;
+    }
+    .topbar.open .nav a:nth-child(5) {
+        transition-delay: 180ms;
+    }
+    .nav a:hover,
+    .nav a:active {
+        color: var(--text);
+        background: color-mix(in srgb, var(--c) 7%, transparent);
+    }
+    .nav a[aria-current='page'] {
+        color: var(--text);
+        border-color: color-mix(in srgb, var(--c) 30%, transparent);
+        background: color-mix(in srgb, var(--c) 10%, transparent);
+    }
+    /* each page gets an icon tile, rose drifting to violet down the list */
+    .nav a::before {
+        content: '';
+        flex: none;
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: var(--icon) center / 21px no-repeat, color-mix(in srgb, var(--c) 13%, transparent);
+        box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 30%, transparent);
+    }
+    .nav a:nth-child(1) {
+        --c: #ff7db5;
+        --icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23ff7db5' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z'/><path d='M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z'/></svg>");
+    }
+    .nav a:nth-child(2) {
+        --c: #e77dc6;
+        --icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23e77dc6' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='m16 3 4 4-4 4'/><path d='M20 7H4'/><path d='m8 21-4-4 4-4'/><path d='M4 17h16'/></svg>");
+    }
+    .nav a:nth-child(3) {
+        --c: #d07cd8;
+        --icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d07cd8' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='M9 18h6M10 22h4'/><path d='M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.2 1 2V17h6v-.3c0-.8.4-1.5 1-2A7 7 0 0 0 12 2z'/></svg>");
+    }
+    .nav a:nth-child(4) {
+        --c: #b87ce9;
+        --icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b87ce9' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><circle cx='12' cy='12' r='9'/><circle cx='12' cy='12' r='3.5'/><path d='m5.6 5.6 4 4M14.4 14.4l4 4M14.4 9.6l4-4M5.6 18.4l4-4'/></svg>");
+    }
+    .nav a:nth-child(5) {
+        --c: #a07bfa;
+        --icon: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23a07bfa' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'><path d='m8 7-5 5 5 5M16 7l5 5-5 5'/></svg>");
+    }
+    /* chevron */
+    .nav a::after {
+        content: '';
+        width: 16px;
+        height: 16px;
+        margin-inline-start: auto;
+        background: var(--text-3);
+        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 6 6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+    .nav a[aria-current='page']::after {
+        background: var(--c);
+    }
+    [dir='rtl'] .nav a::after {
+        transform: scaleX(-1);
     }
 }
 
 @media (max-width: 720px) {
-    .nav a {
-        padding: 8px 9px;
-        font-size: 14px;
-        white-space: nowrap;
-    }
     .tools .gh {
         display: none;
     }
 }
 
+/* the smallest phones: brand, languages and the menu button share 288px */
 @media (max-width: 360px) {
-    .nav a {
-        padding: 8px 5px;
-        font-size: 13px;
-    }
     .lang svg {
         display: none;
+    }
+    .lang a {
+        padding: 0 8px;
     }
 }
 
@@ -561,15 +731,116 @@ code {
     text-decoration: none;
 }
 
-.hero-link svg {
+/* one sentence each on a wide screen; the icons only show on the phone cards */
+.hero-link .ico {
+    display: none;
+}
+
+.hero-link :is(small, b) {
+    font: inherit;
+}
+
+.hero-link .arr {
+    flex: none;
     width: 17px;
     height: 17px;
     color: var(--rose);
     transition: transform 0.2s;
 }
 
-.hero-link:hover svg {
+.hero-link:hover .arr {
     transform: translateX(3px);
+}
+
+/* on a phone the long sentence wrapped and left its arrow behind, so each link becomes a card */
+@media (max-width: 720px) {
+    .hero-links {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        width: 100%;
+        gap: 10px;
+        margin-top: 16px;
+        text-align: start;
+    }
+    .hero-link {
+        --c: var(--rose);
+        display: flex;
+        gap: 14px;
+        padding: 14px 16px;
+        border-radius: 16px;
+        border: 1px solid color-mix(in srgb, var(--c) 22%, transparent);
+        background:
+            linear-gradient(color-mix(in srgb, var(--c) 7%, transparent), transparent),
+            rgba(31, 21, 28, 0.78);
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, 0.05),
+            0 18px 40px -26px var(--c);
+        transition:
+            border-color 0.2s,
+            transform 0.15s;
+    }
+    .hero-link + .hero-link {
+        --c: var(--plum);
+    }
+    .hero-link:hover {
+        border-color: color-mix(in srgb, var(--c) 45%, transparent);
+    }
+    .hero-link:active {
+        transform: scale(0.985);
+    }
+    .hero-link .ico {
+        display: grid;
+        place-items: center;
+        flex: none;
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: color-mix(in srgb, var(--c) 14%, transparent);
+        box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--c) 32%, transparent);
+        color: var(--c);
+    }
+    .hero-link .ico svg {
+        width: 21px;
+        height: 21px;
+    }
+    .hero-link .txt {
+        flex: 1;
+        min-width: 0;
+        display: grid;
+        gap: 2px;
+    }
+    /* the panel names would wrap the small line; the migrate page lists them */
+    .hero-link .long {
+        display: none;
+    }
+    .hero-link small {
+        color: var(--text-3);
+        font-size: 13px;
+        line-height: 1.4;
+    }
+    .hero-link b {
+        color: var(--text);
+        font-weight: 600;
+        font-size: 15.5px;
+        line-height: 1.35;
+    }
+    .hero-link .arr {
+        width: 18px;
+        height: 18px;
+        color: var(--c);
+    }
+}
+
+/* the smallest phones: a tighter card keeps every line on one row */
+@media (max-width: 359px) {
+    .hero-link {
+        gap: 10px;
+        padding: 12px;
+    }
+    .hero-link .ico {
+        width: 36px;
+        height: 36px;
+    }
 }
 
 /* the panel rises out of the tide, the phone in front of it */
@@ -640,10 +911,11 @@ code {
     mask-image: linear-gradient(#000 55%, transparent 96%);
 }
 
+/* the phone stands in the tide: its lower edge sits under the translucent waves (which are in front) */
 .phone {
     position: absolute;
     inset-inline-start: 0;
-    bottom: 6%;
+    bottom: -34px;
     width: 24%;
     min-width: 116px;
     padding: 7px;
@@ -662,11 +934,12 @@ code {
 }
 
 /* the tide: the logo's two waves, moving */
+/* in front of the stage, so the phone's edge goes under the water; the window has faded out by here */
 .tide {
     position: relative;
     height: 150px;
     margin-top: -96px;
-    z-index: -1;
+    z-index: 1;
     pointer-events: none;
 }
 
@@ -2065,7 +2338,7 @@ mark {
 /* mirror what has a direction: the arrows */
 [dir='rtl'] .btn svg,
 [dir='rtl'] .door .go svg,
-[dir='rtl'] .hero-link svg {
+[dir='rtl'] .hero-link .arr {
     transform: scaleX(-1);
 }
 
@@ -2073,7 +2346,7 @@ mark {
     transform: scaleX(-1) translateX(4px);
 }
 
-[dir='rtl'] .hero-link:hover svg {
+[dir='rtl'] .hero-link:hover .arr {
     transform: scaleX(-1) translateX(3px);
 }
 

@@ -41,7 +41,7 @@
                     </svg>
                     <span class="word"><span class="umi">Umi</span><span class="ji">ji</span></span>
                 </a>
-                <nav class="nav" aria-label="Main">
+                <nav class="nav" id="site-nav" aria-label="Main">
                     <a href="guide/">Setup guide</a>
                     <a href="migrate/">Migrate</a>
                     <a href="concepts/">Concepts</a>
@@ -57,6 +57,7 @@
                         <a href="./" lang="en" aria-current="page">English</a>
                         <a href="fa/" lang="fa" hreflang="fa">فارسی</a>
                     </div>
+                    <button class="icon-btn menu-btn" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu"><i></i><i></i></button>
                 </div>
             </div>
         </header>
@@ -74,12 +75,14 @@
                     </div>
                     <div class="hero-links">
                         <a class="hero-link" href="guide/">
-                            New to this? Follow the setup guide
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z" /><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z" /></svg></span>
+                            <span class="txt"><small>New to this?</small> <b>Follow the setup guide</b></span>
+                            <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                         </a>
                         <a class="hero-link" href="migrate/">
-                            <span>Moving from Marzban, 3x-ui, Hiddify or another panel? Bring your users over</span>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+                            <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m16 3 4 4-4 4" /><path d="M20 7H4" /><path d="m8 21-4-4 4-4" /><path d="M4 17h16" /></svg></span>
+                            <span class="txt"><small>Moving from <span class="long">Marzban, 3x-ui, Hiddify or </span>another panel?</small> <b>Bring your users over</b></span>
+                            <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
                         </a>
                     </div>
                 </div>

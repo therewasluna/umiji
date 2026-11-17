@@ -6,6 +6,26 @@
         e.currentTarget.href = e.currentTarget.href.split('#')[0] + location.hash
     })
 
+    // Phone menu: the nav drops down from the top bar. A link, the dimmed page, Escape or Back closes it.
+    const bar = document.querySelector('.topbar')
+    const menuBtn = bar?.querySelector('.menu-btn')
+    if (menuBtn) {
+        const setMenu = (open) => {
+            bar.classList.toggle('open', open)
+            menuBtn.setAttribute('aria-expanded', open)
+            document.documentElement.classList.toggle('menu-open', open)
+        }
+        menuBtn.addEventListener('click', () => setMenu(!bar.classList.contains('open')))
+        bar.addEventListener('click', (e) => (e.target === bar || e.target.closest('a')) && setMenu(false))
+        addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape' || !bar.classList.contains('open')) return
+            setMenu(false)
+            menuBtn.focus()
+        })
+        addEventListener('pageshow', () => setMenu(false))
+        matchMedia('(min-width: 861px)').addEventListener('change', () => setMenu(false))
+    }
+
     // A link to something inside a folded section opens it.
     const reveal = () => {
         const el = location.hash ? document.getElementById(decodeURIComponent(location.hash.slice(1))) : null
